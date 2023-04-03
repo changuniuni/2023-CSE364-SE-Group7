@@ -19,16 +19,6 @@ public class RatingController {
         return ratingService.getRatingById(id);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Rating> getRatingsByUserId(@PathVariable int userId) {
-        return ratingService.getRatingsByUserId(userId);
-    }
-
-    @GetMapping("/movie/{movieId}")
-    public List<Rating> getRatingsByMovieId(@PathVariable int movieId) {
-        return ratingService.getRatingsByMovieId(movieId);
-    }
-
     @PostMapping
     public Rating addRating(@RequestBody Rating rating) {
         return ratingService.addRating(rating);

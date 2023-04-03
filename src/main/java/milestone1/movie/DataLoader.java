@@ -25,9 +25,9 @@ public class DataLoader {
 
     @PostConstruct
     public void loadData() {
-        String movieFile = "classpath:data/movies.dat";
-        String ratingFile = "classpath:data/ratings.dat";
-        String userFile = "classpath:data/users.dat";
+        String movieFile = "data/movies.dat";
+        String ratingFile = "data/ratings.dat";
+        String userFile = "data/users.dat";
 
         readDataFile(movieFile);
         readDataFile(ratingFile);
@@ -40,13 +40,13 @@ public class DataLoader {
             while ((line = br.readLine()) != null) {
                 String[] data = line.split("::");
                 if (filePath.contains("movies")) {
-                    Movie movie = new Movie(Integer.parseInt(data[0]), data[1], data[2].split("\\|"));
+                    Movie movie = new Movie(data[0], data[1], data[2].split("\\|"));
                     movieRepository.save(movie);
                 } else if (filePath.contains("ratings")) {
-                    Rating rating = new Rating(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Double.parseDouble(data[2]), Long.parseLong(data[3]));
+                    Rating rating = new Rating(data[0], data[1], Double.parseDouble(data[2]), Long.parseLong(data[3]));
                     ratingRepository.save(rating);
                 } else if (filePath.contains("users")) {
-                    User user = new User(Integer.parseInt(data[0]), data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),data[4]);
+                    User user = new User(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),data[4]);
                     userRepository.save(user);
                 }
             }

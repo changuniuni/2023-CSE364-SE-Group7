@@ -6,5 +6,4 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel ="movies", path = "movies")
 public interface MovieRepository extends MongoRepository<Movie, String> {
-    List<Movie> findByTitleContainingIgnoreCase(String title);
 }

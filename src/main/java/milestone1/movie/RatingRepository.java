@@ -7,6 +7,4 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel ="ratings", path = "ratings")
 public interface RatingRepository extends MongoRepository<Rating, String> {
-    List<Rating> findByUserId(int userId);
-    List<Rating> findByMovieId(int movieId);
 }

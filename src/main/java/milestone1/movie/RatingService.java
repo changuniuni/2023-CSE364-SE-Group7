@@ -18,14 +18,6 @@ public class RatingService {
         return ratingRepository.findById(id).orElse(null);
     }
 
-    public List<Rating> getRatingsByUserId(int userId) {
-        return ratingRepository.findByUserId(userId);
-    }
-
-    public List<Rating> getRatingsByMovieId(int movieId) {
-        return ratingRepository.findByMovieId(movieId);
-    }
-
     public Rating addRating(Rating rating) {
         return ratingRepository.save(rating);
     }

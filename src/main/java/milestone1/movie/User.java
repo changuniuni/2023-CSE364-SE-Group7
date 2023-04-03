@@ -6,13 +6,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 public class User {
     @Id
-    private int id;
+    private String id;
     private String gender;
     private int age;
     private int occupation;
     private String zipCode;
 
-    public User(int id, String gender, int age, int occupation, String zipCode) {
+    public User(String id, String gender, int age, int occupation, String zipCode) {
         this.id = id;
         this.gender = gender;
         this.age = age;
@@ -20,11 +20,11 @@ public class User {
         this.zipCode = zipCode;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

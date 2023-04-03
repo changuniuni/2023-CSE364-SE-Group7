@@ -19,11 +19,6 @@ public class MovieController {
         return movieService.getMovieById(id);
     }
 
-    @GetMapping("/search")
-    public List<Movie> getMoviesByTitle(@RequestParam(value = "title") String title) {
-        return movieService.getMoviesByTitle(title);
-    }
-
     @PostMapping
     public Movie addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);

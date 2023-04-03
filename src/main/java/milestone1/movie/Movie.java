@@ -6,11 +6,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "movies")
 public class Movie {
     @Id
-    private int id;
+    private String id;
     private String title;
     private String[] genres;
 
-    public Movie(int id, String title, String[] genres) {
+    public Movie(String id, String title, String[] genres) {
         this.id = id;
         this.title = title;
         this.genres = genres;
@@ -18,11 +18,11 @@ public class Movie {
 
     // getters and setters
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

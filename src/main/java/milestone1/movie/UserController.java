@@ -16,15 +16,15 @@ public class UserController {
         return userService.getAllUsers();
     }
     @GetMapping("/{id}")
-    public User getUserById(String id) {
+    public User getUserById(@PathVariable String id) {
         return userService.getUserById(id);
     }
     @PostMapping
-    public User addUser(User user) {
+    public User addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
     @DeleteMapping("/{id}")
-    public void deleteUserById(String id) {
+    public void deleteUserById(@PathVariable String id) {
         userService.deleteUserById(id);
     }
 }
