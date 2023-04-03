@@ -7,38 +7,32 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Movie {
     @Id
     private String id;
+    private String movieid;
     private String title;
+    private Double meanratings;
     private String[] genres;
 
-    public Movie(String id, String title, String[] genres) {
-        this.id = id;
+    public Movie(String movieid, String title, Double meanratings, String[] genres) {
+        this.movieid = movieid;
         this.title = title;
+        this.meanratings = meanratings;
         this.genres = genres;
     }
 
-    // getters and setters
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public String getMovieId() {
+        return movieid;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public Double getMeanRatings() {
+        return meanratings;
     }
 
     public String[] getGenres() {
         return genres;
     }
 
-    public void setGenres(String[] genres) {
-        this.genres = genres;
-    }
 }
