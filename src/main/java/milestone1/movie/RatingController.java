@@ -24,19 +24,33 @@ public class RatingController {
                     HttpStatus.BAD_REQUEST, "Invalid ratingsAVG value");
         }
         else {
-            for(Movie movie:movieRepository.findAll()) {
-                List<Rating> movieRatings = ratingRepository.findByMovieId(movie.getId());
-                double ratingsSum = 0;
-                double movieRatingscnt = 0;
-                for(Rating rating:movieRatings) {
-                    ratingsSum += rating.getRating();
-                    movieRatingscnt += 1;
+            List<Rating> ratings = ratingRepository.findAll();
+            Map<String, Double> movieRatingSumMap = new HashMap<>();
+            Map<String, Integer> movieRatingCountMap = new HashMap<>();
+            for(Rating rating : ratings) {
+                String movieId = rating.getid();
+                double score = rating.getRating();
+                if(!movieRatingSumMap.containsKey(movieId)) {
+                    movieRatingSumMap.put(movieId, score);
+                    movieRatingCountMap.put(movieId, 1);
+                } else {
+                    movieRatingSumMap.put(movieId, movieRatingSumMap.get(movieId) + score);
+                    movieRatingCountMap.put(movieId, movieRatingCountMap.get(movieId) + 1);
                 }
-                if(ratingsSum/movieRatingscnt >= ratingsAVG)
-                    MByRAVG.add(movie);
+            }
+            for(Map.Entry<String, Double> entry : movieRatingSumMap.entrySet()) {
+                String movieId = entry.getKey();
+                double movieRatingAVG = entry.getValue() / movieRatingCountMap.get(movieId);
+                if(movieRatingAVG >= ratingsAVG) {
+                    Movie movie = movieRepository.findByMovieid(movieId);
+                    if(movie != null) {
+                        MByRAVG.add(movie);
+                    }
+                }
             }
         }
         return MByRAVG;
     }
-
+        
 }
+
