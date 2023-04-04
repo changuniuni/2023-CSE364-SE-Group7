@@ -1,11 +1,15 @@
 package milestone1.movie;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/ratings/{ratingsAVG}")
@@ -28,7 +32,7 @@ public class RatingController {
             Map<String, Double> movieRatingSumMap = new HashMap<>();
             Map<String, Integer> movieRatingCountMap = new HashMap<>();
             for(Rating rating : ratings) {
-                String movieId = rating.getid();
+                String movieId = rating.getMovieId();
                 double score = rating.getRating();
                 if(!movieRatingSumMap.containsKey(movieId)) {
                     movieRatingSumMap.put(movieId, score);
@@ -42,7 +46,7 @@ public class RatingController {
                 String movieId = entry.getKey();
                 double movieRatingAVG = entry.getValue() / movieRatingCountMap.get(movieId);
                 if(movieRatingAVG >= ratingsAVG) {
-                    Movie movie = movieRepository.findByMovieid(movieId);
+                    Movie movie = movieRepository.findById(movieId).orElse(null);
                     if(movie != null) {
                         MByRAVG.add(movie);
                     }
