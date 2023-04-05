@@ -44,7 +44,7 @@ mvn spring-boot:run
 ```bash
 curl -X GET http://localhost:8080/employees 
 ```
-we can get the following output.
+We can get the following output.
 <img src="https://user-images.githubusercontent.com/48553632/229964494-bdb6dab2-fabc-4447-905b-0c6ea85c3306.png">
 
 
@@ -62,6 +62,7 @@ We can confirm that the new element is added correctly.<br></br>
 curl -X PUT http://localhost:8080/employees/id -H 'Content-Type: application/json' -d '{"name":"Test_people","role":"Grad student"}'
 ```
 ***Please note that "id" should be replaced with the id of the element that we want to modify.***
+<br></br>
 
 Then we can see the following result.
 <img width="790" alt="스크린샷 2023-04-05 오전 10 49 35" src="https://user-images.githubusercontent.com/48553632/229965732-e41dddeb-1614-41ee-92f7-33e93474181b.png">
@@ -71,11 +72,12 @@ Then we can see the following result.
 curl -X DELETE http://localhost:8080/employees/id
 ```
 ***Please note that "id" should be replaced with the id of the element that we want to delete.***
+<br></br>
 Then we can see the following result.
 <img width="1493" alt="image" src="https://user-images.githubusercontent.com/48553632/229966245-b1d46a2c-7071-4f83-bd39-3bdcc1b2f014.png">
 <br></br>
 
-**Basic REST API implementation is done for PART 2**
+#### Basic REST API implementation is done for PART 2
 - - -
 ### Guilelined for running the code(Part 3).
 #### 1. First, go inside to the "PARTIII" directory.
