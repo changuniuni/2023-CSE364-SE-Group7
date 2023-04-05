@@ -2,9 +2,8 @@ package milestone1.movie;
 
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
 import java.io.File;

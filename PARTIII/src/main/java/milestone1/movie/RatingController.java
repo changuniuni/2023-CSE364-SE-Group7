@@ -9,10 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import java.util.stream.Collectors;
+
 
 
 @RestController
-@RequestMapping("/ratings/{ratingsAVG}")
+@RequestMapping
 public class RatingController {
     @Autowired
     private RatingRepository ratingRepository;
@@ -20,7 +25,7 @@ public class RatingController {
     @Autowired
     private MovieRepository movieRepository;
 
-    @GetMapping
+    @GetMapping("/ratings/{ratingsAVG}")
     public List<Movie> getMovieByRatingsAVG(@PathVariable Double ratingsAVG) {
         List<Movie> MByRAVG = new ArrayList<>();
         if (ratingsAVG < 1 || ratingsAVG > 5) {
@@ -52,9 +57,15 @@ public class RatingController {
                     }
                 }
             }
-        }
+        }/* 
+        List<EntityModel<Movie>> RESTMVs = MByRAVG.stream()
+            .map(movie -> EntityModel.of(movie,
+                linkTo(methodOn(RatingController.class).findById(movie.getId())).withSelfRel(),
+                linkTo(methodOn(RatingController.class).findgetMovieByRatingsAVG()).withRel("ratings")))
+            .collect(Collectors.toList());
+        return CollectionModel.of(RESTMVs, linkTo(methodOn(RatingController.class).getMovieByRatingsAVG()).withSelfRel());
+        */
         return MByRAVG;
     }
         
 }
-
