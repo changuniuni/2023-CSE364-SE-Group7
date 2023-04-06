@@ -8,11 +8,11 @@
 		<version>3.0.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>gruop7</groupId>
-	<artifactId>payroll</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>payroll</name>
-	<description>Demo project for Spring Boot</description>
+   <groupId>gruop7</groupId>
+   <artifactId>milestone1</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+   <name>milestone1</name>
+   <description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
