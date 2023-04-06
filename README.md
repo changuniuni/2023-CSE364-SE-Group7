@@ -44,7 +44,7 @@ We can get the following output.
 
 #### 2. And if we add new element who has name "Test_people" and has a role of "Undergrad stuent" by using following command,
 ```bash
-curl -X POST http://localhost:8080/employees -H 'Content-Type: application/json' -d '{"name":"Test_people","role":"Undergrad stuent"}'
+curl -X POST http://localhost:8080/employees -H 'Content-Type: application/json' -d '{"name":"Test_people","role":"Undergrad student"}'
 ```
 We can confirm that the new element is added correctly.<br></br>
 <img width="826" alt="스크린샷 2023-04-05 오전 10 46 29" src="https://user-images.githubusercontent.com/48553632/229964934-6a2f13a3-1604-4048-935d-c5c0aee49c0f.png">
