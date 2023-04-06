@@ -33,15 +33,8 @@ bash run.sh
 ```
 
 ### Guilelined for running the code(Part 2).
-#### 1. First, go inside to the "2023-CSE364-SE-Group7" directory.
-```bash
-cd 2023-CSE364-SE-Group7
-```
-#### 2. Then, run the following command.
-```bash
-mvn spring-boot:run
-```
-#### 3. To check the implementation of REST APIs, if we use the following command, 
+
+#### 1. To check the implementation of REST APIs, if we use the following command, 
 ```bash
 curl -X GET http://localhost:8080/employees 
 ```
@@ -49,7 +42,7 @@ We can get the following output.
 <img src="https://user-images.githubusercontent.com/48553632/229964494-bdb6dab2-fabc-4447-905b-0c6ea85c3306.png">
 
 
-#### 4. And if we add new element who has name "Test_people" and has a role of "Undergrad stuent" by using following command,
+#### 2. And if we add new element who has name "Test_people" and has a role of "Undergrad stuent" by using following command,
 ```bash
 curl -X POST http://localhost:8080/employees -H 'Content-Type: application/json' -d '{"name":"Test_people","role":"Undergrad stuent"}'
 ```
@@ -58,7 +51,7 @@ We can confirm that the new element is added correctly.<br></br>
 
 
 
-#### 5. If we want to modify the element with another role "Grad student", we can use the following command.
+#### 3. If we want to modify the element with another role "Grad student", we can use the following command.
 ```bash
 curl -X PUT http://localhost:8080/employees/id -H 'Content-Type: application/json' -d '{"name":"Test_people","role":"Grad student"}'
 ```
@@ -68,7 +61,7 @@ curl -X PUT http://localhost:8080/employees/id -H 'Content-Type: application/jso
 Then we can see the following result.
 <img width="790" alt="스크린샷 2023-04-05 오전 10 49 35" src="https://user-images.githubusercontent.com/48553632/229965732-e41dddeb-1614-41ee-92f7-33e93474181b.png">
   
-#### 6. If we want to delete the element, we can use the following command.
+#### 4. If we want to delete the element, we can use the following command.
 ```bash
 curl -X DELETE http://localhost:8080/employees/id
 ```
