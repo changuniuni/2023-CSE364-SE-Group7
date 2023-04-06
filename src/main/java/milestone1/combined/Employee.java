@@ -1,5 +1,5 @@
 package milestone1.combined;
-
+ 
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "employees")
 class Employee {
-  @Id 
+  @Id
   private String id;
   private String name;
   private String role;
