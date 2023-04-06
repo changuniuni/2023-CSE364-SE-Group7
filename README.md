@@ -39,7 +39,9 @@ bash run.sh
 curl -X GET http://localhost:8080/employees 
 ```
 We can get the following output.
-<img src="https://user-images.githubusercontent.com/48553632/229964494-bdb6dab2-fabc-4447-905b-0c6ea85c3306.png">
+<img src="https://user-images.githubusercontent.com/48553632/229964494-bdb6dab2-fabc-4447-905b-0c6ea85c3306.png">  
+![KakaoTalk_Photo_2023-04-06-13-15-59-1](https://user-images.githubusercontent.com/48553632/230270925-7beb1395-feec-4a78-b169-0d93d0444450.png)
+  
 
 
 #### 2. And if we add new element who has name "Test_people" and has a role of "Undergrad stuent" by using following command,
@@ -48,6 +50,8 @@ curl -X POST http://localhost:8080/employees -H 'Content-Type: application/json'
 ```
 We can confirm that the new element is added correctly.<br></br>
 <img width="826" alt="스크린샷 2023-04-05 오전 10 46 29" src="https://user-images.githubusercontent.com/48553632/229964934-6a2f13a3-1604-4048-935d-c5c0aee49c0f.png">
+  
+  ![KakaoTalk_Photo_2023-04-06-13-15-59-2](https://user-images.githubusercontent.com/48553632/230270999-605a5ffb-6948-4792-b9da-602536bbf31a.png)
 
 
 
@@ -59,7 +63,10 @@ curl -X PUT http://localhost:8080/employees/id -H 'Content-Type: application/jso
 <br></br>
 
 Then we can see the following result.
-<img width="790" alt="스크린샷 2023-04-05 오전 10 49 35" src="https://user-images.githubusercontent.com/48553632/229965732-e41dddeb-1614-41ee-92f7-33e93474181b.png">
+<img width="790" alt="스크린샷 2023-04-05 오전 10 49 35" src="https://user-images.githubusercontent.com/48553632/229965732-e41dddeb-1614-41ee-92f7-33e93474181b.png">  
+ ![KakaoTalk_Photo_2023-04-06-13-15-59-3](https://user-images.githubusercontent.com/48553632/230271040-6f400d82-f7de-4845-9ef4-f63deb01e673.png)
+
+
   
 #### 4. If we want to delete the element, we can use the following command.
 ```bash
@@ -68,7 +75,9 @@ curl -X DELETE http://localhost:8080/employees/id
 ***Please note that "id" should be replaced with the id of the element that we want to delete.***
 <br></br>
 Then we can see the following result.
-<img width="1493" alt="image" src="https://user-images.githubusercontent.com/48553632/229966245-b1d46a2c-7071-4f83-bd39-3bdcc1b2f014.png">
+<img width="1493" alt="image" src="https://user-images.githubusercontent.com/48553632/229966245-b1d46a2c-7071-4f83-bd39-3bdcc1b2f014.png">  
+![KakaoTalk_Photo_2023-04-06-13-15-59-4](https://user-images.githubusercontent.com/48553632/230271106-8956c4e0-cddf-4e96-8919-0ff88d86998b.png)
+
 <br></br>
 
 #### Basic REST API implementation is done for PART 2
