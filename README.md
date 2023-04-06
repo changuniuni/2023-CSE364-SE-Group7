@@ -24,7 +24,8 @@ docker build -t image_name .
 ```
 #### Then, run the docker image.
 ```bash
-docker run -it -p 8080:8080 image_name
+docker run -d -p 27017:27017 -p 8080:8080 image_name
+docker exec -it container_name /bin/bash
 ```
 #### Finally, inside the docker container, run the following command.
 ```bash
@@ -32,9 +33,9 @@ bash run.sh
 ```
 
 ### Guilelined for running the code(Part 2).
-#### 1. First, go inside to the "PARTII" directory.
+#### 1. First, go inside to the "2023-CSE364-SE-Group7" directory.
 ```bash
-cd 2023-CSE364-SE-Group7/PARTII
+cd 2023-CSE364-SE-Group7
 ```
 #### 2. Then, run the following command.
 ```bash
@@ -80,31 +81,21 @@ Then we can see the following result.
 #### Basic REST API implementation is done for PART 2
 - - -
 ### Guilelined for running the code(Part 3).
-#### 1. First, go inside to the "PARTIII" directory.
-```bash
-cd 2023-CSE364-SE-Group7/PARTIII
-```
-#### 2. Then, run the following command.
-```bash
-mvn spring-boot:run
-```
-If spring-boot from PART 2 is still running, please stop it first.
-
-#### 3. If we want to see the total movie list by using the following command,
+#### 1. If we want to see the total movie list by using the following command,
 ```bash
 curl -X GET http://localhost:8080/movies
 ```
 It will show the first top 20 movies.
 ![image](https://user-images.githubusercontent.com/48553632/229973289-41fef6e6-8410-495b-a812-bba0f978eb23.png)
 
-#### 4. If we want to see the movie list with average rating above 5, we can use the following command.
+#### 2. If we want to see the movie list with average rating above 5, we can use the following command.
 ```bash
 curl -X GET http://localhost:8080/ratings/5
 ```
 Then we can see the following result.
 ![스크린샷 2023-04-05 오후 2 21 41](https://user-images.githubusercontent.com/48553632/230007915-a7cc4011-f9d8-46d0-8f49-cc1963ecc810.png)
 
-#### 5. If we add new movie with id = "9999", title = "test_Movie" and genres = "Crime", we can use the following command.
+#### 3. If we add new movie with id = "9999", title = "test_Movie" and genres = "Crime", we can use the following command.
 ```bash
 curl -X POST http://localhost:8080/movies -H 'Content-Type: application/json' -d '{"id":"9999","title":"test_Movie","genres":["Crime"]}'
 ```  
@@ -115,7 +106,7 @@ Then we can see the following result.
 And we can see that the movie is added correctly.
 <img width="574" alt="image" src="https://user-images.githubusercontent.com/48553632/230009791-07107c0f-f50f-4513-b995-a56cdacb5572.png">
 
-#### 6. If we want to modify the movie with id = "9999", which has a genre of "Comedy", we can use the following command.
+#### 4. If we want to modify the movie with id = "9999", which has a genre of "Comedy", we can use the following command.
 ```bash
 curl -X PUT http://localhost:8080/movies/9999 -H 'Content-Type: application/json' -d '{"id":"9999","title":"test_Movie","genres":["Comedy"]}'
 ```
