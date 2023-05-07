@@ -1,4 +1,4 @@
-package milestone2;
+package milestone2.courses;
 
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
