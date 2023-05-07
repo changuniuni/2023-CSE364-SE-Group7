@@ -1,12 +1,12 @@
-package milestone1.combined;
+package milestone2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CombinedApplication {
+public class milestone2Application {
 
   public static void main(String... args) {
-    SpringApplication.run(CombinedApplication.class, args);
+    SpringApplication.run(milestone2Application.class, args);
   }
 }
