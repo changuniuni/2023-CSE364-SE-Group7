@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="2023-software-engineeringcse364---group-7">2023 Software Engineering(CSE364) - Group 7</h1>
+<hr>
+<h3 id="%F0%9F%91%A5-team-member">👥 Team Member</h3>
+<ul>
+<li>Changhyeon Kim (20181069)</li>
+<li>KyeongHoon Min (20191102)</li>
+<li>JunSu Lee (20191244)</li>
+</ul>
+<h3 id="%E2%9A%99%EF%B8%8F-environment-setting">⚙️ Environment Setting</h3>
+<ul>
+<li><code>Java 17</code></li>
+<li><code>JDK 17.0.6</code></li>
+<li><strong>OS</strong> : Ubuntu 22.04</li>
+<li><strong>Database</strong> : MongoDB 6.0.5</li>
+<li><strong>IDE</strong> : VS Code</li>
+<li><strong>Framework</strong> : Spring Boot 2.6.1</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%9A%A9-milestone-1">🚩 Milestone 1</h2>
+<h4 id="first-build-a-given-dockerfile">First, build a given DockerFile.</h4>
+<pre class="hljs"><code><div>docker build -t image_name . 
+</div></code></pre>
+<h4 id="then-run-the-docker-image">Then, run the docker image.</h4>
+<pre class="hljs"><code><div>docker run -d -p 27017:27017 -p 8080:8080 image_name
+docker <span class="hljs-built_in">exec</span> -it container_name /bin/bash
+</div></code></pre>
+<h4 id="finally-inside-the-docker-container-run-the-following-command">Finally, inside the docker container, run the following command.</h4>
+<pre class="hljs"><code><div>bash run.sh
+</div></code></pre>
+<h3 id="guilelined-for-running-the-codepart-2">Guilelined for running the code(Part 2).</h3>
+<h4 id="1-to-check-the-implementation-of-rest-apis-if-we-use-the-following-command">1. To check the implementation of REST APIs, if we use the following command,</h4>
+<pre class="hljs"><code><div>curl -X GET http://localhost:8080/employees 
+</div></code></pre>
+<p>We can get the following output.
+<img src="https://user-images.githubusercontent.com/48553632/229964494-bdb6dab2-fabc-4447-905b-0c6ea85c3306.png"><br>
+<img src="https://user-images.githubusercontent.com/48553632/230270925-7beb1395-feec-4a78-b169-0d93d0444450.png" alt="KakaoTalk_Photo_2023-04-06-13-15-59-1"></p>
+<h4 id="2-and-if-we-add-new-element-who-has-name-%22testpeople%22-and-has-a-role-of-%22undergrad-stuent%22-by-using-following-command">2. And if we add new element who has name &quot;Test_people&quot; and has a role of &quot;Undergrad stuent&quot; by using following command,</h4>
+<pre class="hljs"><code><div>curl -X POST http://localhost:8080/employees -H <span class="hljs-string">'Content-Type: application/json'</span> -d <span class="hljs-string">'{"name":"Test_people","role":"Undergrad student"}'</span>
+</div></code></pre>
+<p>We can confirm that the new element is added correctly.<br></br>
+<img width="826" alt="스크린샷 2023-04-05 오전 10 46 29" src="https://user-images.githubusercontent.com/48553632/229964934-6a2f13a3-1604-4048-935d-c5c0aee49c0f.png"></p>
+<p><img src="https://user-images.githubusercontent.com/48553632/230270999-605a5ffb-6948-4792-b9da-602536bbf31a.png" alt="KakaoTalk_Photo_2023-04-06-13-15-59-2"></p>
+<h4 id="3-if-we-want-to-modify-the-element-with-another-role-%22grad-student%22-we-can-use-the-following-command">3. If we want to modify the element with another role &quot;Grad student&quot;, we can use the following command.</h4>
+<pre class="hljs"><code><div>curl -X PUT http://localhost:8080/employees/id -H <span class="hljs-string">'Content-Type: application/json'</span> -d <span class="hljs-string">'{"name":"Test_people","role":"Grad student"}'</span>
+</div></code></pre>
+<p><em><strong>Please note that &quot;id&quot; should be replaced with the id of the element that we want to modify.</strong></em>
+<br></br></p>
+<p>Then we can see the following result.
+<img width="790" alt="스크린샷 2023-04-05 오전 10 49 35" src="https://user-images.githubusercontent.com/48553632/229965732-e41dddeb-1614-41ee-92f7-33e93474181b.png"><br>
+<img src="https://user-images.githubusercontent.com/48553632/230271040-6f400d82-f7de-4845-9ef4-f63deb01e673.png" alt="KakaoTalk_Photo_2023-04-06-13-15-59-3"></p>
+<h4 id="4-if-we-want-to-delete-the-element-we-can-use-the-following-command">4. If we want to delete the element, we can use the following command.</h4>
+<pre class="hljs"><code><div>curl -X DELETE http://localhost:8080/employees/id
+</div></code></pre>
+<p><em><strong>Please note that &quot;id&quot; should be replaced with the id of the element that we want to delete.</strong></em>
+<br></br>
+Then we can see the following result.
+<img width="1493" alt="image" src="https://user-images.githubusercontent.com/48553632/229966245-b1d46a2c-7071-4f83-bd39-3bdcc1b2f014.png"><br>
+<img src="https://user-images.githubusercontent.com/48553632/230271106-8956c4e0-cddf-4e96-8919-0ff88d86998b.png" alt="KakaoTalk_Photo_2023-04-06-13-15-59-4"></p>
+<p><br></br></p>
+<h4 id="basic-rest-api-implementation-is-done-for-part-2">Basic REST API implementation is done for PART 2</h4>
+<hr>
+<h3 id="guilelined-for-running-the-codepart-3">Guilelined for running the code(Part 3).</h3>
+<h4 id="1-if-we-want-to-see-the-total-movie-list-by-using-the-following-command">1. If we want to see the total movie list by using the following command,</h4>
+<pre class="hljs"><code><div>curl -X GET http://localhost:8080/movies
+</div></code></pre>
+<p>It will show the first top 20 movies.
+<img src="https://user-images.githubusercontent.com/48553632/229973289-41fef6e6-8410-495b-a812-bba0f978eb23.png" alt="image"></p>
+<h4 id="2-if-we-want-to-see-the-movie-list-with-average-rating-above-5-we-can-use-the-following-command">2. If we want to see the movie list with average rating above 5, we can use the following command.</h4>
+<pre class="hljs"><code><div>curl -X GET http://localhost:8080/ratings/5
+</div></code></pre>
+<p>Then we can see the following result.
+<img src="https://user-images.githubusercontent.com/48553632/230007915-a7cc4011-f9d8-46d0-8f49-cc1963ecc810.png" alt="스크린샷 2023-04-05 오후 2 21 41"></p>
+<h4 id="3-if-we-add-new-movie-with-id--%229999%22-title--%22testmovie%22-and-genres--%22crime%22-we-can-use-the-following-command">3. If we add new movie with id = &quot;9999&quot;, title = &quot;test_Movie&quot; and genres = &quot;Crime&quot;, we can use the following command.</h4>
+<pre class="hljs"><code><div>curl -X POST http://localhost:8080/movies -H <span class="hljs-string">'Content-Type: application/json'</span> -d <span class="hljs-string">'{"id":"9999","title":"test_Movie","genres":["Crime"]}'</span>
+</div></code></pre>
+<p><em><strong>Please note that we have to give genres with brackets.</strong></em>
+Then we can see the following result.<br>
+<img width="1725" alt="스크린샷 2023-04-05 오전 10 41 28" src="https://user-images.githubusercontent.com/48553632/230009098-f20e619b-e1e3-4e27-9103-2c2f12e0326c.png"></p>
+<p>And we can see that the movie is added correctly.
+<img width="574" alt="image" src="https://user-images.githubusercontent.com/48553632/230009791-07107c0f-f50f-4513-b995-a56cdacb5572.png"></p>
+<h4 id="4-if-we-want-to-modify-the-movie-with-id--%229999%22-which-has-a-genre-of-%22comedy%22-we-can-use-the-following-command">4. If we want to modify the movie with id = &quot;9999&quot;, which has a genre of &quot;Comedy&quot;, we can use the following command.</h4>
+<pre class="hljs"><code><div>curl -X PUT http://localhost:8080/movies/9999 -H <span class="hljs-string">'Content-Type: application/json'</span> -d <span class="hljs-string">'{"id":"9999","title":"test_Movie","genres":["Comedy"]}'</span>
+</div></code></pre>
+<p>Then we can see the following result.
+<img width="1728" alt="스크린샷 2023-04-05 오전 10 42 46" src="https://user-images.githubusercontent.com/48553632/230010115-72cb2eec-4b69-41bf-8bc5-ed3d71612a22.png">
+<br></br><br></br></p>
+<h2 id="this-is-all-for-milestone-1-implementation">This is all for Milestone 1 implementation.</h2>
+
+</body>
+</html>
