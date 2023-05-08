@@ -1,4 +1,4 @@
-package milestone2;
+package milestone2.courses;
 
 import java.util.List;
 

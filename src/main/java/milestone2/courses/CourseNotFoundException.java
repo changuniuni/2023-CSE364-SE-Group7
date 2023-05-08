@@ -1,4 +1,4 @@
-package milestone2;
+package milestone2.courses;
 
 class CourseNotFoundException extends RuntimeException {
  
