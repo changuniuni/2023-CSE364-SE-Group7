@@ -12,7 +12,7 @@ import java.io.FileReader;
 
 
 @Component
-public class DataLoader {
+public class CourseDataLoader {
 
     @Autowired
     private CourseRepository courseRepository;
@@ -31,7 +31,6 @@ public class DataLoader {
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split("\t");
-                print();
                 Course course = new Course(data[0], data[1], data[2], data[3], data[4].split("\\|"), data[5], data[6], data[7]);
                 courseRepository.save(course);
             }
