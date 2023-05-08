@@ -1,6 +1,8 @@
 package milestone2.labs;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +92,16 @@ class LabController {
     repository.deleteById(id);
   
     return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/labs/search/{findarea}")
+  CollectionModel<EntityModel<Lab>> AreaSearch(@PathVariable String findarea) {
+    List<EntityModel<Lab>> AreaLabs = repository.findAll()
+      .stream()
+      .filter(lab -> new ArrayList<>(Arrays.asList(lab.getArea())).contains(findarea))
+      .map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(AreaLabs, linkTo(methodOn(LabController.class).all()).withSelfRel());
   }
 }

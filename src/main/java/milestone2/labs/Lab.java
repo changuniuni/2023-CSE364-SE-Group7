@@ -86,12 +86,12 @@ class Lab {
     return Objects.equals(this.id, lab.id) && Objects.equals(this.name, lab.name)
         && Objects.equals(this.area, lab.area) && Objects.equals(this.topic, lab.topic)
         && Objects.equals(this.desc, lab.desc) && Objects.equals(this.email, lab.email)
-        && Objects.equals(this.office, lab.office) && Objects.equals(this.desc, lab.desc);
+        && Objects.equals(this.office, lab.office);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.name, this.area, this.topic, this.desc, this.email, this.office, this.desc);
+    return Objects.hash(this.id, this.name, this.area, this.topic, this.desc, this.email, this.office);
   }
 
   @Override

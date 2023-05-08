@@ -16,8 +16,9 @@ class Course {
   private String acad_year;
   private String type;
   private String desc;
+  private String count;
 
-  Course(String id, String code, String title, String mandatory, String[] prereq, String acad_year, String type, String desc) {
+  Course(String id, String code, String title, String mandatory, String[] prereq, String acad_year, String type, String desc, String count) {
     this.id = id;
     this.code = code;
     this.title = title;
@@ -26,6 +27,7 @@ class Course {
     this.acad_year = acad_year;
     this.type = type;
     this.desc = desc;
+    this.count = count;
   }
 
   public String getId() {
@@ -57,10 +59,10 @@ class Course {
   }
 
   public String[] getPrereq() {
-        return prereq;
+    return prereq;
   }
   public void setPrereq(String[] prereq) {
-        this.prereq = prereq;
+    this.prereq = prereq;
   }
 
   public String getAcadYear() {
@@ -84,9 +86,15 @@ class Course {
     this.desc = desc;
   }
 
+  public String getCount() {
+    return this.count;
+  }
+  public void setCount(String count) {
+    this.count = count;
+  }
+
   @Override
   public boolean equals(Object o) {
-
     if (this == o)
       return true;
     if (!(o instanceof Course))
@@ -95,18 +103,19 @@ class Course {
     return Objects.equals(this.id, course.id) && Objects.equals(this.code, course.code)
         && Objects.equals(this.title, course.title) && Objects.equals(this.mandatory, course.mandatory)
         && Objects.equals(this.prereq, course.prereq) && Objects.equals(this.acad_year, course.acad_year)
-        && Objects.equals(this.type, course.type) && Objects.equals(this.desc, course.desc);
+        && Objects.equals(this.type, course.type) && Objects.equals(this.desc, course.desc)
+        && Objects.equals(this.count, course.count);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.code, this.title, this.mandatory, this.prereq, this.acad_year, this.type, this.desc);
+    return Objects.hash(this.id, this.code, this.title, this.mandatory, this.prereq, this.acad_year, this.type, this.desc, this.count);
   }
 
   @Override
   public String toString() {
     return "Course{" + "id=" + this.id + ", code='" + this.code + '\'' + ", title='" + this.title + '\'' + 
     ", mandatory='" + this.mandatory + '\'' + ", prereq='" + this.prereq + '\'' + ", acad_year='" + this.acad_year + '\'' + 
-    ", type='" + this.type + '\'' + ", desc='" + this.desc + '\'' + '}';
+    ", type='" + this.type + '\'' + ", desc='" + this.desc + '\'' + ", count='" + this.count + '\'' + '}';
   }
 }
