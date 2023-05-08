@@ -1,7 +1,8 @@
 package milestone2.courses;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.hateoas.IanaLinkRelations;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import java.util.stream.Collectors;
+
 
 @RestController
 class CourseController {
@@ -23,7 +25,6 @@ class CourseController {
     this.repository = repository;
     this.assembler = assembler;
   }
-
 
   // Aggregate root
   // tag::get-aggregate-root[]
@@ -49,7 +50,6 @@ class CourseController {
   }
 
   // Single item
-  
   @GetMapping("/courses/{id}")
   EntityModel<Course> one(@PathVariable String id) {
 
@@ -71,6 +71,7 @@ class CourseController {
           course.setAcadYear(newCourse.getAcadYear());
           course.setType(newCourse.getType());
           course.setDesc(newCourse.getDesc());
+          course.setCount(newCourse.getCount());
           return repository.save(course);
         })
         .orElseGet(() -> {
@@ -91,5 +92,16 @@ class CourseController {
     repository.deleteById(id);
   
     return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/courses/year/{acadYear}")
+  CollectionModel<EntityModel<Course>> AreaSearch(@PathVariable String acadYear) {
+    List<EntityModel<Course>> CourseYear = repository.findAll()
+      .stream()
+      .filter(course -> new ArrayList<>(Arrays.asList(course.getAcadYear())).contains(acadYear))
+      .map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
   }
 }
