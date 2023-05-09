@@ -99,7 +99,14 @@ class LabController {
   CollectionModel<EntityModel<Lab>> AreaSearch(@PathVariable String findarea) {
     List<EntityModel<Lab>> AreaLabs = repository.findAll()
       .stream()
-      .filter(lab -> new ArrayList<>(Arrays.asList(lab.getArea())).contains(findarea))
+      .filter(lab -> {
+        for(String area : lab.getArea()){
+          if(area.toLowerCase().indexOf(findarea.toLowerCase())>= 0)
+            return true;
+        }
+        return false;
+      })
+      //new ArrayList<>(Arrays.asList(lab.getArea())).contains(findarea))
       .map(assembler::toModel)
       .collect(Collectors.toList());
     
