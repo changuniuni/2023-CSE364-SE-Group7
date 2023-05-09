@@ -69,6 +69,7 @@ class CourseController {
           course.setMandatory(newCourse.getMandatory());
           course.setPrereq(newCourse.getPrereq());
           course.setAcadYear(newCourse.getAcadYear());
+          course.setOpenSmes(newCourse.getOpenSmes());
           course.setType(newCourse.getType());
           course.setDesc(newCourse.getDesc());
           course.setCount(newCourse.getCount());
@@ -94,11 +95,16 @@ class CourseController {
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("/courses/year/{acadYear}")
+  @GetMapping("/courses/{acadYear}")
   CollectionModel<EntityModel<Course>> AreaSearch(@PathVariable String acadYear) {
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
-      .filter(course -> new ArrayList<>(Arrays.asList(course.getAcadYear())).contains(acadYear))
+      .filter(course -> {
+        String findYear = course.getAcadYear();
+        if(findYear.toLowerCase().indexOf(acadYear.toLowerCase())>= 0)
+          return true;
+        return false;
+      })
       .map(assembler::toModel)
       .collect(Collectors.toList());
     
