@@ -1,8 +1,8 @@
-package milestone2.labs;
+package milestone2.professors;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  
-public interface LabRepository extends MongoRepository<Lab, String> {
+public interface ProfessorRepository extends MongoRepository<Professor, String> {
 
 }

@@ -1,4 +1,4 @@
-package milestone2.labs;
+package milestone2.professors;
  
 import java.util.Objects;
 
@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "labs")
-class Lab {
+class Professor {
   @Id
   private String id;
   private String name;
@@ -16,7 +16,7 @@ class Lab {
   private String email;
   private String office;
 
-  Lab(String id, String name, String[] area, String topic, String desc, String email, String office) {
+  Professor(String id, String name, String[] area, String topic, String desc, String email, String office) {
     this.id = id;
     this.name = name;
     this.area = area;
@@ -80,13 +80,13 @@ class Lab {
 
     if (this == o)
       return true;
-    if (!(o instanceof Lab))
+    if (!(o instanceof Professor))
       return false;
-    Lab lab = (Lab) o;
-    return Objects.equals(this.id, lab.id) && Objects.equals(this.name, lab.name)
-        && Objects.equals(this.area, lab.area) && Objects.equals(this.topic, lab.topic)
-        && Objects.equals(this.desc, lab.desc) && Objects.equals(this.email, lab.email)
-        && Objects.equals(this.office, lab.office);
+    Professor professor = (Professor) o;
+    return Objects.equals(this.id, professor.id) && Objects.equals(this.name, professor.name)
+        && Objects.equals(this.area, professor.area) && Objects.equals(this.topic, professor.topic)
+        && Objects.equals(this.desc, professor.desc) && Objects.equals(this.email, professor.email)
+        && Objects.equals(this.office, professor.office);
   }
 
   @Override
@@ -96,7 +96,7 @@ class Lab {
 
   @Override
   public String toString() {
-    return "Lab{" + "id=" + this.id + ", name='" + this.name + '\'' + ", area='" + this.area + '\'' + 
+    return "Professor{" + "id=" + this.id + ", name='" + this.name + '\'' + ", area='" + this.area + '\'' + 
     ", topic='" + this.topic + '\'' + ", desc='" + this.desc + '\'' + ", email='" + this.email + '\'' + 
     ", office='" + this.office + '\'' + '}';
   }
