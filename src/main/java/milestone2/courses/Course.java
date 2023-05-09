@@ -32,10 +32,10 @@ class Course {
     this.count = count;
   }
 
-  public String getId() {
+  public String getCourseId() {
     return this.id;
   }
-  public void setId(String id) {
+  public void setCourseId(String id) {
     this.id = id;
   }
 

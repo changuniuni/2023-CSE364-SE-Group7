@@ -3,6 +3,8 @@ package milestone2.courses;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.hateoas.IanaLinkRelations;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import java.util.stream.Collectors;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -76,7 +80,7 @@ class CourseController {
           return repository.save(course);
         })
         .orElseGet(() -> {
-          newCourse.setId(id);
+          newCourse.setCourseId(id);
           return repository.save(newCourse);
         });
   
@@ -95,13 +99,13 @@ class CourseController {
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("/courses/{acadYear}")
-  CollectionModel<EntityModel<Course>> AreaSearch(@PathVariable String acadYear) {
+  @GetMapping("/courses/academic/{acadYear}")
+  CollectionModel<EntityModel<Course>> YearSearch(@PathVariable String acadYear) {
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
       .filter(course -> {
-        String findYear = course.getAcadYear();
-        if(findYear.toLowerCase().indexOf(acadYear.toLowerCase())>= 0)
+        String findYear = course.getAcadYear().toLowerCase();
+        if(findYear.indexOf(acadYear.toLowerCase()) >= 0)
           return true;
         return false;
       })
@@ -110,4 +114,60 @@ class CourseController {
     
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
   }
+
+  @GetMapping("/courses/academic/{acadYear}/{openSmes}")
+  CollectionModel<EntityModel<Course>> YearSmesSearch(@PathVariable String acadYear, @PathVariable int openSmes) {
+    if (openSmes < 0 || openSmes > 2) {
+      throw new ResponseStatusException(
+        HttpStatus.BAD_REQUEST, "Invalid Semester value (0~2 expected).");
+    }
+    List<EntityModel<Course>> CourseYear = repository.findAll()
+      .stream()
+      .filter(course -> {
+        String findYear = course.getAcadYear().toLowerCase();
+        int findSmes = course.getOpenSmes();
+        if(findYear.indexOf(acadYear.toLowerCase()) >= 0 && findSmes + openSmes != 3)
+          return true;
+        return false;
+      })
+      .map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
+  }
+/*
+  @GetMapping("/tendencies")
+  CollectionModel<EntityModel<Course>> TendencySearch() {
+
+    List<EntityModel<Course>> courses = CourseRepository.findAll();
+    List<EntityModel<Course>> tendencyList = new ArrayList<>();
+    Map<String, Integer> tendenciesMap = new HashMap<>();
+    int bestcourse = 0;
+    for(Course courseAll : courses) {
+      String courseId = courseAll.getCourseId();
+      int courseCount = courseAll.getCount();
+      if(bestcourse < 5) {
+        bestcourse += 1;
+      } else {
+        String deleteId = "";
+        int deleteCount = 999;
+        for(Map.Entry<String, Integer> deleteTarget : tendenciesMap.entrySet()) {
+          if(deleteCount > deleteTarget.getValue()) {
+            deleteId = deleteTarget.getKey();
+            deleteCount = deleteTarget.getValue();
+          }
+        }
+        tendenciesMap.remove(deleteId);
+      }
+      tendenciesMap.put(courseId, courseCount);
+    }
+
+    for(Map.Entry<String, Integer> returnTarget : tendenciesMap.entrySet()) {
+      String addCourseId = returnTarget.getKey();
+      Course addCourse = CourseRepository.findById(addCourseId).orElse(null);
+      if(addCourse != null) {tendencyList.add(addCourse);}
+    }
+    
+    return tendencyList;
+  }*/
 }
