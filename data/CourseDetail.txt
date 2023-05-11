@@ -23,6 +23,7 @@
 1469	CSE469	Introduction to Robotics	Elective	1331|2203|2112	Senior	1	Software	Fundamental skills for high-fi grpahical and visual UI prototyping.	17
 1471	CSE471	Computer Graphics	Elective	1221|1331	Senior	1	Graphics	Displaying 3D objects and write algorithms for better graphics.	7
 1472	CSE472	Computer Vision	Elective	1221|2203|3111	Senior	2	AI	Detailed understandings of deep learning architectures.	8
-3112	ITP112	Discrete Mathematics	Required	0	Sophomore	1	Math	Learning discrete mathematics for Computer Science.	50
-3117	ITP117	Introduction to AI Programming II	Required	0	Freshman	2	Basic	Learning concpts of AI using Python libraries.	55
-2203	MTH203	Applied Linear Algebra	Required	0	Sophomore	0	Math	Learning the basic of linear algebra and its applications.	43
+2111	ITP111	Probability and Random Process	Elective	0	Sophomore	0	Math	Mathematics about probability and random process.	49
+2112	ITP112	Discrete Mathematics	Required	0	Sophomore	1	Math	Learning discrete mathematics for Computer Science.	50
+2117	ITP117	Introduction to AI Programming II	Required	0	Freshman	2	Basic	Learning concpts of AI using Python libraries.	55
+3203	MTH203	Applied Linear Algebra	Required	0	Sophomore	0	Math	Learning the basic of linear algebra and its applications.	43

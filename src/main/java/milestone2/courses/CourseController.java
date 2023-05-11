@@ -33,10 +33,10 @@ class CourseController {
   // Aggregate root
   // tag::get-aggregate-root[]
   @GetMapping("/courses")
-  CollectionModel<EntityModel<Course>> all() {
+  CollectionModel<EntityModel<Course>> CourseShowAll() {
  
-    List<EntityModel<Course>> courses = repository.findAll().stream() //
-        .map(assembler::toModel) //
+    List<EntityModel<Course>> courses = repository.findAll().stream()
+        .map(assembler::toModel)
         .collect(Collectors.toList());
 
     return CollectionModel.of(courses, linkTo(methodOn(CourseController.class).all()).withSelfRel());
@@ -44,7 +44,7 @@ class CourseController {
   // end::get-aggregate-root[]
 
   @PostMapping("/courses")
-  ResponseEntity<?> newCourse(@RequestBody Course newCourse) {
+  ResponseEntity<?> CourseNew(@RequestBody Course newCourse) {
 
     EntityModel<Course> entityModel = assembler.toModel(repository.save(newCourse));
   
@@ -55,18 +55,18 @@ class CourseController {
 
   // Single item
   @GetMapping("/courses/{id}")
-  EntityModel<Course> one(@PathVariable String id) {
+  EntityModel<Course> CourseShowOne(@PathVariable String id) {
 
-    Course course = repository.findById(id) //
+    Course course = repository.findById(id)
         .orElseThrow(() -> new CourseNotFoundException(id));
   
     return assembler.toModel(course);
   }
 
   @PutMapping("/courses/{id}")
-  ResponseEntity<?> replaceCourse(@RequestBody Course newCourse, @PathVariable String id) {
+  ResponseEntity<?> CourseReplace(@RequestBody Course newCourse, @PathVariable String id) {
 
-    Course updatedCourse = repository.findById(id) //
+    Course updatedCourse = repository.findById(id)
         .map(course -> {
           course.setCode(newCourse.getCode());
           course.setTitle(newCourse.getTitle());
@@ -92,7 +92,7 @@ class CourseController {
   }
 
   @DeleteMapping("/courses/{id}")
-  ResponseEntity<?> deleteCourse(@PathVariable String id) {
+  ResponseEntity<?> CourseDelete(@PathVariable String id) {
 
     repository.deleteById(id);
   
@@ -100,7 +100,14 @@ class CourseController {
   }
 
   @GetMapping("/courses/academic/{acadYear}")
-  CollectionModel<EntityModel<Course>> YearSearch(@PathVariable String acadYear) {
+  CollectionModel<EntityModel<Course>> CourseSearchYear(@PathVariable String acadYear) {
+
+    if (acadYear.toLowerCase() == "freshman" || acadYear.toLowerCase() == "sophomore" ||
+    acadYear.toLowerCase() == "junior" || acadYear.toLowerCase() == "senior") {
+      throw new ResponseStatusException(
+        HttpStatus.BAD_REQUEST, "Invalid AcademicYear value (try freshman/sophomore/junior/senior).");
+    }
+
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
       .filter(course -> {
@@ -116,11 +123,18 @@ class CourseController {
   }
 
   @GetMapping("/courses/academic/{acadYear}/{openSmes}")
-  CollectionModel<EntityModel<Course>> YearSmesSearch(@PathVariable String acadYear, @PathVariable int openSmes) {
+  CollectionModel<EntityModel<Course>> CourseSearchYearSmes(@PathVariable String acadYear, @PathVariable int openSmes) {
+
+    if (acadYear.toLowerCase() == "freshman" || acadYear.toLowerCase() == "sophomore" ||
+    acadYear.toLowerCase() == "junior" || acadYear.toLowerCase() == "senior") {
+      throw new ResponseStatusException(
+        HttpStatus.BAD_REQUEST, "Invalid AcademicYear value (try freshman/sophomore/junior/senior).");
+    }
     if (openSmes < 0 || openSmes > 2) {
       throw new ResponseStatusException(
         HttpStatus.BAD_REQUEST, "Invalid Semester value (0~2 expected).");
     }
+
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
       .filter(course -> {
@@ -135,39 +149,22 @@ class CourseController {
     
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
   }
-/*
-  @GetMapping("/tendencies")
-  CollectionModel<EntityModel<Course>> TendencySearch() {
-
-    List<EntityModel<Course>> courses = CourseRepository.findAll();
-    List<EntityModel<Course>> tendencyList = new ArrayList<>();
-    Map<String, Integer> tendenciesMap = new HashMap<>();
-    int bestcourse = 0;
-    for(Course courseAll : courses) {
-      String courseId = courseAll.getCourseId();
-      int courseCount = courseAll.getCount();
-      if(bestcourse < 5) {
-        bestcourse += 1;
-      } else {
-        String deleteId = "";
-        int deleteCount = 999;
-        for(Map.Entry<String, Integer> deleteTarget : tendenciesMap.entrySet()) {
-          if(deleteCount > deleteTarget.getValue()) {
-            deleteId = deleteTarget.getKey();
-            deleteCount = deleteTarget.getValue();
-          }
-        }
-        tendenciesMap.remove(deleteId);
-      }
-      tendenciesMap.put(courseId, courseCount);
-    }
-
-    for(Map.Entry<String, Integer> returnTarget : tendenciesMap.entrySet()) {
-      String addCourseId = returnTarget.getKey();
-      Course addCourse = CourseRepository.findById(addCourseId).orElse(null);
-      if(addCourse != null) {tendencyList.add(addCourse);}
-    }
+  /*
+  @GetMapping("/courses/tendency")
+  CollectionModel<EntityModel<Course>> CourseSearchTendency() {
     
-    return tendencyList;
+    List<EntityModel<Course>> CourseYear = repository.findAll()
+      .stream()
+      .filter(course -> {
+        String findYear = course.getAcadYear().toLowerCase();
+        int findSmes = course.getOpenSmes();
+        if(findYear.indexOf(acadYear.toLowerCase()) >= 0 && findSmes + openSmes != 3)
+          return true;
+        return false;
+      })
+      .map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
   }*/
 }
