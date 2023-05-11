@@ -15,7 +15,7 @@ class ProfessorModelAssembler implements RepresentationModelAssembler<Professor,
   public EntityModel<Professor> toModel(Professor professor) {
 
     return EntityModel.of(professor, //
-        linkTo(methodOn(ProfessorController.class).one(professor.getId())).withSelfRel(),
+        linkTo(methodOn(ProfessorController.class).searchPhone(professor.getId())).withSelfRel(),
         linkTo(methodOn(ProfessorController.class).all()).withRel("professors"));
   }
 }

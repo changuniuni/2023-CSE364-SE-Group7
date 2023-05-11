@@ -51,14 +51,15 @@ class ProfessorController {
 
   // Single item
   
-  @GetMapping("/professors/{id}")
-  EntityModel<Professor> one(@PathVariable String id) {
+  @GetMapping("/professors/search/phone/{phone}")
+  EntityModel<Professor> searchPhone(@PathVariable String phone) {
 
-    Professor professor = repository.findById(id) //
-        .orElseThrow(() -> new ProfessorNotFoundException(id));
+    Professor professor = repository.findById(phone) //
+        .orElseThrow(() -> new ProfessorNotFoundException(phone));
   
     return assembler.toModel(professor);
   }
+
 
   @PutMapping("/professors/{id}")
   ResponseEntity<?> replaceProfessor(@RequestBody Professor newProfessor, @PathVariable String id) {
@@ -94,7 +95,7 @@ class ProfessorController {
   }
 
   @GetMapping("/professors/search/area/{findarea}")
-  CollectionModel<EntityModel<Professor>> AreaSearch(@PathVariable String findarea) {
+  CollectionModel<EntityModel<Professor>> searchArea(@PathVariable String findarea) {
     List<EntityModel<Professor>> AreaProfessors = repository.findAll()
       .stream()
       .filter(professor -> {
@@ -112,7 +113,7 @@ class ProfessorController {
   }
 
   @GetMapping("/professors/search/name/{findname}")
-  CollectionModel<EntityModel<Professor>> AreaName(@PathVariable String findname) {
+  CollectionModel<EntityModel<Professor>> searchaName(@PathVariable String findname) {
     List<EntityModel<Professor>> NameProfessors = repository.findAll()
       .stream()
       .filter(professor -> {
@@ -129,7 +130,7 @@ class ProfessorController {
   }
 
   @GetMapping("/professors/search/topic/{findtopic}")
-  CollectionModel<EntityModel<Professor>> AreaTopic(@PathVariable String findtopic) {
+  CollectionModel<EntityModel<Professor>> searchTopic(@PathVariable String findtopic) {
     List<EntityModel<Professor>> TopicProfessors = repository.findAll()
       .stream()
       .filter(professor -> {

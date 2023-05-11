@@ -15,8 +15,9 @@ class Professor {
   private String desc;
   private String email;
   private String office;
+  private String phone;
 
-  Professor(String id, String name, String[] area, String topic, String desc, String email, String office) {
+  Professor(String id, String name, String[] area, String topic, String desc, String email, String office, String phone) {
     this.id = id;
     this.name = name;
     this.area = area;
@@ -24,6 +25,7 @@ class Professor {
     this.desc = desc;
     this.email = email;
     this.office = office;
+    this.phone = phone;
   }
 
   public String getId() {
@@ -75,6 +77,13 @@ class Professor {
     this.office = office;
   }
 
+  public String getPhone() {
+    return this.phone;
+  }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
   @Override
   public boolean equals(Object o) {
 
@@ -86,18 +95,18 @@ class Professor {
     return Objects.equals(this.id, professor.id) && Objects.equals(this.name, professor.name)
         && Objects.equals(this.area, professor.area) && Objects.equals(this.topic, professor.topic)
         && Objects.equals(this.desc, professor.desc) && Objects.equals(this.email, professor.email)
-        && Objects.equals(this.office, professor.office);
+        && Objects.equals(this.office, professor.office) && Objects.equals(this.phone, professor.phone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.name, this.area, this.topic, this.desc, this.email, this.office);
+    return Objects.hash(this.id, this.name, this.area, this.topic, this.desc, this.email, this.office, this.phone);
   }
 
   @Override
   public String toString() {
     return "Professor{" + "id=" + this.id + ", name='" + this.name + '\'' + ", area='" + this.area + '\'' + 
     ", topic='" + this.topic + '\'' + ", desc='" + this.desc + '\'' + ", email='" + this.email + '\'' + 
-    ", office='" + this.office + '\'' + '}';
+    ", office='" + this.office + '\'' + ", phone='" + this.phone + '\'' +'}';
   }
 }
