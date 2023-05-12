@@ -1,4 +1,4 @@
-package milestone2.labs;
+package milestone2.professors;
 
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +10,16 @@ import java.io.FileReader;
 
 
 @Component
-public class LabDataLoader {
+public class ProfessorDataLoader {
 
     @Autowired
-    private LabRepository labRepository;
+    private ProfessorRepository professorRepository;
 
     @PostConstruct
     public void loadData() {
-        String labFile = "data/CSE_LAB.txt";
+        String professorFile = "data/CSE_LAB.txt";
 
-        readDataFile(labFile);
+        readDataFile(professorFile);
     }
 
     private void readDataFile(String filePath) {
@@ -29,8 +29,8 @@ public class LabDataLoader {
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split("\t");
-                Lab lab = new Lab(data[0], data[1], data[2].split(", "), data[3], data[4], data[5], data[6]);
-                labRepository.save(lab);
+                Professor professor = new Professor(data[0], data[1], data[2].split(", "), data[3], data[4], data[5], data[6], "052-217-"+data[0]);
+                professorRepository.save(professor);
             }
 
         } catch (IOException e) {
