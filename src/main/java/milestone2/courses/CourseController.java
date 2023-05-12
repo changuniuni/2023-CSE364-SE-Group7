@@ -127,7 +127,6 @@ public
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
   }
 
-<<<<<<< HEAD
   // curl -X POST http://localhost:8080/users/20201111/courses/1241   
   @PostMapping("/users/{userId}/courses/{courseId}")
   ResponseEntity<?> addCourseToUser(@PathVariable String userId, @PathVariable String courseId) {
@@ -153,7 +152,6 @@ public
         .created(courseModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
         .body(courseModel);
   }
-=======
   @GetMapping("/courses/academic/{acadYear}/{openSmes}")
   CollectionModel<EntityModel<Course>> CourseSearchYearSmes(@PathVariable String acadYear, @PathVariable int openSmes) {
 
@@ -199,5 +197,4 @@ public
     
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
   }*/
->>>>>>> 2860d20f01a1fa6aa3668e2dac3a594240b7cf78
 }
