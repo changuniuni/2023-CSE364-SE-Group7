@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
-class CourseController {
+public class CourseController {
 
   private final CourseRepository repository;
 
@@ -39,7 +39,7 @@ class CourseController {
         .map(assembler::toModel)
         .collect(Collectors.toList());
 
-    return CollectionModel.of(courses, linkTo(methodOn(CourseController.class).all()).withSelfRel());
+    return CollectionModel.of(courses, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
   }
   // end::get-aggregate-root[]
 
@@ -55,6 +55,7 @@ class CourseController {
 
   // Single item
   @GetMapping("/courses/{id}")
+public
   EntityModel<Course> CourseShowOne(@PathVariable String id) {
 
     Course course = repository.findById(id)
@@ -119,7 +120,7 @@ class CourseController {
       .map(assembler::toModel)
       .collect(Collectors.toList());
     
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
   }
 
   @GetMapping("/courses/academic/{acadYear}/{openSmes}")
@@ -147,7 +148,7 @@ class CourseController {
       .map(assembler::toModel)
       .collect(Collectors.toList());
     
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
   }
   /*
   @GetMapping("/courses/tendency")

@@ -16,12 +16,15 @@ public class ProfessorDataLoader {
 
     @Autowired
     private ProfessorRepository professorRepository;
+    @Autowired
+    private CourseHistoryRepository coursehistoryRepository;
 
     @PostConstruct
     public void loadData() {
         String professorFile = "data/CSE_LAB.txt";
-
+        String courseHistory = "data/CourseHistory.txt";
         readDataFile(professorFile);
+        readCourseHistory(courseHistory);
     }
 
     private void readDataFile(String filePath) {
@@ -33,6 +36,23 @@ public class ProfessorDataLoader {
                 String[] data = line.split("\t");
                 Professor professor = new Professor(data[0], data[1], data[2].split(", "), data[3], data[4], data[5], data[6], "052-217-"+data[0]);
                 professorRepository.save(professor);
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error occurred while reading " + filePath + " file.");
+            e.printStackTrace();
+        }
+    }
+    
+    private void readCourseHistory(String filePath) {
+        String line = "";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split("\t");
+                CourseHistory course = new CourseHistory(data[0], data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]));
+                coursehistoryRepository.save(course);
             }
 
         } catch (IOException e) {
