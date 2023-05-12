@@ -190,6 +190,25 @@ public class CourseController {
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
   }
 
+  @GetMapping("/courses/next/{id}")
+  CollectionModel<EntityModel<Course>> courseNext(@PathVariable String id) {
+     
+    List<EntityModel<Course>> CourseYear = repository.findAll()
+      .stream()
+      .filter(course -> {
+        String[] findPrereq = course.getPrereq();
+        for(String targetPrereq : findPrereq) {
+          if(targetPrereq.indexOf(id) == 0)
+            return true;
+        }
+        return false;
+      })
+      .map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+  }
+
   @GetMapping("/courses/tendency")
   CollectionModel<EntityModel<Course>> courseTendency() {
     
