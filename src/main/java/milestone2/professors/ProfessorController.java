@@ -1,7 +1,6 @@
 package milestone2.professors;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
@@ -103,7 +102,6 @@ class ProfessorController {
         }
         return false;
       })
-      //new ArrayList<>(Arrays.asList(professor.getArea())).contains(findarea))
       .map(assembler::toModel)
       .collect(Collectors.toList());
     
@@ -120,7 +118,6 @@ class ProfessorController {
         
         return false;
       })
-      //new ArrayList<>(Arrays.asList(professor.getArea())).contains(findarea))
       .map(assembler::toModel)
       .collect(Collectors.toList());
     
@@ -137,7 +134,6 @@ class ProfessorController {
         
         return false;
       })
-      //new ArrayList<>(Arrays.asList(professor.getArea())).contains(findarea))
       .map(assembler::toModel)
       .collect(Collectors.toList());
     
@@ -176,8 +172,6 @@ class ProfessorController {
         
         return false;
       })
-      //new ArrayList<>(Arrays.asList(professor.getArea())).contains(findarea))
-      //.map(assembler::toModel)
       .collect(Collectors.toList());
     
       List<EntityModel<CourseHistory>> ProfessorCourse = coursehistoryrepository.findAll().stream().filter(coursehistory -> {
