@@ -1,7 +1,9 @@
 package milestone2.sign_up.controller;
 
+import milestone2.courses.Course;
 import milestone2.sign_up.model.User;
 import milestone2.sign_up.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,12 @@ public class UserController {
         return userRepository.findById(id).orElse(null);
     }
 
+    @GetMapping("/users/{id}/courses")
+    public List<Course> getCourses(@PathVariable String id) {
+        User user = userRepository.findById(id).orElse(null);
+        return userService.getCourses(user);
+    }
+
     @PutMapping("/users/{id}")
     public User updateUser(@PathVariable String id, @RequestBody User user) {
         User existingUser = userRepository.findById(id).orElse(null);
@@ -40,6 +48,8 @@ public class UserController {
         }
         return existingUser;
     }
+
+
 
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable String id) {

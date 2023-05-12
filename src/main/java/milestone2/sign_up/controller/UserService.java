@@ -1,9 +1,14 @@
 package milestone2.sign_up.controller;
 
+import java.util.List;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
+
+import milestone2.courses.Course;
+import milestone2.sign_up.model.User;
 
 @Service
 public class UserService {
@@ -12,6 +17,10 @@ public class UserService {
 
     public void deleteAllUsers() {
         mongoTemplate.getCollection("users").deleteMany(new Document());
+    }
+
+    public List<Course> getCourses(User user) {
+        return user.getCourseList();
     }
     
 }

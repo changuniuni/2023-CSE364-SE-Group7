@@ -6,8 +6,11 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import milestone2.sign_up.model.User;
+import milestone2.sign_up.repository.UserRepository;
+
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +25,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class CourseController {
 
   private final CourseRepository repository;
-
+  private final UserRepository userRepository;
   private final CourseModelAssembler assembler;
 
-  CourseController(CourseRepository repository, CourseModelAssembler assembler) {
+  CourseController(CourseRepository repository, CourseModelAssembler assembler, UserRepository userRepository) {
     this.repository = repository;
     this.assembler = assembler;
+    this.userRepository = userRepository;
   }
 
   // Aggregate root
@@ -123,6 +127,33 @@ public
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
   }
 
+<<<<<<< HEAD
+  // curl -X POST http://localhost:8080/users/20201111/courses/1241   
+  @PostMapping("/users/{userId}/courses/{courseId}")
+  ResponseEntity<?> addCourseToUser(@PathVariable String userId, @PathVariable String courseId) {
+    User user = userRepository.findById(userId).orElseThrow();
+    Course course = repository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId));
+    user.getCourseList().add(course);
+    userRepository.save(user);
+    EntityModel<Course> courseModel = assembler.toModel(course);
+    return ResponseEntity
+        .created(courseModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+        .body(courseModel);
+  }
+  // curl -X DELETE http://localhost:8080/users/20201111/courses/1221
+  @DeleteMapping("/users/{userId}/courses/{courseId}")
+  ResponseEntity<?> removeCourseFromUser(@PathVariable String userId, @PathVariable String courseId) 
+  {
+    User user = userRepository.findById(userId).orElseThrow();
+    Course course = repository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId));
+    user.deleteCourse(courseId);
+    userRepository.save(user);
+    EntityModel<Course> courseModel = assembler.toModel(course);
+    return ResponseEntity
+        .created(courseModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+        .body(courseModel);
+  }
+=======
   @GetMapping("/courses/academic/{acadYear}/{openSmes}")
   CollectionModel<EntityModel<Course>> CourseSearchYearSmes(@PathVariable String acadYear, @PathVariable int openSmes) {
 
@@ -168,4 +199,5 @@ public
     
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
   }*/
+>>>>>>> 2860d20f01a1fa6aa3668e2dac3a594240b7cf78
 }

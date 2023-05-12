@@ -3,10 +3,8 @@ package milestone2.professors;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.FileReader;
 
