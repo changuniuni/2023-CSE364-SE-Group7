@@ -61,7 +61,7 @@ public class User {
     {
         for (int i = 0; i < courseList.size(); i++)
         {
-            if (courseList.get(i).getId().equals(courseId))
+            if (courseList.get(i).getCourseId().equals(courseId))
             {
                 courseList.remove(i);
                 return;
