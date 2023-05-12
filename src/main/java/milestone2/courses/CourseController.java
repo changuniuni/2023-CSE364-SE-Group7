@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -81,7 +82,6 @@ public
           course.setOpenSmes(newCourse.getOpenSmes());
           course.setType(newCourse.getType());
           course.setDesc(newCourse.getDesc());
-          course.setCount(newCourse.getCount());
           return repository.save(course);
         })
         .orElseGet(() -> {
@@ -130,28 +130,36 @@ public
   // curl -X POST http://localhost:8080/users/20201111/courses/1241   
   @PostMapping("/users/{userId}/courses/{courseId}")
   ResponseEntity<?> addCourseToUser(@PathVariable String userId, @PathVariable String courseId) {
+    CourseCountMap courseCntMap = CourseCountMap.getInstance();
     User user = userRepository.findById(userId).orElseThrow();
     Course course = repository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId));
     user.getCourseList().add(course);
     userRepository.save(user);
     EntityModel<Course> courseModel = assembler.toModel(course);
+    int countToUpdate = courseCntMap.getValue(courseId) + 1;
+    courseCntMap.put(courseId, countToUpdate);
     return ResponseEntity
         .created(courseModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
         .body(courseModel);
   }
+
   // curl -X DELETE http://localhost:8080/users/20201111/courses/1221
   @DeleteMapping("/users/{userId}/courses/{courseId}")
   ResponseEntity<?> removeCourseFromUser(@PathVariable String userId, @PathVariable String courseId) 
   {
+    CourseCountMap courseCntMap = CourseCountMap.getInstance();
     User user = userRepository.findById(userId).orElseThrow();
     Course course = repository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId));
     user.deleteCourse(courseId);
     userRepository.save(user);
     EntityModel<Course> courseModel = assembler.toModel(course);
+    int countToUpdate = courseCntMap.getValue(courseId) - 1;
+    courseCntMap.put(courseId, countToUpdate);
     return ResponseEntity
         .created(courseModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
         .body(courseModel);
   }
+
   @GetMapping("/courses/academic/{acadYear}/{openSmes}")
   CollectionModel<EntityModel<Course>> CourseSearchYearSmes(@PathVariable String acadYear, @PathVariable int openSmes) {
 
@@ -170,8 +178,9 @@ public
       .filter(course -> {
         String findYear = course.getAcadYear().toLowerCase();
         int findSmes = course.getOpenSmes();
-        if(findYear.indexOf(acadYear.toLowerCase()) >= 0 && findSmes + openSmes != 3)
+        if(findYear.indexOf(acadYear.toLowerCase()) >= 0 && findSmes + openSmes != 3) {
           return true;
+        }
         return false;
       })
       .map(assembler::toModel)
@@ -179,22 +188,44 @@ public
     
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
   }
-  /*
+  
   @GetMapping("/courses/tendency")
   CollectionModel<EntityModel<Course>> CourseSearchTendency() {
-    
+    CourseCountMap courseCntMap = CourseCountMap.getInstance();
+
+    String[] tendencyTop = new String[5];
+    int position = -1;
+    for(Map.Entry<String, Integer> entry : courseCntMap.getEntrySet()) {
+      int value = entry.getValue();
+      for(int i = 0; i < 5; i++) {
+        if(tendencyTop[i] == null) {
+          tendencyTop[i] = entry.getKey();
+          break;
+        }
+        if(value > courseCntMap.getValue(tendencyTop[i])) {
+          tendencyTop[4] = null;
+          for(int j = 4; j > i; j--) {
+            tendencyTop[j] = tendencyTop[j-1];
+          }
+          tendencyTop[i] = entry.getKey();
+          break;
+        }
+      }
+    }
+
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
       .filter(course -> {
-        String findYear = course.getAcadYear().toLowerCase();
-        int findSmes = course.getOpenSmes();
-        if(findYear.indexOf(acadYear.toLowerCase()) >= 0 && findSmes + openSmes != 3)
-          return true;
+        for(int i = 0; i < 5; i++) {
+          String traget = course.getCourseId();
+          if(traget.indexOf(tendencyTop[i]) == 0)
+            return true;
+        }
         return false;
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
     
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).all()).withSelfRel());
-  }*/
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
+  }
 }
