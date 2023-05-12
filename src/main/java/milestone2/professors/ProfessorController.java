@@ -162,6 +162,43 @@ class ProfessorController {
     return coursehistoryassembler.toModel(coursehistory);
   }
 
+  @GetMapping("/coursehistories/browse/{year}")
+  CollectionModel<EntityModel<CourseHistory>> histroyBrowseYear(@PathVariable int year) {
+
+    List<EntityModel<CourseHistory>> cHistoryYear = coursehistoryrepository.findAll()
+      .stream()
+      .filter(coursehistory -> {
+        int findYear = coursehistory.getOpenYear();
+        if(year == findYear) {
+          return true;
+        }
+        return false;
+      })
+      .map(coursehistoryassembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(cHistoryYear, linkTo(methodOn(ProfessorController.class).historyall()).withSelfRel());
+  }
+
+  @GetMapping("/coursehistories/browse/{year}/{smes}")
+  CollectionModel<EntityModel<CourseHistory>> histroyBrowseYearSmes(@PathVariable int year, @PathVariable int smes) {
+
+    List<EntityModel<CourseHistory>> cHistoryYear = coursehistoryrepository.findAll()
+      .stream()
+      .filter(coursehistory -> {
+        int findYear = coursehistory.getOpenYear();
+        int findSmes = coursehistory.getOpenSmes();
+        if(year == findYear && smes == findSmes) {
+          return true;
+        }
+        return false;
+      })
+      .map(coursehistoryassembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(cHistoryYear, linkTo(methodOn(ProfessorController.class).historyall()).withSelfRel());
+  }
+
   @GetMapping("/professors/search/{name}/courses")
   CollectionModel<EntityModel<CourseHistory>> professorCourse(@PathVariable String name) {
     List<Professor> NameProfessors = repository.findAll()

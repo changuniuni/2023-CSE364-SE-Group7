@@ -35,8 +35,6 @@ public class CourseController {
     this.userRepository = userRepository;
   }
 
-  // Aggregate root
-  // tag::get-aggregate-root[]
   @GetMapping("/courses")
   CollectionModel<EntityModel<Course>> CourseShowAll() {
  
@@ -46,7 +44,6 @@ public class CourseController {
 
     return CollectionModel.of(courses, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
   }
-  // end::get-aggregate-root[]
 
   @PostMapping("/courses")
   ResponseEntity<?> CourseNew(@RequestBody Course newCourse) {
@@ -58,10 +55,8 @@ public class CourseController {
         .body(entityModel);
   }
 
-  // Single item
   @GetMapping("/courses/{id}")
-public
-  EntityModel<Course> CourseShowOne(@PathVariable String id) {
+  public EntityModel<Course> CourseShowOne(@PathVariable String id) {
 
     Course course = repository.findById(id)
         .orElseThrow(() -> new CourseNotFoundException(id));
@@ -104,29 +99,6 @@ public
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("/courses/academic/{acadYear}")
-  CollectionModel<EntityModel<Course>> CourseSearchYear(@PathVariable String acadYear) {
-
-    if (acadYear.toLowerCase() == "freshman" || acadYear.toLowerCase() == "sophomore" ||
-    acadYear.toLowerCase() == "junior" || acadYear.toLowerCase() == "senior") {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST, "Invalid AcademicYear value (try freshman/sophomore/junior/senior).");
-    }
-
-    List<EntityModel<Course>> CourseYear = repository.findAll()
-      .stream()
-      .filter(course -> {
-        String findYear = course.getAcadYear().toLowerCase();
-        if(findYear.indexOf(acadYear.toLowerCase()) >= 0)
-          return true;
-        return false;
-      })
-      .map(assembler::toModel)
-      .collect(Collectors.toList());
-    
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
-  }
-
   // curl -X POST http://localhost:8080/users/20201111/courses/1241   
   @PostMapping("/users/{userId}/courses/{courseId}")
   ResponseEntity<?> addCourseToUser(@PathVariable String userId, @PathVariable String courseId) {
@@ -160,19 +132,24 @@ public
         .body(courseModel);
   }
 
+  @GetMapping("/courses/academic/{acadYear}")
+  CollectionModel<EntityModel<Course>> CourseSearchYear(@PathVariable String acadYear) {
+    List<EntityModel<Course>> CourseYear = repository.findAll()
+      .stream()
+      .filter(course -> {
+        String findYear = course.getAcadYear().toLowerCase();
+        if(findYear.indexOf(acadYear.toLowerCase()) >= 0)
+          return true;
+        return false;
+      })
+      .map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).CourseShowAll()).withSelfRel());
+  }
+  
   @GetMapping("/courses/academic/{acadYear}/{openSmes}")
   CollectionModel<EntityModel<Course>> CourseSearchYearSmes(@PathVariable String acadYear, @PathVariable int openSmes) {
-
-    if (acadYear.toLowerCase() == "freshman" || acadYear.toLowerCase() == "sophomore" ||
-    acadYear.toLowerCase() == "junior" || acadYear.toLowerCase() == "senior") {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST, "Invalid AcademicYear value (try freshman/sophomore/junior/senior).");
-    }
-    if (openSmes < 0 || openSmes > 2) {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST, "Invalid Semester value (0~2 expected).");
-    }
-
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
       .filter(course -> {
