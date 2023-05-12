@@ -120,8 +120,7 @@ public class CourseController {
 
   // curl -X DELETE http://localhost:8080/users/20201111/courses/1221
   @DeleteMapping("/users/{userId}/courses/{courseId}")
-  ResponseEntity<?> userCourseRemove(@PathVariable String userId, @PathVariable String courseId) 
-  {
+  ResponseEntity<?> userCourseRemove(@PathVariable String userId, @PathVariable String courseId) {
     
     CourseCountMap courseCntMap = CourseCountMap.getInstance();
     User user = userRepository.findById(userId).orElseThrow();
@@ -174,6 +173,23 @@ public class CourseController {
     return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
   }
   
+  @GetMapping("/courses/area/{area}")
+  CollectionModel<EntityModel<Course>> courseArea(@PathVariable String area) {
+     
+    List<EntityModel<Course>> CourseYear = repository.findAll()
+      .stream()
+      .filter(course -> {
+        String findArea = course.getType().toLowerCase();
+        if(findArea.indexOf(area.toLowerCase()) >= 0)
+          return true;
+        return false;
+      })
+      .map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+  }
+
   @GetMapping("/courses/tendency")
   CollectionModel<EntityModel<Course>> courseTendency() {
     
@@ -255,6 +271,28 @@ public class CourseController {
           if(traget.indexOf(tendencyTop[i]) == 0)
             return true;
         }
+        return false;
+      })
+      .map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+  }
+
+  @GetMapping("/courses/recommend/{area}")
+  CollectionModel<EntityModel<Course>> courseRecommendArea(@PathVariable String area) {
+
+    List<EntityModel<Course>> CourseYear = repository.findAll()
+      .stream()
+      .filter(course -> {
+        if(course.getMandatory().indexOf("Required") == 0)
+          return true;
+        String findArea = course.getType().toLowerCase();
+        if(findArea.indexOf(area.toLowerCase()) >= 0)
+          return true;
+        if(findArea.indexOf("System") != 0 || findArea.indexOf("Network") != 0)
+          if(course.getCourseId().indexOf("1311") == 0)
+            return true;
         return false;
       })
       .map(assembler::toModel)
