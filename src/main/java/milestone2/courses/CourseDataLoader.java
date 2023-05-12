@@ -18,11 +18,10 @@ public class CourseDataLoader {
     @PostConstruct
     public void loadData() {
         String courseFile = "data/CourseDetail.txt";
-
-        readDataFile(courseFile);
+        readCourseFile(courseFile);
     }
 
-    private void readDataFile(String filePath) {
+    private void readCourseFile(String filePath) {
         String line = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -38,4 +37,5 @@ public class CourseDataLoader {
             e.printStackTrace();
         }
     }
+
 }

@@ -1,5 +1,7 @@
 package milestone2.professors;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +19,17 @@ class ProfessorController {
 
   private final ProfessorModelAssembler assembler;
 
-  ProfessorController(ProfessorRepository repository, ProfessorModelAssembler assembler) {
+  private final CourseHistoryRepository coursehistoryrepository;
+
+  private final CourseHistoryModelAssembler coursehistoryassembler;
+
+  ProfessorController(ProfessorRepository repository, ProfessorModelAssembler assembler, CourseHistoryRepository coursehistoryrepository, CourseHistoryModelAssembler coursehistoryassembler) {
     this.repository = repository;
     this.assembler = assembler;
+    this.coursehistoryrepository = coursehistoryrepository;
+    this.coursehistoryassembler = coursehistoryassembler;
   }
 
-
-  // Aggregate root
-  // tag::get-aggregate-root[]
   @GetMapping("/professors")
   CollectionModel<EntityModel<Professor>> all() {
  
@@ -34,7 +39,6 @@ class ProfessorController {
 
     return CollectionModel.of(professors, linkTo(methodOn(ProfessorController.class).all()).withSelfRel());
   }
-  // end::get-aggregate-root[]
 
   @PostMapping("/professors")
   ResponseEntity<?> newProfessor(@RequestBody Professor newProfessor) {
@@ -45,8 +49,6 @@ class ProfessorController {
         .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
         .body(entityModel);
   }
-
-  // Single item
   
   @GetMapping("/professors/search/phone/{phone}")
   EntityModel<Professor> searchPhone(@PathVariable String phone) {
@@ -56,7 +58,6 @@ class ProfessorController {
   
     return assembler.toModel(professor);
   }
-
 
   @PutMapping("/professors/{id}")
   ResponseEntity<?> replaceProfessor(@RequestBody Professor newProfessor, @PathVariable String id) {
@@ -141,5 +142,55 @@ class ProfessorController {
       .collect(Collectors.toList());
     
     return CollectionModel.of(TopicProfessors, linkTo(methodOn(ProfessorController.class).all()).withSelfRel());
+  }
+
+// CourseHistory
+
+  @GetMapping("/coursehistories")
+  CollectionModel<EntityModel<CourseHistory>> historyall() {
+ 
+    List<EntityModel<CourseHistory>> coursehistories = coursehistoryrepository.findAll().stream() //
+        .map(coursehistoryassembler::toModel) //
+        .collect(Collectors.toList());
+
+    return CollectionModel.of(coursehistories, linkTo(methodOn(ProfessorController.class).historyall()).withSelfRel());
+  }
+
+
+  @GetMapping("/coursehistories/{id}")
+  EntityModel<CourseHistory> one(@PathVariable String id) {
+
+    CourseHistory coursehistory = coursehistoryrepository.findById(id) //
+        .orElseThrow(() -> new ProfessorNotFoundException(id));
+  
+    return coursehistoryassembler.toModel(coursehistory);
+  }
+
+  @GetMapping("/professors/search/{name}/courses")
+  CollectionModel<EntityModel<CourseHistory>> professorCourse(@PathVariable String name) {
+    List<Professor> NameProfessors = repository.findAll()
+      .stream()
+      .filter(professor -> {
+        if(professor.getName().toLowerCase().indexOf(name.toLowerCase())>= 0)
+          return true;
+        
+        return false;
+      })
+      //new ArrayList<>(Arrays.asList(professor.getArea())).contains(findarea))
+      //.map(assembler::toModel)
+      .collect(Collectors.toList());
+    
+      List<EntityModel<CourseHistory>> ProfessorCourse = coursehistoryrepository.findAll().stream().filter(coursehistory -> {
+        boolean check = false;
+        for(Professor professor : NameProfessors){
+          if(coursehistory.getProfessorName().toLowerCase().indexOf(professor.getName().toLowerCase()) >= 0){
+            check = true;
+          }
+        }
+        return check;
+      })
+      .map(coursehistoryassembler::toModel)
+      .collect(Collectors.toList());
+    return CollectionModel.of(ProfessorCourse, linkTo(methodOn(ProfessorController.class).historyall()).withSelfRel());
   }
 }

@@ -22,8 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
-public
-class CourseController {
+public class CourseController {
 
   private final CourseRepository repository;
   private final UserRepository userRepository;
@@ -60,6 +59,7 @@ class CourseController {
 
   // Single item
   @GetMapping("/courses/{id}")
+public
   EntityModel<Course> CourseShowOne(@PathVariable String id) {
 
     Course course = repository.findById(id)
