@@ -14,26 +14,28 @@ class Course {
   private String mandatory;
   private String[] prereq;
   private String acad_year;
+  private int open_smes;
   private String type;
   private String desc;
-  private String count;
+  private int count;
 
-  Course(String id, String code, String title, String mandatory, String[] prereq, String acad_year, String type, String desc, String count) {
+  Course(String id, String code, String title, String mandatory, String[] prereq, String acad_year, int open_smes, String type, String desc, int count) {
     this.id = id;
     this.code = code;
     this.title = title;
     this.mandatory = mandatory;
     this.prereq = prereq;
     this.acad_year = acad_year;
+    this.open_smes = open_smes;
     this.type = type;
     this.desc = desc;
     this.count = count;
   }
 
-  public String getId() {
+  public String getCourseId() {
     return this.id;
   }
-  public void setId(String id) {
+  public void setCourseId(String id) {
     this.id = id;
   }
 
@@ -72,6 +74,13 @@ class Course {
     this.acad_year = acad_year;
   }
 
+  public int getOpenSmes() {
+    return this.open_smes;
+  }
+  public void setOpenSmes(int open_smes) {
+    this.open_smes = open_smes;
+  }
+
   public String getType() {
     return this.type;
   }
@@ -86,10 +95,10 @@ class Course {
     this.desc = desc;
   }
 
-  public String getCount() {
+  public int getCount() {
     return this.count;
   }
-  public void setCount(String count) {
+  public void setCount(int count) {
     this.count = count;
   }
 
@@ -103,19 +112,20 @@ class Course {
     return Objects.equals(this.id, course.id) && Objects.equals(this.code, course.code)
         && Objects.equals(this.title, course.title) && Objects.equals(this.mandatory, course.mandatory)
         && Objects.equals(this.prereq, course.prereq) && Objects.equals(this.acad_year, course.acad_year)
-        && Objects.equals(this.type, course.type) && Objects.equals(this.desc, course.desc)
-        && Objects.equals(this.count, course.count);
+        && Objects.equals(this.open_smes, course.open_smes) && Objects.equals(this.type, course.type)
+        && Objects.equals(this.desc, course.desc) && Objects.equals(this.count, course.count);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.code, this.title, this.mandatory, this.prereq, this.acad_year, this.type, this.desc, this.count);
+    return Objects.hash(this.id, this.code, this.title, this.mandatory, this.prereq, this.acad_year, this.open_smes, this.type, this.desc, this.count);
   }
 
   @Override
   public String toString() {
     return "Course{" + "id=" + this.id + ", code='" + this.code + '\'' + ", title='" + this.title + '\'' + 
     ", mandatory='" + this.mandatory + '\'' + ", prereq='" + this.prereq + '\'' + ", acad_year='" + this.acad_year + '\'' + 
-    ", type='" + this.type + '\'' + ", desc='" + this.desc + '\'' + ", count='" + this.count + '\'' + '}';
+    ", open_smes='" + this.open_smes + '\'' + ", type='" + this.type + '\'' + ", desc='" + this.desc + '\'' +
+    ", count='" + this.count + '\'' + '}';
   }
 }
