@@ -93,30 +93,4 @@ class Course {
   public void setDesc(String desc) {
     this.desc = desc;
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (!(o instanceof Course))
-      return false;
-    Course course = (Course) o;
-    return Objects.equals(this.id, course.id) && Objects.equals(this.code, course.code)
-        && Objects.equals(this.title, course.title) && Objects.equals(this.mandatory, course.mandatory)
-        && Objects.equals(this.prereq, course.prereq) && Objects.equals(this.acad_year, course.acad_year)
-        && Objects.equals(this.open_smes, course.open_smes) && Objects.equals(this.type, course.type)
-        && Objects.equals(this.desc, course.desc);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.id, this.code, this.title, this.mandatory, this.prereq, this.acad_year, this.open_smes, this.type, this.desc);
-  }
-
-  @Override
-  public String toString() {
-    return "Course{" + "id=" + this.id + ", code='" + this.code + '\'' + ", title='" + this.title + '\'' + 
-    ", mandatory='" + this.mandatory + '\'' + ", prereq='" + this.prereq + '\'' + ", acad_year='" + this.acad_year + '\'' + 
-    ", open_smes='" + this.open_smes + '\'' + ", type='" + this.type + '\'' + ", desc='" + this.desc + '\'' + '}';
-  }
 }

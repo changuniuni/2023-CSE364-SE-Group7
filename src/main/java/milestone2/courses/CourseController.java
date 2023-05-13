@@ -39,16 +39,6 @@ public class CourseController {
     return CollectionModel.of(courses, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
   }
 
-  @PostMapping("/courses")
-  ResponseEntity<?> courseNew(@RequestBody Course newCourse) {
-
-    EntityModel<Course> entityModel = assembler.toModel(repository.save(newCourse));
-  
-    return ResponseEntity
-        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-        .body(entityModel);
-  }
-
   @GetMapping("/courses/{id}")
   public EntityModel<Course> courseShowOne(@PathVariable String id) {
 
@@ -56,41 +46,6 @@ public class CourseController {
         .orElseThrow(() -> new CourseNotFoundException(id));
   
     return assembler.toModel(course);
-  }
-
-  @PutMapping("/courses/{id}")
-  ResponseEntity<?> courseReplace(@RequestBody Course newCourse, @PathVariable String id) {
-
-    Course updatedCourse = repository.findById(id)
-        .map(course -> {
-          course.setCode(newCourse.getCode());
-          course.setTitle(newCourse.getTitle());
-          course.setMandatory(newCourse.getMandatory());
-          course.setPrereq(newCourse.getPrereq());
-          course.setAcadYear(newCourse.getAcadYear());
-          course.setOpenSmes(newCourse.getOpenSmes());
-          course.setType(newCourse.getType());
-          course.setDesc(newCourse.getDesc());
-          return repository.save(course);
-        })
-        .orElseGet(() -> {
-          newCourse.setCourseId(id);
-          return repository.save(newCourse);
-        });
-  
-    EntityModel<Course> entityModel = assembler.toModel(updatedCourse);
-  
-    return ResponseEntity
-        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-        .body(entityModel);
-  }
-
-  @DeleteMapping("/courses/{id}")
-  ResponseEntity<?> courseDelete(@PathVariable String id) {
-
-    repository.deleteById(id);
-  
-    return ResponseEntity.noContent().build();
   }
 
   // curl -X POST http://localhost:8080/users/20201111/courses/1241   
