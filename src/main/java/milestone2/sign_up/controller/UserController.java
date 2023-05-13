@@ -5,6 +5,8 @@ import milestone2.sign_up.model.User;
 import milestone2.sign_up.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,21 +19,30 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+
+    // curl -X POST -H "Content-Type: application/json" -d '{"id": "20201111", "name": "Hong gil dong"}' http://localhost:8080/users
     @PostMapping("/users")
     public User createUser(@RequestBody User user) {
         return userRepository.save(new User(user.getId(), user.getName()));
     }
 
+    //curl -X GET http://localhost:8080/users
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    // curl -X GET http://localhost:8080/users/20201111
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable String id) {
         return userRepository.findById(id).orElse(null);
     }
 
+    // curl -X GET http://localhost:8080/users/20201111/courses
     @GetMapping("/users/{id}/courses")
     public List<Course> getCourses(@PathVariable String id) {
         User user = userRepository.findById(id).orElse(null);
@@ -50,19 +61,16 @@ public class UserController {
     }
 
 
-
+    // curl -X DELETE http://localhost:8080/users/20201111
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable String id) {
         userRepository.deleteById(id);
         return "User deleted successfully";
     }
 
+    // curl -X DELETE http://localhost:8080/users     
     @DeleteMapping("/users")
     public void deleteAllUsers() {
         userService.deleteAllUsers();
     }
-
 }
-
-
-
