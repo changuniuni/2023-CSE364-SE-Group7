@@ -61,8 +61,4 @@ public class UserController {
     public void deleteAllUsers() {
         userService.deleteAllUsers();
     }
-
 }
-
-
-

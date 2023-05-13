@@ -43,7 +43,7 @@ public class UserTest {
         user = new User("1", "John");
         course1 = new Course(null, null, null, null, null, null, 0, null, null); // initialize this with appropriate values for Course
         course2 = new Course(null, null, null, null, null, null, 0, null, null); // initialize this with appropriate values for Course
-        course3 = new Course("2222", "CSE1111", "Title1111", "mandatory", null, "2020", 0, "type", "desc");
+        course3 = new Course("1111", "CSE1111", "Title1111", "mandatory", null, "2020", 0, "type", "desc");
         course4 = new Course("2222", "CSE2222", "Title2222", "mandatory", null, "2020", 0, "type", "desc");
         // String id, String code, String title, String mandatory, String[] prereq, String acad_year, int open_smes, String type, String desc
     }
@@ -96,6 +96,7 @@ public class UserTest {
         assertNull(user.getCourseList());
     }
 
+
     @Test
     public void testDeleteCourseNotFound() {
         // This test case will test the branch when the course to delete is not found
@@ -103,7 +104,37 @@ public class UserTest {
         courses.add(course3);
         user.setCourses(courses);
         user.deleteCourse(course4.getCourseId());
+        assertTrue(user.getCourseList().contains(course3)); // the course should still be there as it was not found for deletion
+    }
+
+    @Test
+    public void testDeleteCourse_CourseExists() {
+        // Set up the course list
+        List<Course> courses = new ArrayList<>();
+        courses.add(course3);
+        courses.add(course4);
+        user.setCourses(courses);
+
+        // Delete the course
+        user.deleteCourse(course3.getCourseId());
+
+        // Verify that the course was deleted
         assertFalse(user.getCourseList().contains(course3));
+    }
+
+    @Test
+    public void testDeleteCourse_CourseDoesNotExist() {
+        // Set up the course list
+        List<Course> courses = new ArrayList<>();
+        courses.add(course3);
+        user.setCourses(courses);
+
+        // Attempt to delete a course that does not exist
+        user.deleteCourse(course4.getCourseId());
+
+        // Verify that the course list remains the same
+        assertTrue(user.getCourseList().contains(course3));
+        assertEquals(1, user.getCourseList().size());
     }
 
     @Test

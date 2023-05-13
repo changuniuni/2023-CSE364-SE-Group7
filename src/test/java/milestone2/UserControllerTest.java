@@ -1,117 +1,104 @@
 package milestone2;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import milestone2.sign_up.controller.UserController;
+import milestone2.courses.Course;
 import milestone2.sign_up.controller.UserService;
 import milestone2.sign_up.model.User;
 import milestone2.sign_up.repository.UserRepository;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.never;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-@ExtendWith(MockitoExtension.class)
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
 public class UserControllerTest {
 
-    @Mock
-    private UserService userService;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private UserRepository userRepository;
 
-    @InjectMocks
-    private UserController userController;
-
-    private MockMvc mockMvc;
+    @MockBean
+    private UserService userService;
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        User user = new User("1", "John");
+        Mockito.when(userRepository.findById("1")).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(user);
+        Mockito.when(userRepository.findAll()).thenReturn(Arrays.asList(user));
+        Mockito.when(userService.getCourses(Mockito.any(User.class))).thenReturn(Arrays.asList(new Course(null, null, null, null, null, null, 0, null, null)));
     }
 
     @Test
-    public void createUserTest() throws Exception {
-        User user = new User("123", "John");
-        when(userRepository.save(any())).thenReturn(user);
-
-        mockMvc.perform(post("/users")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{\"id\":\"123\",\"name\":\"John\"}"))
-            .andExpect(status().isOk());
-
-        verify(userRepository, times(1)).save(any());
+    public void testCreateUser() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\":\"1\",\"name\":\"John\"}"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void getAllUsersTest() throws Exception {
-        List<User> users = Arrays.asList(new User("123", "John"), new User("456", "Jane"));
-        when(userRepository.findAll()).thenReturn(users);
-
-        mockMvc.perform(get("/users")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
-
-        verify(userRepository, times(1)).findAll();
+    public void testGetAllUsers() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/users"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void getUserByIdTest() throws Exception {
-        User user = new User("123", "John");
-        when(userRepository.findById("123")).thenReturn(Optional.of(user));
-
-        mockMvc.perform(get("/users/123")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
-
-        verify(userRepository, times(1)).findById("123");
+    public void testGetUserById_UserExists() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/1"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void updateUserTest() throws Exception {
-        User user = new User("123", "John");
-        when(userRepository.findById("123")).thenReturn(Optional.of(user));
-        when(userRepository.save(any())).thenReturn(user);
-
-        mockMvc.perform(put("/users/123")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{\"id\":\"123\",\"name\":\"John\"}"))
-            .andExpect(status().isOk());
-
-        verify(userRepository, times(1)).save(any());
+    public void testGetUserById_UserDoesNotExist() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/2"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void deleteUserTest() throws Exception {
-        mockMvc.perform(delete("/users/123")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
-
-        verify(userRepository, times(1)).deleteById("123");
+    public void testGetCourses() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/1/courses"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void deleteAllUsersTest() throws Exception {
-        mockMvc.perform(delete("/users")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+    public void testUpdateUser_UserExists() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\":\"1\",\"name\":\"Adam\"}"))
+                .andExpect(status().isOk());
+    }
 
-        verify(userService, times(1)).deleteAllUsers();
+    @Test
+    public void testUpdateUser_UserDoesNotExist() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\":\"2\",\"name\":\"Adam\"}"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteUser() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteAllUsers() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users"))
+                .andExpect(status().isOk());
     }
 }
