@@ -110,12 +110,14 @@ class ProfessorController {
 
   @GetMapping("/professors/search/name/{findname}")
   CollectionModel<EntityModel<Professor>> searchaName(@PathVariable String findname) {
+    String polishedName = findname.replaceAll("\\s+", "").toLowerCase();
+
     List<EntityModel<Professor>> NameProfessors = repository.findAll()
       .stream()
       .filter(professor -> {
-        if(professor.getName().toLowerCase().indexOf(findname.toLowerCase())>= 0)
+        String targetName = professor.getName().replaceAll("\\s+", "").toLowerCase();
+        if(targetName.indexOf(polishedName) >= 0)
           return true;
-        
         return false;
       })
       .map(assembler::toModel)
@@ -145,9 +147,10 @@ class ProfessorController {
   @GetMapping("/coursehistories")
   CollectionModel<EntityModel<CourseHistory>> historyall() {
  
-    List<EntityModel<CourseHistory>> coursehistories = coursehistoryrepository.findAll().stream() //
-        .map(coursehistoryassembler::toModel) //
-        .collect(Collectors.toList());
+    List<EntityModel<CourseHistory>> coursehistories = coursehistoryrepository.findAll()
+      .stream() //
+      .map(coursehistoryassembler::toModel) //
+      .collect(Collectors.toList());
 
     return CollectionModel.of(coursehistories, linkTo(methodOn(ProfessorController.class).historyall()).withSelfRel());
   }
@@ -201,12 +204,14 @@ class ProfessorController {
 
   @GetMapping("/professors/search/{name}/courses")
   CollectionModel<EntityModel<CourseHistory>> professorCourse(@PathVariable String name) {
+    String polishedName = name.replaceAll("\\s+", "").toLowerCase();
+
     List<Professor> NameProfessors = repository.findAll()
       .stream()
       .filter(professor -> {
-        if(professor.getName().toLowerCase().indexOf(name.toLowerCase())>= 0)
+        String targetName = professor.getName().replaceAll("\\s+", "").toLowerCase();
+        if(targetName.indexOf(polishedName) >= 0)
           return true;
-        
         return false;
       })
       .collect(Collectors.toList());
