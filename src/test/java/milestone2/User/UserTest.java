@@ -1,4 +1,4 @@
-package milestone2;
+package milestone2.User;
 
 import milestone2.courses.Course;
 import milestone2.sign_up.model.User;

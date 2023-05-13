@@ -1,4 +1,4 @@
-package milestone2;
+package milestone2.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import static org.mockito.BDDMockito.given;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import milestone2.courses.Course;
@@ -15,9 +17,12 @@ import milestone2.sign_up.controller.UserService;
 import milestone2.sign_up.model.User;
 import milestone2.sign_up.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -100,5 +105,26 @@ public class UserControllerTest {
     public void testDeleteAllUsers() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/users"))
                 .andExpect(status().isOk());
+    }
+
+
+    @Test
+    public void getAllUsersReturnsOkWhenUsersExist() throws Exception {
+        User user1 = new User("1", "John");
+        User user2 = new User("2", "Jane");
+        List<User> users = Arrays.asList(user1, user2);
+
+        given(userRepository.findAll()).willReturn(users);
+    }
+
+    @Test
+    public void getAllUsersReturnsNotFoundWhenNoUsersExist() throws Exception {
+        List<User> users = new ArrayList<>();
+
+        given(userRepository.findAll()).willReturn(users);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/users")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
