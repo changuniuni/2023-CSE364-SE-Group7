@@ -16,7 +16,7 @@ class CourseHistoryModelAssembler implements RepresentationModelAssembler<Course
   public EntityModel<CourseHistory> toModel(CourseHistory coursehistory) {
 
     return EntityModel.of(coursehistory, //
-        linkTo(methodOn(CourseController.class).CourseShowOne(coursehistory.getCourseId())).withSelfRel(),
+        linkTo(methodOn(CourseController.class).courseShowOne(coursehistory.getCourseId())).withSelfRel(),
         linkTo(methodOn(ProfessorController.class).historyall()).withRel("coursehistories"));
   }
 }

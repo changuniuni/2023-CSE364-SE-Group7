@@ -12,8 +12,8 @@ class CourseModelAssembler implements RepresentationModelAssembler<Course, Entit
   @Override
   public EntityModel<Course> toModel(Course course) {
 
-    return EntityModel.of(course, //
-        linkTo(methodOn(CourseController.class).CourseShowOne(course.getCourseId())).withSelfRel(),
-        linkTo(methodOn(CourseController.class).CourseShowAll()).withRel("courses"));
+    return EntityModel.of(course,
+        linkTo(methodOn(CourseController.class).courseShowOne(course.getCourseId())).withSelfRel(),
+        linkTo(methodOn(CourseController.class).courseShowAll()).withRel("courses"));
   }
 }

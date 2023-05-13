@@ -1,6 +1,7 @@
 package milestone2.courses;
  
 import java.util.Objects;
+import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,9 +19,8 @@ class Course {
   private int open_smes;
   private String type;
   private String desc;
-  private int count;
 
-  Course(String id, String code, String title, String mandatory, String[] prereq, String acad_year, int open_smes, String type, String desc, int count) {
+  Course(String id, String code, String title, String mandatory, String[] prereq, String acad_year, int open_smes, String type, String desc) {
     this.id = id;
     this.code = code;
     this.title = title;
@@ -30,7 +30,6 @@ class Course {
     this.open_smes = open_smes;
     this.type = type;
     this.desc = desc;
-    this.count = count;
   }
 
   public String getCourseId() {
@@ -96,13 +95,6 @@ class Course {
     this.desc = desc;
   }
 
-  public int getCount() {
-    return this.count;
-  }
-  public void setCount(int count) {
-    this.count = count;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o)
@@ -114,19 +106,18 @@ class Course {
         && Objects.equals(this.title, course.title) && Objects.equals(this.mandatory, course.mandatory)
         && Objects.equals(this.prereq, course.prereq) && Objects.equals(this.acad_year, course.acad_year)
         && Objects.equals(this.open_smes, course.open_smes) && Objects.equals(this.type, course.type)
-        && Objects.equals(this.desc, course.desc) && Objects.equals(this.count, course.count);
+        && Objects.equals(this.desc, course.desc);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.code, this.title, this.mandatory, this.prereq, this.acad_year, this.open_smes, this.type, this.desc, this.count);
+    return Objects.hash(this.id, this.code, this.title, this.mandatory, this.prereq, this.acad_year, this.open_smes, this.type, this.desc);
   }
 
   @Override
   public String toString() {
     return "Course{" + "id=" + this.id + ", code='" + this.code + '\'' + ", title='" + this.title + '\'' + 
     ", mandatory='" + this.mandatory + '\'' + ", prereq='" + this.prereq + '\'' + ", acad_year='" + this.acad_year + '\'' + 
-    ", open_smes='" + this.open_smes + '\'' + ", type='" + this.type + '\'' + ", desc='" + this.desc + '\'' +
-    ", count='" + this.count + '\'' + '}';
+    ", open_smes='" + this.open_smes + '\'' + ", type='" + this.type + '\'' + ", desc='" + this.desc + '\'' + '}';
   }
 }
