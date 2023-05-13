@@ -1,6 +1,4 @@
 package milestone2.professors;
- 
-import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +15,7 @@ class Professor {
   private String office;
   private String phone;
 
-  Professor(String id, String name, String[] area, String topic, String desc, String email, String office, String phone) {
+  Professor(String id, String name, String[] area, String topic, String desc, String email, String office) {
     this.id = id;
     this.name = name;
     this.area = area;
@@ -25,7 +23,7 @@ class Professor {
     this.desc = desc;
     this.email = email;
     this.office = office;
-    this.phone = phone;
+    this.phone = "052-217-"+id;
   }
 
   public String getId() {
@@ -33,6 +31,7 @@ class Professor {
   }
   public void setId(String id) {
     this.id = id;
+    this.phone = "052-217-"+id;
   }
 
   public String getName() {
@@ -82,31 +81,7 @@ class Professor {
   }
   public void setPhone(String phone) {
     this.phone = phone;
+    this.id = phone.replaceAll("052-217-","");
   }
 
-  @Override
-  public boolean equals(Object o) {
-
-    if (this == o)
-      return true;
-    if (!(o instanceof Professor))
-      return false;
-    Professor professor = (Professor) o;
-    return Objects.equals(this.id, professor.id) && Objects.equals(this.name, professor.name)
-        && Objects.equals(this.area, professor.area) && Objects.equals(this.topic, professor.topic)
-        && Objects.equals(this.desc, professor.desc) && Objects.equals(this.email, professor.email)
-        && Objects.equals(this.office, professor.office) && Objects.equals(this.phone, professor.phone);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.id, this.name, this.area, this.topic, this.desc, this.email, this.office, this.phone);
-  }
-
-  @Override
-  public String toString() {
-    return "Professor{" + "id=" + this.id + ", name='" + this.name + '\'' + ", area='" + this.area + '\'' + 
-    ", topic='" + this.topic + '\'' + ", desc='" + this.desc + '\'' + ", email='" + this.email + '\'' + 
-    ", office='" + this.office + '\'' + ", phone='" + this.phone + '\'' +'}';
-  }
 }

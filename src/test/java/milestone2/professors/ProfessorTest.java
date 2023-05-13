@@ -33,7 +33,7 @@ public class ProfessorTest {
 
     @BeforeEach
     public void setUp() {
-        professor = new Professor("1", "KyeongHoon_Min", "A, B, C".split(", "), "asdf", "Hello", "mkh533@mkh.com", "105-105", "052-217-"+"1");
+        professor = new Professor("1", "KyeongHoon_Min", "A, B, C".split(", "), "asdf", "Hello", "mkh533@mkh.com", "105-105");
 
     }
 
@@ -49,7 +49,7 @@ public class ProfessorTest {
 
     @Test
     public void testGetArea() {
-        assertEquals("A, B, C".split(", "), professor.getArea());
+        assertArrayEquals("A, B, C".split(", "), professor.getArea());
     }
 
     @Test
@@ -77,90 +77,53 @@ public class ProfessorTest {
         assertEquals("052-217-"+"1", professor.getPhone());
     }
 
-    // @Test
-    // public void testSetName() {
-    //     user.setName("Adam");
-    //     assertEquals("Adam", user.getName());
-    // }
+    @Test
+    public void testSetName() {
+        professor.setName("Junsu");
+        assertEquals("Junsu", professor.getName());
+    }
 
-    // @Test
-    // public void testSetNameThrowsException() {
-    //     assertThrows(IllegalArgumentException.class, () -> {
-    //         professor.setName(null);
-    //     });
-    // }
+    @Test
+    public void testSetArea() {
+        professor.setArea("G, G, D".split(", "));
+        assertArrayEquals("G, G, D".split(", "), professor.getArea());
+    }
 
-    // @Test
-    // public void testGetCourseList() {
-    //     List<Course> courses = new ArrayList<>();
-    //     courses.add(course1);
-    //     courses.add(course2);
-    //     user.setCourses(courses);
-    //     assertEquals(courses, user.getCourseList());
-    // }
+    @Test
+    public void testSetTopic() {
+        professor.setTopic("math");
+        assertEquals("math", professor.getTopic());
+    }
 
-    // @Test
-    // public void testDeleteCourse() {
-    //     List<Course> courses = new ArrayList<>();
-    //     courses.add(course3);
-    //     courses.add(course4);
-    //     user.setCourses(courses);
-    //     user.deleteCourse(course3.getCourseId());
-    //     assertTrue(user.getCourseList().contains(course4));
-    // }
+    @Test
+    public void testSetDesc() {
+        professor.setDesc("Bye");
+        assertEquals("Bye", professor.getDesc());
+    }
 
-    // @Test
-    // public void testGetCourseListWhenNull() {
-    //     // This test case will test the branch when courseList is null
-    //     assertNull(user.getCourseList());
-    // }
+    @Test
+    public void testSetEmail() {
+        professor.setEmail("junsu@naver.com");
+        assertEquals("junsu@naver.com", professor.getEmail());
+    }
 
+    @Test
+    public void testSetOffice() {
+        professor.setOffice("Bulid 202-306");
+        assertEquals("Bulid 202-306", professor.getOffice());
+    }
 
-    // @Test
-    // public void testDeleteCourseNotFound() {
-    //     // This test case will test the branch when the course to delete is not found
-    //     List<Course> courses = new ArrayList<>();
-    //     courses.add(course3);
-    //     user.setCourses(courses);
-    //     user.deleteCourse(course4.getCourseId());
-    //     assertTrue(user.getCourseList().contains(course3)); // the course should still be there as it was not found for deletion
-    // }
+    @Test
+    public void testSetPhone() {
+        professor.setPhone("052-217-3242");
+        assertEquals("052-217-3242", professor.getPhone());
+        assertEquals("3242", professor.getId());
+    }
 
-    // @Test
-    // public void testDeleteCourse_CourseExists() {
-    //     // Set up the course list
-    //     List<Course> courses = new ArrayList<>();
-    //     courses.add(course3);
-    //     courses.add(course4);
-    //     user.setCourses(courses);
-
-    //     // Delete the course
-    //     user.deleteCourse(course3.getCourseId());
-
-    //     // Verify that the course was deleted
-    //     assertFalse(user.getCourseList().contains(course3));
-    // }
-
-    // @Test
-    // public void testDeleteCourse_CourseDoesNotExist() {
-    //     // Set up the course list
-    //     List<Course> courses = new ArrayList<>();
-    //     courses.add(course3);
-    //     user.setCourses(courses);
-
-    //     // Attempt to delete a course that does not exist
-    //     user.deleteCourse(course4.getCourseId());
-
-    //     // Verify that the course list remains the same
-    //     assertTrue(user.getCourseList().contains(course3));
-    //     assertEquals(1, user.getCourseList().size());
-    // }
-
-    // @Test
-    // public void testSetCoursesToNull() {
-    //     // This test case will test the setCourses method with a null argument
-    //     user.setCourses(null);
-    //     assertNull(user.getCourseList());
-    // }
-
+    @Test
+    public void testSetId() {
+        professor.setId("5");
+        assertEquals("5", professor.getId());
+        assertEquals("052-217-5", professor.getPhone());
+    }
 }

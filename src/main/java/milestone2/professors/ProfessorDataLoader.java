@@ -13,7 +13,7 @@ import java.io.FileReader;
 public class ProfessorDataLoader {
 
     @Autowired
-    private ProfessorRepository professorRepository;
+    static ProfessorRepository professorRepository;
     @Autowired
     private CourseHistoryRepository coursehistoryRepository;
 
@@ -25,14 +25,14 @@ public class ProfessorDataLoader {
         readCourseHistory(courseHistory);
     }
 
-    private void readDataFile(String filePath) {
+    public static void readDataFile(String filePath) {
         String line = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split("\t");
-                Professor professor = new Professor(data[0], data[1], data[2].split(", "), data[3], data[4], data[5], data[6], "052-217-"+data[0]);
+                Professor professor = new Professor(data[0], data[1], data[2].split(", "), data[3], data[4], data[5], data[6]);
                 professorRepository.save(professor);
             }
 
