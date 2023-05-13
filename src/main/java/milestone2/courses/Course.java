@@ -1,7 +1,6 @@
 package milestone2.courses;
  
 import java.util.Objects;
-import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,7 +19,7 @@ class Course {
   private String type;
   private String desc;
 
-  Course(String id, String code, String title, String mandatory, String[] prereq, String acad_year, int open_smes, String type, String desc) {
+  public Course(String id, String code, String title, String mandatory, String[] prereq, String acad_year, int open_smes, String type, String desc) {
     this.id = id;
     this.code = code;
     this.title = title;

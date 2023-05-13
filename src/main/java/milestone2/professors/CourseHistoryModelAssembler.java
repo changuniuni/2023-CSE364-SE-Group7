@@ -1,7 +1,6 @@
 package milestone2.professors;
  
 import milestone2.courses.*;
-import java.util.List;
  
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
