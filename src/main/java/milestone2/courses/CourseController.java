@@ -1,11 +1,7 @@
 package milestone2.courses;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.hateoas.IanaLinkRelations;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import java.util.stream.Collectors;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
-
 
 @RestController
 public class CourseController {
@@ -36,6 +29,7 @@ public class CourseController {
   }
 
   @GetMapping("/courses")
+  public
   CollectionModel<EntityModel<Course>> courseShowAll() {
  
     List<EntityModel<Course>> courses = repository.findAll().stream()
