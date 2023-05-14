@@ -14,21 +14,18 @@ public class ProfessorDataLoader {
 
     @Autowired
     private ProfessorRepository professorRepository;
-    @Autowired
-    private CourseHistoryRepository coursehistoryRepository;
+    
+    String professorFile = "data/CSE_LAB.txt";
 
     @PostConstruct
-    public void loadData() {
-        String professorFile = "data/CSE_LAB.txt";
-        String courseHistory = "data/CourseHistory.txt";
-        readDataFile(professorFile);
-        readCourseHistory(courseHistory);
+    public void loadData() throws IOException {
+        readDataFile();
     }
 
-    private void readDataFile(String filePath) {
+    private void readDataFile() throws IOException {
         String line = "";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(professorFile))) {
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split("\t");
@@ -37,25 +34,9 @@ public class ProfessorDataLoader {
             }
 
         } catch (IOException e) {
-            System.err.println("Error occurred while reading " + filePath + " file.");
-            e.printStackTrace();
+            throw e;
         }
-    }
-    
-    private void readCourseHistory(String filePath) {
-        String line = "";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split("\t");
-                CourseHistory course = new CourseHistory(data[0], data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]));
-                coursehistoryRepository.save(course);
-            }
-
-        } catch (IOException e) {
-            System.err.println("Error occurred while reading " + filePath + " file.");
-            e.printStackTrace();
-        }
+        
     }
 }
