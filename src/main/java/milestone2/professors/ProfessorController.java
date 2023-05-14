@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.hateoas.IanaLinkRelations;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import java.util.stream.Collectors;
 
