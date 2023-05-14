@@ -13,7 +13,7 @@ import java.io.FileReader;
 public class ProfessorDataLoader {
 
     @Autowired
-    static ProfessorRepository professorRepository;
+    private ProfessorRepository professorRepository;
     @Autowired
     private CourseHistoryRepository coursehistoryRepository;
 
@@ -25,7 +25,7 @@ public class ProfessorDataLoader {
         readCourseHistory(courseHistory);
     }
 
-    public static void readDataFile(String filePath) {
+    private void readDataFile(String filePath) {
         String line = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

@@ -3,7 +3,7 @@ package milestone2.professors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "labs")
+@Document(collection = "professors")
 class Professor {
   @Id
   private String id;
