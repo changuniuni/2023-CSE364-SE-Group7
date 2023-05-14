@@ -38,16 +38,6 @@ class ProfessorController {
 
     return CollectionModel.of(professors, linkTo(methodOn(ProfessorController.class).all()).withSelfRel());
   }
-
-  @PostMapping("/professors")
-  ResponseEntity<?> newProfessor(@RequestBody Professor newProfessor) {
-
-    EntityModel<Professor> entityModel = assembler.toModel(repository.save(newProfessor));
-  
-    return ResponseEntity
-        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-        .body(entityModel);
-  }
   
   @GetMapping("/professors/search/phone/{phone}")
   ResponseEntity<?> searchPhone(@PathVariable String phone) {
