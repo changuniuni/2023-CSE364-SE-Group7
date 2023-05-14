@@ -4,8 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
-public
-class CourseCountMap {
+public class CourseCountMap {
   private static CourseCountMap instance = null;
   private HashMap<String,Integer> map;
 
@@ -24,7 +23,13 @@ class CourseCountMap {
     map.put(key, value);
   }
 
+  public void remove(String key) {
+    map.remove(key);
+  }
+  
   public String getkey(int index) {
+    if(index < 0)
+      return null;
     int target = 0;
     String keyReturn = "";
     for (Map.Entry<String, Integer> entry : map.entrySet()) {
@@ -34,11 +39,13 @@ class CourseCountMap {
       else
         target++;
     }
-    return keyReturn;
+    return null;
   }
 
   public int getValue(String key) {
-    return map.get(key);
+    if(map.containsKey(key))
+      return map.get(key);
+    return -99;
   }
 
   public Set<Map.Entry<String, Integer>> getEntrySet() {
