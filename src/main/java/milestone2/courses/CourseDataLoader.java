@@ -15,13 +15,15 @@ public class CourseDataLoader {
     @Autowired
     private CourseRepository courseRepository;
 
+    
+    String courseFile = "data/CourseDetail.txt";
+
     @PostConstruct
-    public void loadData() {
-        String courseFile = "data/CourseDetail.txt";
+    public void loadData() throws IOException {
         readCourseFile(courseFile);
     }
 
-    private void readCourseFile(String filePath) {
+    private void readCourseFile(String filePath) throws IOException {
         String line = "";
         CourseCountMap courseCntMap = CourseCountMap.getInstance();
 
@@ -35,8 +37,7 @@ public class CourseDataLoader {
             }
 
         } catch (IOException e) {
-            System.err.println("Error occurred while reading " + filePath + " file.");
-            e.printStackTrace();
+            throw e;
         }
     }
 
