@@ -1,19 +1,18 @@
 package milestone2.courses;
-
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.bind.annotation.*;
-
 import milestone2.sign_up.model.User;
 import milestone2.sign_up.repository.UserRepository;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.web.bind.annotation.*;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.hateoas.IanaLinkRelations;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-import java.util.stream.Collectors;
+
 
 @RestController
 public class CourseController {
@@ -28,78 +27,39 @@ public class CourseController {
     this.userRepository = userRepository;
   }
 
+  //curl -X GET http://localhost:8080/courses
+  //Getting all existing courses in 2023 catalog.
   @GetMapping("/courses")
-  public
-  CollectionModel<EntityModel<Course>> courseShowAll() {
+  public ResponseEntity<?> courseShowAll() {
  
     List<EntityModel<Course>> courses = repository.findAll().stream()
         .map(assembler::toModel)
         .collect(Collectors.toList());
 
-    return CollectionModel.of(courses, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+    return ResponseEntity.ok(CollectionModel.of(courses, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
 
-  @PostMapping("/courses")
-  ResponseEntity<?> courseNew(@RequestBody Course newCourse) {
-
-    EntityModel<Course> entityModel = assembler.toModel(repository.save(newCourse));
-  
-    return ResponseEntity
-        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-        .body(entityModel);
-  }
-
+  //curl -X GET http://localhost:8080/courses/1364
+  //Searching certain course with specific id.
   @GetMapping("/courses/{id}")
-  public EntityModel<Course> courseShowOne(@PathVariable String id) {
+  public ResponseEntity<?> courseShowOne(@PathVariable String id) {
+    
+    Course course = repository.findById(id).orElse(null);
+    if (course == null)
+      return ResponseEntity.notFound().build();
 
-    Course course = repository.findById(id)
-        .orElseThrow(() -> new CourseNotFoundException(id));
-  
-    return assembler.toModel(course);
+    return ResponseEntity.ok(assembler.toModel(course));
   }
 
-  @PutMapping("/courses/{id}")
-  ResponseEntity<?> courseReplace(@RequestBody Course newCourse, @PathVariable String id) {
-
-    Course updatedCourse = repository.findById(id)
-        .map(course -> {
-          course.setCode(newCourse.getCode());
-          course.setTitle(newCourse.getTitle());
-          course.setMandatory(newCourse.getMandatory());
-          course.setPrereq(newCourse.getPrereq());
-          course.setAcadYear(newCourse.getAcadYear());
-          course.setOpenSmes(newCourse.getOpenSmes());
-          course.setType(newCourse.getType());
-          course.setDesc(newCourse.getDesc());
-          return repository.save(course);
-        })
-        .orElseGet(() -> {
-          newCourse.setCourseId(id);
-          return repository.save(newCourse);
-        });
-  
-    EntityModel<Course> entityModel = assembler.toModel(updatedCourse);
-  
-    return ResponseEntity
-        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-        .body(entityModel);
-  }
-
-  @DeleteMapping("/courses/{id}")
-  ResponseEntity<?> courseDelete(@PathVariable String id) {
-
-    repository.deleteById(id);
-  
-    return ResponseEntity.noContent().build();
-  }
-
-  // curl -X POST http://localhost:8080/users/20201111/courses/1241   
+  //curl -X POST http://localhost:8080/users/20201111/courses/1241   
   @PostMapping("/users/{userId}/courses/{courseId}")
   ResponseEntity<?> userCourseAdd(@PathVariable String userId, @PathVariable String courseId) {
     
     CourseCountMap courseCntMap = CourseCountMap.getInstance();
     User user = userRepository.findById(userId).orElseThrow();
-    Course course = repository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId));
+    Course course = repository.findById(courseId).orElse(null);
+    if (course == null)
+      return ResponseEntity.notFound().build();
     user.getCourseList().add(course);
     userRepository.save(user);
     EntityModel<Course> courseModel = assembler.toModel(course);
@@ -112,13 +72,15 @@ public class CourseController {
         .body(courseModel);
   }
 
-  // curl -X DELETE http://localhost:8080/users/20201111/courses/1221
+  //curl -X DELETE http://localhost:8080/users/20201111/courses/1221
   @DeleteMapping("/users/{userId}/courses/{courseId}")
   ResponseEntity<?> userCourseRemove(@PathVariable String userId, @PathVariable String courseId) {
-    
+
     CourseCountMap courseCntMap = CourseCountMap.getInstance();
     User user = userRepository.findById(userId).orElseThrow();
-    Course course = repository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId));
+    Course course = repository.findById(courseId).orElse(null);
+    if(course == null)
+      return ResponseEntity.notFound().build();
     user.deleteCourse(courseId);
     userRepository.save(user);
     EntityModel<Course> courseModel = assembler.toModel(course);
@@ -131,9 +93,12 @@ public class CourseController {
         .body(courseModel);
   }
 
+  //curl -X GET http://localhost:8080/courses/grade/Sophomore
+  //Filtering courses in grade:
+  //  Freshman, Sophomore, Junior, Senior
   @GetMapping("/courses/grade/{acadYear}")
-  CollectionModel<EntityModel<Course>> courseGradeYear(@PathVariable String acadYear) {
-    
+  ResponseEntity<?> courseGradeYear(@PathVariable String acadYear) {
+
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
       .filter(course -> {
@@ -144,13 +109,19 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+    if (CourseYear.isEmpty())
+      return ResponseEntity.notFound().build();
+
+    return ResponseEntity.ok(CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
 
+  //curl -X GET http://localhost:8080/courses/grade/Sophomore/2
+  //Filtering courses in grade and smester:
+  //  Freshman, Sophomore, Junior, Senior
+  //  0, 1, 2
   @GetMapping("/courses/grade/{acadYear}/{openSmes}")
-  CollectionModel<EntityModel<Course>> courseGradeYearSmes(@PathVariable String acadYear, @PathVariable int openSmes) {
-    
+  ResponseEntity<?> courseGradeYearSmes(@PathVariable String acadYear, @PathVariable Integer openSmes) {
+
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
       .filter(course -> {
@@ -163,14 +134,19 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+    if (CourseYear.isEmpty())
+      return ResponseEntity.notFound().build();
+
+    return ResponseEntity.ok(CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
   
+  //curl -X GET http://localhost:8080/courses/grade/Sophomore/2
+  //Filtering courses in area:
+  //  AI, Basic, Data, Graphics, HCI, Math, Mobile, Network, Security, Software, System, Virtual
   @GetMapping("/courses/area/{area}")
-  CollectionModel<EntityModel<Course>> courseArea(@PathVariable String area) {
-     
-    List<EntityModel<Course>> CourseYear = repository.findAll()
+  ResponseEntity<?> courseArea(@PathVariable String area) {
+
+    List<EntityModel<Course>> CourseArea = repository.findAll()
       .stream()
       .filter(course -> {
         String findArea = course.getType().toLowerCase();
@@ -180,14 +156,18 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+    if (CourseArea.isEmpty())
+      return ResponseEntity.notFound().build();
+
+    return ResponseEntity.ok(CollectionModel.of(CourseArea, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
 
+  //curl -X GET http://localhost:8080/courses/next/1221
+  //Showing courses that requires given id's course to be already taken.
   @GetMapping("/courses/next/{id}")
-  CollectionModel<EntityModel<Course>> courseNext(@PathVariable String id) {
-     
-    List<EntityModel<Course>> CourseYear = repository.findAll()
+  ResponseEntity<?> courseNext(@PathVariable String id) {
+
+    List<EntityModel<Course>> CourseNext = repository.findAll()
       .stream()
       .filter(course -> {
         String[] findPrereq = course.getPrereq();
@@ -199,12 +179,16 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+    if (CourseNext.isEmpty())
+      return ResponseEntity.notFound().build();
+
+    return ResponseEntity.ok(CollectionModel.of(CourseNext, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
 
+  //curl -X GET http://localhost:8080/courses/tendency
+  //Showing top 5 courses that have been taken(not organized order).
   @GetMapping("/courses/tendency")
-  CollectionModel<EntityModel<Course>> courseTendency() {
+  ResponseEntity<?> courseTendency() {
     
     CourseCountMap courseCntMap = CourseCountMap.getInstance();
     String[] tendencyTop = new String[5];
@@ -225,8 +209,8 @@ public class CourseController {
         }
       }
     }
-
-    List<EntityModel<Course>> CourseYear = repository.findAll()
+    
+    List<EntityModel<Course>> CourseTend = repository.findAll()
       .stream()
       .filter(course -> {
         for(int i = 0; i < 5; i++) {
@@ -238,13 +222,16 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+
+    return ResponseEntity.ok(CollectionModel.of(CourseTend, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
   
+  //curl -X GET http://localhost:8080/courses/tendency/Junior
+  //Showing top 5 certaain grade's courses that have been taken(not organized order):
+  //  Freshman, Sophomore, Junior, Senior
   @GetMapping("/courses/tendency/{acadYear}")
-  CollectionModel<EntityModel<Course>> courseTendencyGrade(@PathVariable String acadYear) {
-    
+  ResponseEntity<?> courseTendencyGrade(@PathVariable String acadYear) {
+
     CourseCountMap courseCntMap = CourseCountMap.getInstance();
     String[] tendencyTop = new String[5];
 
@@ -276,7 +263,7 @@ public class CourseController {
       }
     }
 
-    List<EntityModel<Course>> CourseYear = repository.findAll()
+    List<EntityModel<Course>> CourseTend = repository.findAll()
       .stream()
       .filter(course -> {
         for(int i = 0; i < 5; i++) {
@@ -288,14 +275,17 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+
+    return ResponseEntity.ok(CollectionModel.of(CourseTend, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
 
+  //curl -X GET http://localhost:8080/courses/recommend/HCI
+  //Listing courses that 1)Are required to take, 2)Matches with give area:
+  //  AI, Data, Graphics, HCI, Mobile, Network, Security, Software, System, Virtual
   @GetMapping("/courses/recommend/{area}")
-  CollectionModel<EntityModel<Course>> courseRecommendArea(@PathVariable String area) {
+  ResponseEntity<?> courseRecommendArea(@PathVariable String area) {
 
-    List<EntityModel<Course>> CourseYear = repository.findAll()
+    List<EntityModel<Course>> CourseRec = repository.findAll()
       .stream()
       .filter(course -> {
         if(course.getMandatory().indexOf("Required") == 0)
@@ -303,14 +293,11 @@ public class CourseController {
         String findArea = course.getType().toLowerCase();
         if(findArea.indexOf(area.toLowerCase()) >= 0)
           return true;
-        if(findArea.indexOf("System") != 0 || findArea.indexOf("Network") != 0)
-          if(course.getCourseId().indexOf("1311") == 0)
-            return true;
         return false;
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    
-    return CollectionModel.of(CourseYear, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel());
+
+    return ResponseEntity.ok(CollectionModel.of(CourseRec, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
 }

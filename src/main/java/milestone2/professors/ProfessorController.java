@@ -77,9 +77,9 @@ class ProfessorController {
     List<EntityModel<Professor>> NameProfessors = repository.findAll()
       .stream()
       .filter(professor -> {
-        if(professor.getName().toLowerCase().indexOf(findname.toLowerCase())>= 0)
+        String targetName = professor.getName().replaceAll("\\s+", "").toLowerCase();
+        if(targetName.indexOf(polishedName) >= 0)
           return true;
-        
         return false;
       })
       .map(assembler::toModel)
@@ -188,9 +188,9 @@ class ProfessorController {
     List<Professor> NameProfessors = repository.findAll()
       .stream()
       .filter(professor -> {
-        if(professor.getName().toLowerCase().indexOf(name.toLowerCase())>= 0)
+        String targetName = professor.getName().replaceAll("\\s+", "").toLowerCase();
+        if(targetName.indexOf(polishedName) >= 0)
           return true;
-        
         return false;
       })
       .collect(Collectors.toList());
