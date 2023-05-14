@@ -32,7 +32,7 @@ public class ProfessorDataLoader {
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split("\t");
-                Professor professor = new Professor(data[0], data[1], data[2].split(", "), data[3], data[4], data[5], data[6], "052-217-"+data[0]);
+                Professor professor = new Professor(data[0], data[1], data[2].split(", "), data[3], data[4], data[5], data[6]);
                 professorRepository.save(professor);
             }
 
