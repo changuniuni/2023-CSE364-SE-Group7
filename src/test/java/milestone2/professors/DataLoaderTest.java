@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.IOException;
 
 @SpringBootTest
-public class ProfessorDataLoaderTest {
+public class DataLoaderTest {
 
     private ProfessorDataLoader professorDataLoader;
     private CourseHistoryDataLoader coursehistoryrDataLoader;

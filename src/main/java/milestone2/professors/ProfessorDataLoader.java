@@ -19,13 +19,13 @@ public class ProfessorDataLoader {
 
     @PostConstruct
     public void loadData() throws IOException {
-        readDataFile();
+        readDataFile(professorFile);
     }
 
-    private void readDataFile() throws IOException {
+    private void readDataFile(String filePath) throws IOException {
         String line = "";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(professorFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split("\t");
