@@ -1,5 +1,4 @@
 package milestone2;
-
 import milestone2.courses.Course;
 
 import org.junit.jupiter.api.BeforeEach;

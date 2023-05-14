@@ -35,9 +35,7 @@ public class CourseController {
     List<EntityModel<Course>> courses = repository.findAll().stream()
         .map(assembler::toModel)
         .collect(Collectors.toList());
-    if (courses.isEmpty())
-      return ResponseEntity.notFound().build();
-    
+
     return ResponseEntity.ok(CollectionModel.of(courses, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
 
@@ -45,9 +43,6 @@ public class CourseController {
   //Searching certain course with specific id.
   @GetMapping("/courses/{id}")
   public ResponseEntity<?> courseShowOne(@PathVariable String id) {
-
-    if (id == null)
-      return ResponseEntity.notFound().build();
     
     Course course = repository.findById(id).orElse(null);
     if (course == null)
@@ -59,9 +54,6 @@ public class CourseController {
   //curl -X POST http://localhost:8080/users/20201111/courses/1241   
   @PostMapping("/users/{userId}/courses/{courseId}")
   ResponseEntity<?> userCourseAdd(@PathVariable String userId, @PathVariable String courseId) {
-    
-    if(userId == null || courseId == null)
-      return ResponseEntity.badRequest().build();
     
     CourseCountMap courseCntMap = CourseCountMap.getInstance();
     User user = userRepository.findById(userId).orElseThrow();
@@ -83,9 +75,6 @@ public class CourseController {
   //curl -X DELETE http://localhost:8080/users/20201111/courses/1221
   @DeleteMapping("/users/{userId}/courses/{courseId}")
   ResponseEntity<?> userCourseRemove(@PathVariable String userId, @PathVariable String courseId) {
-
-    if(userId == null || courseId == null)
-      return ResponseEntity.notFound().build();
 
     CourseCountMap courseCntMap = CourseCountMap.getInstance();
     User user = userRepository.findById(userId).orElseThrow();
@@ -110,9 +99,6 @@ public class CourseController {
   @GetMapping("/courses/grade/{acadYear}")
   ResponseEntity<?> courseGradeYear(@PathVariable String acadYear) {
 
-    if(acadYear == null)
-      return ResponseEntity.notFound().build();
-
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
       .filter(course -> {
@@ -135,9 +121,6 @@ public class CourseController {
   //  0, 1, 2
   @GetMapping("/courses/grade/{acadYear}/{openSmes}")
   ResponseEntity<?> courseGradeYearSmes(@PathVariable String acadYear, @PathVariable Integer openSmes) {
-    
-    if(acadYear == null || openSmes == null)
-      return ResponseEntity.notFound().build();
 
     List<EntityModel<Course>> CourseYear = repository.findAll()
       .stream()
@@ -162,9 +145,6 @@ public class CourseController {
   //  AI, Basic, Data, Graphics, HCI, Math, Mobile, Network, Security, Software, System, Virtual
   @GetMapping("/courses/area/{area}")
   ResponseEntity<?> courseArea(@PathVariable String area) {
-    
-    if(area == null)
-      return ResponseEntity.notFound().build();
 
     List<EntityModel<Course>> CourseArea = repository.findAll()
       .stream()
@@ -186,10 +166,7 @@ public class CourseController {
   //Showing courses that requires given id's course to be already taken.
   @GetMapping("/courses/next/{id}")
   ResponseEntity<?> courseNext(@PathVariable String id) {
-    
-    if(id == null)
-      return ResponseEntity.notFound().build();
-    
+
     List<EntityModel<Course>> CourseNext = repository.findAll()
       .stream()
       .filter(course -> {
@@ -245,8 +222,6 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    if (CourseTend.isEmpty())
-      return ResponseEntity.notFound().build();
 
     return ResponseEntity.ok(CollectionModel.of(CourseTend, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
@@ -256,9 +231,6 @@ public class CourseController {
   //  Freshman, Sophomore, Junior, Senior
   @GetMapping("/courses/tendency/{acadYear}")
   ResponseEntity<?> courseTendencyGrade(@PathVariable String acadYear) {
-    
-    if(acadYear == null)
-      return ResponseEntity.notFound().build();
 
     CourseCountMap courseCntMap = CourseCountMap.getInstance();
     String[] tendencyTop = new String[5];
@@ -303,8 +275,6 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    if (CourseTend.isEmpty())
-      return ResponseEntity.notFound().build();
 
     return ResponseEntity.ok(CollectionModel.of(CourseTend, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }
@@ -315,9 +285,6 @@ public class CourseController {
   @GetMapping("/courses/recommend/{area}")
   ResponseEntity<?> courseRecommendArea(@PathVariable String area) {
 
-    if(area == null)
-      return ResponseEntity.notFound().build();
-
     List<EntityModel<Course>> CourseRec = repository.findAll()
       .stream()
       .filter(course -> {
@@ -326,15 +293,10 @@ public class CourseController {
         String findArea = course.getType().toLowerCase();
         if(findArea.indexOf(area.toLowerCase()) >= 0)
           return true;
-        if(findArea.indexOf("System") != 0 || findArea.indexOf("Network") != 0)
-          if(course.getCourseId().indexOf("1311") == 0)
-            return true;
         return false;
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-    if (CourseRec.isEmpty())
-      return ResponseEntity.notFound().build();
 
     return ResponseEntity.ok(CollectionModel.of(CourseRec, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
   }

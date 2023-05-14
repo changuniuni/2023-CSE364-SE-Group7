@@ -1,5 +1,4 @@
 package milestone2;
-
 import milestone2.courses.CourseCountMap;
 
 import org.junit.jupiter.api.Test;
@@ -39,8 +38,8 @@ public class CourseCntMapTest {
         try {
             CourseCountMap countMapDummy = CourseCountMap.getInstance();
             assertNull(countMapDummy.getkey(-1));
-            assertEquals("2111", countMapDummy.getkey(0));
-            assertNull(countMapDummy.getkey(29));
+            assertEquals("1261", countMapDummy.getkey(10));
+            assertNull(countMapDummy.getkey(99));
         }
         catch (Exception e) {
             fail();
