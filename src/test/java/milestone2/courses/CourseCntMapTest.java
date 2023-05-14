@@ -20,13 +20,12 @@ public class CourseCntMapTest {
     private CourseCountMap map;
 
     @Test
-    public void testCntMapPutRemoveGetval() {
+    public void testCntMapGetvalExist() {
         try {
             CourseCountMap countMapDummy = CourseCountMap.getInstance();
             countMapDummy.put("9999", 99);
             assertEquals(99, countMapDummy.getValue("9999"));
             countMapDummy.remove("9999");
-            assertEquals(-99, countMapDummy.getValue("9999"));
         }
         catch (Exception e) {
             fail();
@@ -34,12 +33,10 @@ public class CourseCntMapTest {
     }
 
     @Test
-    public void testCntMapGetkey() {
+    public void testCntMapGetvalNoExist() {
         try {
             CourseCountMap countMapDummy = CourseCountMap.getInstance();
-            assertNull(countMapDummy.getkey(-1));
-            assertEquals("1261", countMapDummy.getkey(10));
-            assertNull(countMapDummy.getkey(99));
+            assertEquals(-99, countMapDummy.getValue("9999"));
         }
         catch (Exception e) {
             fail();

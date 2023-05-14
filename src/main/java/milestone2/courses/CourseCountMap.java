@@ -27,6 +27,7 @@ public class CourseCountMap {
     map.remove(key);
   }
   
+  /*
   public String getkey(int index) {
     if(index < 0)
       return null;
@@ -40,7 +41,7 @@ public class CourseCountMap {
         target++;
     }
     return null;
-  }
+  }*/
 
   public int getValue(String key) {
     if(map.containsKey(key))
