@@ -7,18 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import static org.mockito.BDDMockito.given;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -58,12 +52,19 @@ public class ProfessorControllerTest {
     public void testGetAllProfessors() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/professors"))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/professor"))
+                .andExpect(status().isNotFound());
+                
     }
 
     @Test
     public void testGetAllCourseHistories() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/coursehistories"))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/coursehistorie"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

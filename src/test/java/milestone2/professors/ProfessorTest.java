@@ -5,27 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @SpringBootTest
-@AutoConfigureMockMvc
 public class ProfessorTest {
 
     private Professor professor;
@@ -151,8 +133,8 @@ public class ProfessorTest {
         professor.setId("5");
         assertEquals("5", professor.getId());
         assertEquals("052-217-5", professor.getPhone());
-        professor.setId("6");
-        assertEquals("6", professor.getId());
-        assertEquals("052-217-6", professor.getPhone());
+        professor2.setId("6");
+        assertEquals("6", professor2.getId());
+        assertEquals("052-217-6", professor2.getPhone());
     }
 }
