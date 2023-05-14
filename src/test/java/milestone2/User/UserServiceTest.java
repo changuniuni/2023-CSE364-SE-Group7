@@ -6,18 +6,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.bson.Document;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Service;
 
 import milestone2.courses.Course;
 import milestone2.sign_up.controller.UserService;
@@ -33,7 +28,7 @@ public class UserServiceTest {
     private MongoTemplate mongoTemplate;
 
     @Mock
-    private MongoCollection mongoCollection;
+    private MongoCollection<Document> mongoCollection;
 
     @InjectMocks
     private UserService userService;

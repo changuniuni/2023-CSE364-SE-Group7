@@ -1,43 +1,24 @@
-package milestone2;
-import milestone2.courses.Course;
-import milestone2.courses.CourseController;
-import milestone2.courses.CourseRepository;
-import milestone2.courses.CourseModelAssembler;
-import milestone2.courses.CourseCountMap;
+package milestone2.courses;
 import milestone2.sign_up.controller.UserService;
-import milestone2.sign_up.model.User;
 import milestone2.sign_up.repository.UserRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.mockito.Mockito;
-import static org.mockito.BDDMockito.given;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import java.util.Collections;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
 
 
 @SpringBootTest
@@ -61,8 +42,6 @@ public class CourseControllerTest {
 
     @MockBean
     private UserService userService;
-
-    private HashMap<String, Integer> courseCountMap;
 
     @BeforeEach
     public void setUp() {
