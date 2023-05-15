@@ -59,6 +59,8 @@ We can confirm that the new course information is added correctly.<br></br>
 ```bash
 curl -X GET http://localhost:8080/users/20201111/courses
 ```
+<img width="1418" alt="스크린샷 2023-05-15 오후 2 00 29" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/41aa02cd-7c2c-4af1-bf6f-3d89a7c279c5">
+
 <hr/>
 
 #### 3. Feature 2  
@@ -87,7 +89,7 @@ curl -X GET http://localhost: 8080/courses/area/AI
 * It also recommends the classes you need to take classes in a specific field.   
 * For example, to advance into the system field, information can be obtained through the following command.
 ```bash
-curl -X GET http://localhost: 8080/courses/recommend/System
+curl -X GET http://localhost:8080/courses/recommend/System
 ``` 
 ![cmdGET courses-recommend-System](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/aa7367fb-8ce7-4cf6-9103-c8d3285b480c)
 
@@ -120,12 +122,11 @@ curl -X GET http://localhost:8080/courses/next/1221
 ```
 ![cmdGET courses-next-1221](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/4e9e6910-01b6-46d7-b014-e1b156d35cbe)
 
-* One of our key feature is that users can be informed of tendencies in courses others are taking.   
-* Students can establish your own course roadmap through information on courses taken by other students.   
+* One of our key feature is that users can be informed of tendencies in courses others are taking.    
 * It shows the courses people have taken the most.
 ```bash
 curl -X GET http://localhost:8080/courses/tendency
-curl -× GET http://localhost:8080/courses/ tendency/Sophomore
+curl -X GET http://localhost:8080/courses/ tendency/Sophomore
 ```
 ![cmdGET courses-tendency](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d875fe0c-14d9-483c-acb0-e989c67bad0c)
 
@@ -136,6 +137,28 @@ curl -× GET http://localhost:8080/courses/ tendency/Sophomore
 
 #### 4. Feature 3
 * This feature shows professors' research fields, introductions to labs, and information on courses taken.
+* First, we can see the list of professors in CSE major.
+```bash
+curl -X  GET http://localhost:8080/professors
+```
+<img width="1726" alt="스크린샷 2023-05-15 오후 4 38 57" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/5a8dd048-70e7-4fa2-9d5f-837b10df8245">
+
+* Also, we can easily search professors whose last name is "Kim".
+```bash
+curl -X GET http://localhost:8080/professors/search/name/Kim
+```
+* We can also search by professor's research field. 
+* For example, we can search for information about professors who are researching ai as follows.
+```bash
+curl -X GET http://localhost:8080/professors/search/area/ai
+```
+<img width="1728" alt="스크린샷 2023-05-15 오후 4 45 27" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d60e0d95-4402-4424-8b9c-e2022aabd3de">
+
+* We can also find professor using office phone number.(e.g. ends with 2253)
+```bash
+curl -X GET http://localhost:8080/professors/search/phone/2253
+```
+
 
 Then we can see the following result.
 <br></br><br></br>
