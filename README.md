@@ -33,9 +33,9 @@ bash run.sh
 ```
 <hr/>
 
-### Part 2.   
+### Part II: Implement REST APIs for your three features.  
 
-#### 1. Default feature. 
+#### 0. Default feature 
 We made user sign up feature by using student id and name.
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{"id": "20201111", "name": "Hong gil dong"}' http://localhost:8080/users 
@@ -52,7 +52,7 @@ curl -X DELETE http://localhost:8080/users
 
 <hr/>
 
-#### 2. Feature 1
+#### Feature 1: Personal CSE course roadmapping
 * Users can add or modify courses they have taken or plan to take according to the roadmap.   
 * Users simply enter the course ID and the course information stored in the database is automatically retrieved and saved.   
 * For example, if the user want to take course "Advanced Programming" with course id "1241", we can use the following command.
@@ -81,7 +81,14 @@ curl -X DELETE http://localhost:8080/users/20201111/courses/1241
 
 <hr/>
 
-#### 3. Feature 2  
+#### Feature 2: Browsing course information & getting roadmap recommendations
+
+Second feature is about CSE course catalog and 5-year history of opened course.  
+Course information(course code, prerequisite, opened semester, etc.) is following the 2023 Undergraduate Course Catalog.  
+Course history contains Spring/Fall semester of 2018~2022.  
+Please note that some old course's data is overriden with new data.  
+For example, 'Information Visualization' had CSE221 & CSE351 as prerequisites in 2022, but there are no more such requirements in 2023.  
+Please follow steps of curl commands carefully, to understand this feature.  
 
 * We made course database for CSE major of UNIST.
 By using the following command, we can easily see the course information.
@@ -178,8 +185,12 @@ curl -X GET http://localhost:8080/courses/tendency/Sophomore
 
 <hr/>
 
-#### 4. Feature 3
-* This feature shows professors' information such that introductions to labs, email, office phone  and courses taken.
+#### Feature 3: Browsing professor information and their course-open history
+Third feature shows professors' information.
+Theses includes introductions to labs, email, office phone.
+And with association of Feature 2, user can browse professor's history of course opened by them.
+Following insturctions will help you understand the feature.
+
 * First, we can see the list of professors in CSE major.
 ```bash
 curl -X GET http://localhost:8080/professors
@@ -223,9 +234,15 @@ Then we can see the following result.
 
 <hr/>
 
-### Part 3. 
-In this part, we implemented "Junit test" for the code we implemented in Part 2.  
-Here are the test results:  
+### Part III: Achieve more than 90% of branch coverage with your unit tests  
+In this part, we used "JUnit test" to test the code we implemented in Part 2.  
+You don't need to type additional command, since tests are done when executing 'bash run.sh'.  
+JaCoCo helps visualizing the JUnit test result, and this is also done without extra command.  
+Its HTML file will be made in this directory, after build success:  
+```bash
+/2023-CSE364-SE-Group7/target/site/jacoco/index.html
+```
+If you open that file, test results are expected to be seen like this, and their branch coverages are above 90%:  
 
 ![스크린샷 2023-05-15 오전 10 15 25](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/785cfff7-f7d5-454c-957e-b8dc578c174c)
 
