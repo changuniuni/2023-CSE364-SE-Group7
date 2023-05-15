@@ -52,7 +52,10 @@ And by using GET command, we can check that user sign up is successfully done.
 ```bash
 curl -X POST http://localhost:8080/users/20201111/courses/1241  
 ```
-We can confirm that the new course information is added correctly.<br></br>
+We can confirm that the new course information is added correctly.  
+* When we add courses using POST command, the count for each course is incremented by 1. 
+* The count obtained in this way is then used for the tendency function.
+<br></br>
 ![스크린샷 2023-05-15 오전 10 31 33](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/b9068085-f8f9-49a9-b601-87feda659559)
 
 * We can get the course information of use whose id is "20201111", by using the following command.
@@ -60,6 +63,11 @@ We can confirm that the new course information is added correctly.<br></br>
 curl -X GET http://localhost:8080/users/20201111/courses
 ```
 <img width="1418" alt="스크린샷 2023-05-15 오후 2 00 29" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/41aa02cd-7c2c-4af1-bf6f-3d89a7c279c5">
+
+* If the user want to delete the course information, we can use the following command.
+```bash
+curl -X DELETE http://localhost:8080/users/20201111/courses/1221
+```
 
 <hr/>
 
