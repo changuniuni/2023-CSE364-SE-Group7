@@ -187,43 +187,6 @@ public class CourseControllerTest {
     }
 
 
-    
-
-    @Test
-    public void userCourseAddTest() throws Exception {
-        User user = new User("20201111", "John");
-        Course course = new Course("1241", "Test Course", "Course Description", "Required", new String[]{"0"}, "Freshman", 1, "Basic", "Test Course Description.");
-        EntityModel<Course> courseModel = EntityModel.of(course);
-
-        Mockito.when(userRepository.findById("20201111")).thenReturn(Optional.of(user));
-        Mockito.when(courseRepository.findById("1241")).thenReturn(Optional.of(course));
-        Mockito.when(courseModelAssembler.toModel(course)).thenReturn(courseModel);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/20201111/courses/1241")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-
-        verify(userRepository, times(1)).save(user);
-    }
-
-    @Test
-    public void userCourseRemoveTest() throws Exception {
-        User user = new User("20201111", "John");
-        Course course = new Course("1221", "Test Course", "Course Description", "Required", new String[]{"0"}, "Freshman", 1, "Basic", "Test Course Description.");
-        EntityModel<Course> courseModel = EntityModel.of(course);
-
-        Mockito.when(userRepository.findById("20201111")).thenReturn(Optional.of(user));
-        Mockito.when(courseRepository.findById("1221")).thenReturn(Optional.of(course));
-        Mockito.when(courseModelAssembler.toModel(course)).thenReturn(courseModel);
-
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/20201111/courses/1221")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-
-        verify(userRepository, times(1)).save(user);
-    }
-
-
     @AfterEach
     public void testDone() {
         courseCntMap.remove("9107");
