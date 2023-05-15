@@ -69,6 +69,9 @@ curl -X GET http://localhost:8080/users/20201111/courses
 curl -X DELETE http://localhost:8080/users/20201111/courses/1221
 ```
 
+#### The main theme of this feature is that when each user signs up at the default feature, they can create a list of courses that they are interested in.  
+#### Users simply enter the course ID, and the course information is retrieved and stored from the course database. automatically.
+
 <hr/>
 
 #### 3. Feature 2  
