@@ -148,8 +148,8 @@ curl -X GET http://localhost:8080/coursehistories/browse/2020/1
 * Similar with previous function, we can find the courses recommended for specific grade(Freshman/Sophomore/Junior/Senior) as follows. 
 * Even we can specify the semester in 1(Spring) and 2(Fall).
 ```bash
-curl -X GET http: //localhost:8080/courses/grade/Junior
-curl -X GET http: //localhost:8080/courses/grade/Senior/1
+curl -X GET http://localhost:8080/courses/grade/Junior
+curl -X GET http://localhost:8080/courses/grade/Senior/1
 ```
 ![cmdGET courses-grade-Junior](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/dc115559-5bfd-4a27-aed7-144816e21f05)
 
