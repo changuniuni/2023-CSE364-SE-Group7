@@ -82,7 +82,7 @@ curl -X GET http://localhost:8080/courses/1364
 
 * And then if you enter the type of each subject, for example "AI", information about artificial intelligence-related classes will appear.
 ```bash
-curl -X GET http://localhost: 8080/courses/area/AI
+curl -X GET http://localhost:8080/courses/area/AI
 ```
 ![cmdGET courses-area-AI](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/efe749db-6209-4b27-afac-5e721c3fedf1)
 
@@ -126,7 +126,7 @@ curl -X GET http://localhost:8080/courses/next/1221
 * It shows the courses people have taken the most.
 ```bash
 curl -X GET http://localhost:8080/courses/tendency
-curl -X GET http://localhost:8080/courses/ tendency/Sophomore
+curl -X GET http://localhost:8080/courses/tendency/Sophomore
 ```
 ![cmdGET courses-tendency](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d875fe0c-14d9-483c-acb0-e989c67bad0c)
 
@@ -139,7 +139,7 @@ curl -X GET http://localhost:8080/courses/ tendency/Sophomore
 * This feature shows professors' research fields, introductions to labs, and information on courses taken.
 * First, we can see the list of professors in CSE major.
 ```bash
-curl -X  GET http://localhost:8080/professors
+curl -X GET http://localhost:8080/professors
 ```
 <img width="1726" alt="스크린샷 2023-05-15 오후 4 38 57" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/5a8dd048-70e7-4fa2-9d5f-837b10df8245">
 
