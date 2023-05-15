@@ -74,7 +74,12 @@ Then we can see the following result.
 
 ![cmdGET courses](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d2095202-9c34-4564-85ee-d8a158d7680b)  
 
-Also, we can find the course information using course id.
+Also, we can find the course information using course id.  
+Id is written in 4 digits, and follows corresopnding format:  
+* First digit : Indicating school. (1: CSE, 2: ITP, 3:MTH)  
+* Other digits : Indicating course code's number part.  
+
+For example, below Id 1364 means CSE364 course. This rule is applied to all course Ids.  
 ```bash
 curl -X GET http://localhost:8080/courses/1364
 ```
@@ -87,14 +92,32 @@ curl -X GET http://localhost:8080/courses/area/AI
 ![cmdGET courses-area-AI](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/efe749db-6209-4b27-afac-5e721c3fedf1)
 
 * It also recommends the classes you need to take classes in a specific field.   
-* For example, to advance into the system field, information can be obtained through the following command.
+* Get result will provide these filtered courses:  
+  * All courses that is set to be "Required",  
+  * Courses that matches the given area, but in "Selective".  
+* For example, to advance into the system field, its recommendation can be obtained through the following command.
 ```bash
 curl -X GET http://localhost:8080/courses/recommend/System
 ``` 
 ![cmdGET courses-recommend-System](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/aa7367fb-8ce7-4cf6-9103-c8d3285b480c)
 
-* You can also know the information of classes held in a specific year as follows.   
-* Even we can specify the semester.
+* This web application also provides the 5-year database of courses opened in UNIST.  
+* To browse all course histories in 'coursehistories' tab.  
+* To see one specific course, indicate its Id on the back. It has different Id format with 1364. If has a five-digit format, and it follows such rules(XXYZZ):  
+  * XX : Last two digits of opened year. (2022->22)
+  * Y : Semester. (1: Spring, 2: Fall)
+  * ZZ : Index of course in that semester, starting from 01.
+* For example, course history Id 18112 stands for twelveth course in 2018 Spring semester.  
+```bash
+curl -X GET http://localhost:8080/coursehistories
+curl -X GET http://localhost:8080/coursehistories/18112
+```
+<img width="992" alt="스크린샷 2023-05-15 오후 5 48 51" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/0359052e-1fee-4e88-ad4d-d6e743d45b70">
+
+<img width="1027" alt="스크린샷 2023-05-15 오후 5 49 26" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/54fc1017-6007-4bab-8306-333b7c95ab09">
+
+* You can also know the information of classes held in a specific year as follows. In database, course histories of 2018~2022 are stored.   
+* Even we can specify the semester in 1(Spring) and 2(Fall).
 ```bash
 curl -X GET http://localhost:8080/coursehistories/browse/2022
 curl -X GET http://localhost:8080/coursehistories/browse/2020/1
@@ -104,8 +127,8 @@ curl -X GET http://localhost:8080/coursehistories/browse/2020/1
 ![cmdGET coursehistories-browse-2020-1](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/2bdcde2b-7077-4dab-b7dd-10c2688932c4)
 
 
-* Similar with previous function, we can find the courses recommended for specific grade(e.g. sophomore or junior) as follows. 
-* Even we can specify the semester.
+* Similar with previous function, we can find the courses recommended for specific grade(Freshman/Sophomore/Junior/Senior) as follows. 
+* Even we can specify the semester in 1(Spring) and 2(Fall).
 ```bash
 curl -X GET http: //localhost:8080/courses/grade/Junior
 curl -X GET http: //localhost:8080/courses/grade/Senior/1
@@ -116,14 +139,16 @@ curl -X GET http: //localhost:8080/courses/grade/Senior/1
 
 
 * In CSE courses, prerequisite courses are important matters. 
-* Therefore, we can check the prerequisite courses of a specific course as follows.
+* We can browse courses that requires the given course Id to be taken.  
+* For example, to check courses that has 1221(Data Structure), below commands can be used.  
 ``` bash
 curl -X GET http://localhost:8080/courses/next/1221
 ```
 ![cmdGET courses-next-1221](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/4e9e6910-01b6-46d7-b014-e1b156d35cbe)
 
 * One of our key feature is that users can be informed of tendencies in courses others are taking.    
-* It shows the courses people have taken the most.
+* It shows top five courses people have taken the most.  
+* For this milestone, tendencies of courses are manually typed. Please note that if # of users are large enough, top 5 courses can be changed.
 ```bash
 curl -X GET http://localhost:8080/courses/tendency
 curl -X GET http://localhost:8080/courses/tendency/Sophomore
