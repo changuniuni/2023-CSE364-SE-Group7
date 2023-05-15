@@ -17,7 +17,7 @@
 
 
 - - -
-## 🚩 Milestone 1
+## 🚩 Milestone 2
 #### First, build a given DockerFile.
 ```bash
 docker build -t image_name . 
