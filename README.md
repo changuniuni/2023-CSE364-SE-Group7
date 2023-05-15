@@ -31,6 +31,7 @@ docker exec -it container_name /bin/bash
 ```bash
 bash run.sh
 ```
+<hr/>
 
 ### Part 2. 
 
@@ -42,21 +43,27 @@ curl -X POST -H "Content-Type: application/json" -d '{"id": "20201111", "name": 
 And by using GET command, we can check that user sign up is successfully done. 
 ![스크린샷 2023-05-15 오전 10 24 05](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d4f26857-7690-47b8-b292-160a3ba1ce73)
 
+<hr/>
 
 #### 2. Feature 1
-Users can add or modify courses they have taken or plan to take according to the roadmap.   
-Users simply enter the course ID and the course information stored in the database is automatically retrieved and saved.   
-For example, if the user want to take course "Advanced Programming" with course id "1241", we can use the following command.
+* Users can add or modify courses they have taken or plan to take according to the roadmap.   
+* Users simply enter the course ID and the course information stored in the database is automatically retrieved and saved.   
+* For example, if the user want to take course "Advanced Programming" with course id "1241", we can use the following command.
 ```bash
 curl -X POST http://localhost:8080/users/20201111/courses/1241  
 ```
 We can confirm that the new course information is added correctly.<br></br>
 ![스크린샷 2023-05-15 오전 10 31 33](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/b9068085-f8f9-49a9-b601-87feda659559)
 
-<br></br>  
+* We can get the course information of use whose id is "20201111", by using the following command.
+```bash
+curl -X GET http://localhost:8080/users/20201111/courses
+```
+<hr/>
 
-#### 3. Feature 2
-We made course database for CSE major of UNIST.
+#### 3. Feature 2  
+
+* We made course database for CSE major of UNIST.
 By using the following command, we can easily see the course information.
 ```bash
 curl -X GET http://localhost:8080/courses
@@ -69,94 +76,79 @@ Also, we can find the course information using course id.
 ```bash
 curl -X GET http://localhost:8080/courses/1364
 ```
-
 ![cmdGET courses-1364](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/2b8d624a-f389-4e6e-8b12-1f414d5ab119)
 
-
-And then if you enter the type of each subject, for example "AI", information about artificial intelligence-related classes will appear.
+* And then if you enter the type of each subject, for example "AI", information about artificial intelligence-related classes will appear.
 ```bash
 curl -X GET http://localhost: 8080/courses/area/AI
 ```
-It also recommends the classes you need to take classes in a specific field. For example, to advance into the system field, information can be obtained through the following command.
+![cmdGET courses-area-AI](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/efe749db-6209-4b27-afac-5e721c3fedf1)
+
+* It also recommends the classes you need to take classes in a specific field.   
+* For example, to advance into the system field, information can be obtained through the following command.
 ```bash
 curl -X GET http://localhost: 8080/courses/recommend/System
 ``` 
+![cmdGET courses-recommend-System](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/aa7367fb-8ce7-4cf6-9103-c8d3285b480c)
 
-You can also know the information of classes held in a specific year as follows. Even we can specify the semester.
+* You can also know the information of classes held in a specific year as follows.   
+* Even we can specify the semester.
 ```bash
 curl -X GET http://localhost:8080/coursehistories/browse/2022
 curl -X GET http://localhost:8080/coursehistories/browse/2020/1
 ```
+![cmdGET coursehistories-browse-2022](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/e75169d7-cbb2-442d-8eee-841cba96b583)
 
-Similar with previous function, we can find the courses recommended for specific grade(e.g. sophomore or junior) as follows. Even we can specify the semester.
+![cmdGET coursehistories-browse-2020-1](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/2bdcde2b-7077-4dab-b7dd-10c2688932c4)
+
+
+* Similar with previous function, we can find the courses recommended for specific grade(e.g. sophomore or junior) as follows. 
+* Even we can specify the semester.
 ```bash
 curl -X GET http: //localhost:8080/courses/grade/Junior
 curl -X GET http: //localhost:8080/courses/grade/Senior/1
 ```
+![cmdGET courses-grade-Junior](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/dc115559-5bfd-4a27-aed7-144816e21f05)
 
-In CSE courses, prerequisite courses are important matters. Therefore, we can check the prerequisite courses of a specific course as follows.
-```bash
+![cmdGET courses-grade-Senior-1](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/3a447464-d71a-45b1-a99a-13c74ad84d9b)
+
+
+* In CSE courses, prerequisite courses are important matters. 
+* Therefore, we can check the prerequisite courses of a specific course as follows.
+``` bash
 curl -X GET http://localhost:8080/courses/next/1221
 ```
-One of our key feature is that users can be informed of tendencies in courses others are taking.   
-Students can establish your own course roadmap through information on courses taken by other students.   
-It shows the courses people have taken the most.
+![cmdGET courses-next-1221](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/4e9e6910-01b6-46d7-b014-e1b156d35cbe)
+
+* One of our key feature is that users can be informed of tendencies in courses others are taking.   
+* Students can establish your own course roadmap through information on courses taken by other students.   
+* It shows the courses people have taken the most.
 ```bash
 curl -X GET http://localhost:8080/courses/tendency
-curl -× GET http://localhost: 8080/courses/ tendency/Sophomore
+curl -× GET http://localhost:8080/courses/ tendency/Sophomore
 ```
+![cmdGET courses-tendency](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d875fe0c-14d9-483c-acb0-e989c67bad0c)
 
-<br></br>
-  
+![cmdGET courses-tendency-Sophomore](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/aeb707ee-bbe6-4f72-9257-c3024e92989c)
+
+
+<hr/>
+
 #### 4. Feature 3
-This feature shows professors' research fields, introductions to labs, and information on courses taken.
-```bash
-curl -X DELETE http://localhost:8080/employees/id
-```
-***Please note that "id" should be replaced with the id of the element that we want to delete.***
-<br></br>
+* This feature shows professors' research fields, introductions to labs, and information on courses taken.
+
 Then we can see the following result.
-<img width="1493" alt="image" src="https://user-images.githubusercontent.com/48553632/229966245-b1d46a2c-7071-4f83-bd39-3bdcc1b2f014.png">  
-![KakaoTalk_Photo_2023-04-06-13-15-59-4](https://user-images.githubusercontent.com/48553632/230271106-8956c4e0-cddf-4e96-8919-0ff88d86998b.png)
-
-<br></br>
-
-#### Basic REST API implementation is done for PART 2
-- - -
-### Guilelined for running the code(Part 3).
-#### 1. If we want to see the total movie list by using the following command,
-```bash
-curl -X GET http://localhost:8080/movies
-```
-It will show the first top 20 movies.
-![image](https://user-images.githubusercontent.com/48553632/229973289-41fef6e6-8410-495b-a812-bba0f978eb23.png)
-
-#### 2. If we want to see the movie list with average rating above 5, we can use the following command.
-```bash
-curl -X GET http://localhost:8080/ratings/5
-```
-Then we can see the following result.
-![스크린샷 2023-04-05 오후 2 21 41](https://user-images.githubusercontent.com/48553632/230007915-a7cc4011-f9d8-46d0-8f49-cc1963ecc810.png)
-
-#### 3. If we add new movie with id = "9999", title = "test_Movie" and genres = "Crime", we can use the following command.
-```bash
-curl -X POST http://localhost:8080/movies -H 'Content-Type: application/json' -d '{"id":"9999","title":"test_Movie","genres":["Crime"]}'
-```  
-***Please note that we have to give genres with brackets.***
-Then we can see the following result.  
-<img width="1725" alt="스크린샷 2023-04-05 오전 10 41 28" src="https://user-images.githubusercontent.com/48553632/230009098-f20e619b-e1e3-4e27-9103-2c2f12e0326c.png">  
-
-And we can see that the movie is added correctly.
-<img width="574" alt="image" src="https://user-images.githubusercontent.com/48553632/230009791-07107c0f-f50f-4513-b995-a56cdacb5572.png">
-
-#### 4. If we want to modify the movie with id = "9999", which has a genre of "Comedy", we can use the following command.
-```bash
-curl -X PUT http://localhost:8080/movies/9999 -H 'Content-Type: application/json' -d '{"id":"9999","title":"test_Movie","genres":["Comedy"]}'
-```
-Then we can see the following result.
-<img width="1728" alt="스크린샷 2023-04-05 오전 10 42 46" src="https://user-images.githubusercontent.com/48553632/230010115-72cb2eec-4b69-41bf-8bc5-ed3d71612a22.png">
 <br></br><br></br>
 
+<hr/>
 
-      
-## This is all for Milestone 1 implementation.
+### Part 3. 
+In this part, we implemented "Junit test" for the code we implemented in Part 2.  
+Here are the test results:  
+
+![스크린샷 2023-05-15 오전 10 15 25](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/785cfff7-f7d5-454c-957e-b8dc578c174c)
+
+
+<hr/>  
+
+#### This is all for Milestone 2 implementation.
