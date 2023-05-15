@@ -33,7 +33,17 @@ bash run.sh
 ```
 <hr/>
 
-### Part 2. 
+### Part 2.   
+
+#### 1. Default feature. 
+We made user sign up feature by using student id and name.
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"id": "20201111", "name": "Hong gil dong"}' http://localhost:8080/users 
+```
+And by using GET command, we can check that user sign up is successfully done. 
+![스크린샷 2023-05-15 오전 10 24 05](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d4f26857-7690-47b8-b292-160a3ba1ce73)
+
+<hr/>
 
 #### 2. Feature 1
 * Users can add or modify courses they have taken or plan to take according to the roadmap.   
