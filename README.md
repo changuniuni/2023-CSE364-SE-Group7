@@ -43,6 +43,13 @@ curl -X POST -H "Content-Type: application/json" -d '{"id": "20201111", "name": 
 And by using GET command, we can check that user sign up is successfully done. 
 ![스크린샷 2023-05-15 오전 10 24 05](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d4f26857-7690-47b8-b292-160a3ba1ce73)
 
+Also, we can delete certain user with given user id(e.g. 20201111).
+Or, we can delete all users.
+```bash
+curl -X DELETE http://localhost:8080/users/20201111
+curl -X DELETE http://localhost:8080/users  
+```
+
 <hr/>
 
 #### 2. Feature 1
