@@ -73,7 +73,7 @@ curl -X GET http://localhost:8080/users/20201111/courses
 
 * If the user want to delete the course information, we can use the following command.
 ```bash
-curl -X DELETE http://localhost:8080/users/20201111/courses/1221
+curl -X DELETE http://localhost:8080/users/20201111/courses/1241
 ```
 
 #### The main theme of this feature is that when each user signs up at the default feature, they can create a list of courses that they are interested in.  
