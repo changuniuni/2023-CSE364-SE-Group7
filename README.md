@@ -32,43 +32,84 @@ docker exec -it container_name /bin/bash
 bash run.sh
 ```
 
-### Guilelined for running the code(Part 2).
+### Part 2. 
 
-#### 1. To check the implementation of REST APIs, if we use the following command, 
+#### 1. Default feature. 
+We made user sign up feature by using student id and name.
 ```bash
-curl -X GET http://localhost:8080/employees 
+curl -X POST -H "Content-Type: application/json" -d '{"id": "20201111", "name": "Hong gil dong"}' http://localhost:8080/users 
 ```
-We can get the following output.
-<img src="https://user-images.githubusercontent.com/48553632/229964494-bdb6dab2-fabc-4447-905b-0c6ea85c3306.png">  
-![KakaoTalk_Photo_2023-04-06-13-15-59-1](https://user-images.githubusercontent.com/48553632/230270925-7beb1395-feec-4a78-b169-0d93d0444450.png)
-  
+And by using GET command, we can check that user sign up is successfully done. 
+![스크린샷 2023-05-15 오전 10 24 05](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d4f26857-7690-47b8-b292-160a3ba1ce73)
 
 
-#### 2. And if we add new element who has name "Test_people" and has a role of "Undergrad stuent" by using following command,
+#### 2. Feature 1
+Users can add or modify courses they have taken or plan to take according to the roadmap.   
+Users simply enter the course ID and the course information stored in the database is automatically retrieved and saved.   
+For example, if the user want to take course "Advanced Programming" with course id "1241", we can use the following command.
 ```bash
-curl -X POST http://localhost:8080/employees -H 'Content-Type: application/json' -d '{"name":"Test_people","role":"Undergrad student"}'
+curl -X POST http://localhost:8080/users/20201111/courses/1241  
 ```
-We can confirm that the new element is added correctly.<br></br>
-<img width="826" alt="스크린샷 2023-04-05 오전 10 46 29" src="https://user-images.githubusercontent.com/48553632/229964934-6a2f13a3-1604-4048-935d-c5c0aee49c0f.png">
-  
-  ![KakaoTalk_Photo_2023-04-06-13-15-59-2](https://user-images.githubusercontent.com/48553632/230270999-605a5ffb-6948-4792-b9da-602536bbf31a.png)
+We can confirm that the new course information is added correctly.<br></br>
+![스크린샷 2023-05-15 오전 10 31 33](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/b9068085-f8f9-49a9-b601-87feda659559)
 
+<br></br>  
 
-
-#### 3. If we want to modify the element with another role "Grad student", we can use the following command.
+#### 3. Feature 2
+We made course database for CSE major of UNIST.
+By using the following command, we can easily see the course information.
 ```bash
-curl -X PUT http://localhost:8080/employees/id -H 'Content-Type: application/json' -d '{"name":"Test_people","role":"Grad student"}'
+curl -X GET http://localhost:8080/courses
 ```
-***Please note that "id" should be replaced with the id of the element that we want to modify.***
-<br></br>
-
 Then we can see the following result.
-<img width="790" alt="스크린샷 2023-04-05 오전 10 49 35" src="https://user-images.githubusercontent.com/48553632/229965732-e41dddeb-1614-41ee-92f7-33e93474181b.png">  
- ![KakaoTalk_Photo_2023-04-06-13-15-59-3](https://user-images.githubusercontent.com/48553632/230271040-6f400d82-f7de-4845-9ef4-f63deb01e673.png)
+
+![cmdGET courses](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d2095202-9c34-4564-85ee-d8a158d7680b)  
+
+Also, we can find the course information using course id.
+```bash
+curl -X GET http://localhost:8080/courses/1364
+```
+
+![cmdGET courses-1364](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/2b8d624a-f389-4e6e-8b12-1f414d5ab119)
 
 
+And then if you enter the type of each subject, for example "AI", information about artificial intelligence-related classes will appear.
+```bash
+curl -X GET http://localhost: 8080/courses/area/AI
+```
+It also recommends the classes you need to take classes in a specific field. For example, to advance into the system field, information can be obtained through the following command.
+```bash
+curl -X GET http://localhost: 8080/courses/recommend/System
+``` 
+
+You can also know the information of classes held in a specific year as follows. Even we can specify the semester.
+```bash
+curl -X GET http://localhost:8080/coursehistories/browse/2022
+curl -X GET http://localhost:8080/coursehistories/browse/2020/1
+```
+
+Similar with previous function, we can find the courses recommended for specific grade(e.g. sophomore or junior) as follows. Even we can specify the semester.
+```bash
+curl -X GET http: //localhost:8080/courses/grade/Junior
+curl -X GET http: //localhost:8080/courses/grade/Senior/1
+```
+
+In CSE courses, prerequisite courses are important matters. Therefore, we can check the prerequisite courses of a specific course as follows.
+```bash
+curl -X GET http://localhost:8080/courses/next/1221
+```
+One of our key feature is that users can be informed of tendencies in courses others are taking.   
+Students can establish your own course roadmap through information on courses taken by other students.   
+It shows the courses people have taken the most.
+```bash
+curl -X GET http://localhost:8080/courses/tendency
+curl -× GET http://localhost: 8080/courses/ tendency/Sophomore
+```
+
+<br></br>
   
-#### 4. If we want to delete the element, we can use the following command.
+#### 4. Feature 3
+This feature shows professors' research fields, introductions to labs, and information on courses taken.
 ```bash
 curl -X DELETE http://localhost:8080/employees/id
 ```
