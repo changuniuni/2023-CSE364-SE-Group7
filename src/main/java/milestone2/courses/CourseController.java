@@ -65,6 +65,7 @@ public class CourseController {
     EntityModel<Course> courseModel = assembler.toModel(course);
     
     int countToUpdate = courseCntMap.getValue(courseId) + 1;
+    // System.out.println("Course count updated to " +courseCntMap.getValue(courseId)+" to "+countToUpdate);
     courseCntMap.put(courseId, countToUpdate);
     
     return ResponseEntity
