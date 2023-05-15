@@ -192,6 +192,8 @@ curl -X GET http://localhost:8080/professors
 ```bash
 curl -X GET http://localhost:8080/professors/search/name/Kim
 ```
+<img width="1578" alt="스크린샷 2023-05-15 오후 7 08 29" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/47911730/8c1da16b-ecee-47e7-9440-42674724040f">
+
 * We can also search by professor's research field. 
 * Format: http://localhost:8080/professors/search/area/"{field}"
 * For example, we can search for information about professors who are researching ai as follows.
@@ -205,6 +207,7 @@ curl -X GET http://localhost:8080/professors/search/area/ai
 ```bash
 curl -X GET http://localhost:8080/professors/search/phone/2253
 ```
+<img width="1238" alt="image" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/47911730/cc3a1f65-357a-41f5-a9d3-84fe000b04ee">
 
 * Additionally, we can search for courses using a partial of the professor's name.
 * Format: http://localhost:8080/professors/search/"{name}"/courses
@@ -213,12 +216,7 @@ curl -X GET http://localhost:8080/professors/search/phone/2253
 ```bash
 curl -X GET http://localhost:8080/professors/search/kim/courses
 ```
-
-
-!!!!!!
-사진 넣어 주세요.
-!!!!!!
-
+<img width="1470" alt="image" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/47911730/3be785cd-0b03-4ca3-90d4-cbce1f909573">
 
 Then we can see the following result.
 <br></br><br></br>
