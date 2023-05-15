@@ -186,12 +186,14 @@ curl -X GET http://localhost:8080/professors
 ```
 <img width="1726" alt="스크린샷 2023-05-15 오후 4 38 57" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/5a8dd048-70e7-4fa2-9d5f-837b10df8245">
 
-* Also, we can easily search professors using name.
+* Also, we can easily search certain professor's information using name.
+* Format: http://localhost:8080/professors/search/name/"{name}"
 * For example, we can search for professors whose last name is "Kim".
 ```bash
 curl -X GET http://localhost:8080/professors/search/name/Kim
 ```
 * We can also search by professor's research field. 
+* Format: http://localhost:8080/professors/search/area/"{field}"
 * For example, we can search for information about professors who are researching ai as follows.
 ```bash
 curl -X GET http://localhost:8080/professors/search/area/ai
@@ -199,11 +201,13 @@ curl -X GET http://localhost:8080/professors/search/area/ai
 <img width="1728" alt="스크린샷 2023-05-15 오후 4 45 27" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d60e0d95-4402-4424-8b9c-e2022aabd3de">
 
 * We can also find professor using office phone number.(e.g. ends with 2253)
+* Format: http://localhost:8080/professors/search/phone/"{number}"
 ```bash
 curl -X GET http://localhost:8080/professors/search/phone/2253
 ```
 
 * Additionally, we can search for courses using a partial of the professor's name.
+* Format: http://localhost:8080/professors/search/"{name}"/courses
 * For example, we can search for courses that were opened by professors with 'kim' in their name.
 
 ```bash
