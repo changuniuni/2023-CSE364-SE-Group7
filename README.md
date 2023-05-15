@@ -35,16 +35,6 @@ bash run.sh
 
 ### Part 2. 
 
-#### 1. Default feature. 
-We made user sign up feature by using student id and name.
-```bash
-curl -X POST -H "Content-Type: application/json" -d '{"id": "20201111", "name": "Hong gil dong"}' http://localhost:8080/users 
-```
-And by using GET command, we can check that user sign up is successfully done. 
-![스크린샷 2023-05-15 오전 10 24 05](https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/d4f26857-7690-47b8-b292-160a3ba1ce73)
-
-<hr/>
-
 #### 2. Feature 1
 * Users can add or modify courses they have taken or plan to take according to the roadmap.   
 * Users simply enter the course ID and the course information stored in the database is automatically retrieved and saved.   
@@ -172,14 +162,15 @@ curl -X GET http://localhost:8080/courses/tendency/Sophomore
 <hr/>
 
 #### 4. Feature 3
-* This feature shows professors' research fields, introductions to labs, and information on courses taken.
+* This feature shows professors' information such that introductions to labs, email, office phone  and courses taken.
 * First, we can see the list of professors in CSE major.
 ```bash
 curl -X GET http://localhost:8080/professors
 ```
 <img width="1726" alt="스크린샷 2023-05-15 오후 4 38 57" src="https://github.com/changuniuni/2023-CSE364-SE-Group7/assets/48553632/5a8dd048-70e7-4fa2-9d5f-837b10df8245">
 
-* Also, we can easily search professors whose last name is "Kim".
+* Also, we can easily search professors using name.
+* For example, we can search for professors whose last name is "Kim".
 ```bash
 curl -X GET http://localhost:8080/professors/search/name/Kim
 ```
@@ -194,6 +185,18 @@ curl -X GET http://localhost:8080/professors/search/area/ai
 ```bash
 curl -X GET http://localhost:8080/professors/search/phone/2253
 ```
+
+* Additionally, we can search for courses using a partial of the professor's name.
+* For example, we can search for courses that were opened by professors with 'kim' in their name.
+
+```bash
+curl -X GET http://localhost:8080/professors/search/kim/courses
+```
+
+
+!!!!!!
+사진 넣어 주세요.
+!!!!!!
 
 
 Then we can see the following result.
