@@ -46,8 +46,8 @@ $(document).ready(function() {
           // Extract the relevant information from the response
           const courses = response._embedded.courses;
           const courseData = courses.map(function(course) {
-            const { code, title, type, desc } = course;
-            return { code, title, type, desc };
+            const { code, title, mandatory, type, desc } = course;
+            return { code, title, mandatory, type, desc };
           });
     
           // Display the course information in a table
@@ -73,8 +73,8 @@ $(document).ready(function() {
           // Extract the relevant information from the response
           const courses = response._embedded.courses;
           const courseData = courses.map(function(course) {
-            const { code, title, type, desc } = course;
-            return { code, title, type, desc };
+            const { code, title, mandatory, type, desc } = course;
+            return { code, title, mandatory, type, desc };
           });
     
           // Display the course information in a table
@@ -96,7 +96,7 @@ $(document).ready(function() {
     const tbody = $('<tbody>');
   
     // Create the table headers
-    const headers = ['Course ID', 'Course Name', 'Course Area', 'Course Description', 'User Roadmap'];
+    const headers = ['Course ID', 'Course Name', 'Course Mandatory', 'Course Area', 'Course Description', 'User Roadmap'];
     const headerRow = $('<tr>');
     headers.forEach(function(header) {
       const th = $('<th>').text(header);
@@ -120,7 +120,7 @@ $(document).ready(function() {
     const tbody = $('<tbody>');
 
     // Create the table headers
-    const headers = ['Course ID', 'Course Name', 'Course Area', 'Course Description', 'User Roadmap'];
+    const headers = ['Course ID', 'Course Name', 'Course Mandatory', 'Course Area', 'Course Description', 'User Roadmap'];
     const headerRow = $('<tr>');
     headers.forEach(function(header) {
       const th = $('<th>').text(header);
@@ -134,14 +134,15 @@ $(document).ready(function() {
 
     // Create the table rows with course data, with filter applied
     courses.forEach(function(course) {
-      const { code, title, type, desc } = course;
+      const { code, title, mandatory, type, desc } = course;
 
       const row = $('<tr>');
       const codeCell = $('<td>').text(code).addClass('course-id');
       const nameCell = $('<td>').text(title);
+      const mandCell = $('<td>').text(mandatory);
       const areaCell = $('<td>').text(type);
       const descCell = $('<td>').text(desc);
-      row.append(codeCell, nameCell, areaCell, descCell);
+      row.append(codeCell, nameCell, mandCell, areaCell, descCell);
       tbody.append(row);
 
       const buttonCell = $('<td>').css('text-align', 'center');

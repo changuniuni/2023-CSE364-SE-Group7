@@ -42,6 +42,29 @@ $(document).ready(function() {
       }
     });
   
+    const ReturnClick = document.getElementById('returnButton');
+    ReturnClick.addEventListener('click', function() {
+      $.ajax({
+        url: 'http://localhost:8080/professors',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          // Extract the relevant information from the response
+          const professors = response._embedded.professors;
+          const professorData = professors.map(function(professor) {
+            const { name, topic, email } = professor;
+            return { name, topic, email };
+          });
+  
+          // Display the professor information in a table
+          displayProfessorTable(professorData);
+        },
+        error: function(error) {
+          console.log('Error:', error);
+        }
+      });
+    });
+
     // Function to display the professor information in a table
 function displayProfessorTable(professors) {
     // Create the table element
@@ -76,7 +99,9 @@ function displayProfessorTable(professors) {
 
     // Append the table to the screen
     table.append(tbody);
-    $('.professor-content').append(table);
+    $('.professor-content').empty().append(table);
+    const returnButton = document.getElementById('returnButton');
+    returnButton.style.display = 'none';
   
     // Attach click event to professor name cells
     $('.professor-name').click(function() {
@@ -154,6 +179,8 @@ function displayCourseTable(courses) {
     // Append the table to the screen
     table.append(tbody);
     $('.professor-content').empty().append(table);
+    const returnButton = document.getElementById('returnButton');
+    returnButton.style.display = 'block';
   }
   });
   
