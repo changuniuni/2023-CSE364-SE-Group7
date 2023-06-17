@@ -14,13 +14,16 @@ $(document).ready(function() {
         const newItem1 = $('<li>').addClass('nav-item');
         const newItem2 = $('<li>').addClass('nav-item');
         const newItem3 = $('<li>').addClass('nav-item');
+        const newItem4 = $('<li>').addClass('nav-item');
         const newLink1 = $('<a>').attr('href', `user_main.html?userid=${userId}&name=${name}`).text('Home');
         const newLink2 = $('<a>').attr('href', `professor.html?userid=${userId}&name=${name}`).text('Professor');
         const newLink3 = $('<a>').attr('href', `course.html?userid=${userId}&name=${name}`).text('Course');
+        const newLink4 = $('<a>').attr('href', `recommend.html?userid=${userId}&name=${name}`).text('Recommend');
 
         newItem1.append(newLink1);
         newItem2.append(newLink2);
         newItem3.append(newLink3);
+        newItem4.append(newLink4);
 
         $('.nav-list').append(newItem1, newItem2, newItem3);
 
