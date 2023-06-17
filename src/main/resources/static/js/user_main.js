@@ -88,7 +88,7 @@ function displayCourseTable(courses) {
     const tbody = $('<tbody>');
   
     // Create the table headers
-    const headers = ['Open Year', 'Course ID', 'Open Smes', 'Course Name'];
+    const headers = ['Open Year', 'Course ID', 'Open Semester', 'Course Name'];
     const headerRow = $('<tr>');
     headers.forEach(function(header) {
       const th = $('<th>').text(header);
@@ -112,7 +112,9 @@ function displayCourseTable(courses) {
         dataType: 'json',
         success: function(response) {
           const courseName = response.title;
+          const courseId = response.code;
           const courseNameCell = $('<td>').text(courseName);
+          const courseIdCell = $('<td>').text(courseId);
           row.append(openYearCell, courseIdCell, openSmesCell, courseNameCell);
           tbody.append(row);
         },
@@ -126,8 +128,5 @@ function displayCourseTable(courses) {
     table.append(tbody);
     $('.user-main-content').empty().append(table);
   }
-  
-  
-  
   });
   
