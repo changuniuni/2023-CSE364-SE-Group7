@@ -23,11 +23,8 @@ $(document).ready(function() {
           if (user) {
             console.log('Login successful:', user);
 
-            // Set the userid in a cookie
-            setCookie('userid', user.id, 7);
-
             // Redirect to the user_main page
-            window.location.href = 'user_main.html';
+            location.href = `user_main.html?userid=${user.id}&name=${user.name}`;
 
           } else {
             console.log('Login failed: User not found');
@@ -43,13 +40,3 @@ $(document).ready(function() {
       });
     });
   });
-  
-  function setCookie(name, value, days) {
-    var expires = '';
-    if (days) {
-      var date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = '; expires=' + date.toUTCString();
-    }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
-  }

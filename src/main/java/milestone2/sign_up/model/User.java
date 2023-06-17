@@ -20,15 +20,10 @@ public class User {
     private String name;
     private List<Course> courseList;
 
-
-    public User() {
-        this.courseList = new ArrayList<>();
-    }
-
     public User(String id, String name) {
         this.id = id;
         this.name = name;
-        this.courseList = null;
+        this.courseList = new ArrayList<>();
     }
 
     public String getId() {

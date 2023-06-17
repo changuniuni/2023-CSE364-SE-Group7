@@ -1,10 +1,28 @@
 $(document).ready(function() {
+  const urlParams = new URLSearchParams(location.search);
+
+  const userId = urlParams.get('userid');
+  const name = urlParams.get('name');
+
   // Fetch the professors' information
   $.ajax({
     url: 'http://localhost:8080/courses',
     type: 'GET',
     dataType: 'json',
     success: function(response) {
+      const newItem1 = $('<li>').addClass('nav-item');
+      const newItem2 = $('<li>').addClass('nav-item');
+      const newItem3 = $('<li>').addClass('nav-item');
+      const newLink1 = $('<a>').attr('href', `user_main.html?userid=${userId}&name=${name}`).text('Home');
+      const newLink2 = $('<a>').attr('href', `professor.html?userid=${userId}&name=${name}`).text('Professor');
+      const newLink3 = $('<a>').attr('href', `course.html?userid=${userId}&name=${name}`).text('Course');
+
+      newItem1.append(newLink1);
+      newItem2.append(newLink2);
+      newItem3.append(newLink3);
+
+      $('.nav-list').append(newItem1, newItem2, newItem3);
+
       // Extract the relevant information from the response
       const courses = response._embedded.courses;
       const courseData = courses.map(function(course) {
