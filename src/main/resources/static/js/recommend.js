@@ -26,76 +26,77 @@ $(document).ready(function() {
 
       $('.nav-list').append(newItem1, newItem2, newItem3, newItem4);
 
-      // Extract the relevant information from the response
-      const courses = response._embedded.courses;
-      const courseData = courses.map(function(course) {
-        const { code, title, type, desc, acadYear, openSmes, prereq } = course;
-        return { code, title, type, desc, acadYear, openSmes, prereq };
-      });
-
       // Display the course information in a table
-      displayCourseCatalog(courseData);
+      displayEmptyRecommend();
     },
     error: function(error) {
       console.log('Error:', error);
     }
   });
   
-  const FilterClick = document.getElementById('checkFilter');
+  const FilterClick = document.getElementById('getRecommend');
   FilterClick.addEventListener('click', function() {
-    $.ajax({
-      url: 'http://localhost:8080/courses',
-      type: 'GET',
-      dataType: 'json',
-      success: function(response) {
-        // Extract the relevant information from the response
-        const courses = response._embedded.courses;
-        const courseData = courses.map(function(course) {
-          const { code, title, type, desc, acadYear, openSmes, prereq } = course;
-          return { code, title, type, desc, acadYear, openSmes, prereq };
-        });
-  
-        // Display the course information in a table
-        displayCourseCatalog(courseData);
-      },
-      error: function(error) {
-        console.log('Error:', error);
-      }
-    });
+    filterSelect = document.getElementById('recSelect');
+    if(filterSelect.value != "none") {
+      $.ajax({
+        url: `http://localhost:8080/courses/recommend/${encodeURIComponent(filterSelect.value)}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          // Extract the relevant information from the response
+          const courses = response._embedded.courses;
+          const courseData = courses.map(function(course) {
+            const { code, title, type, desc } = course;
+            return { code, title, type, desc };
+          });
+    
+          // Display the course information in a table
+          displayRecommend(courseData);
+        },
+        error: function(error) {
+          console.log('Error:', error);
+        }
+      });
+    }
+    else {displayEmptyRecommend();}
   });
 
   const ReturnClick = document.getElementById('returnButton');
   ReturnClick.addEventListener('click', function() {
-    $.ajax({
-      url: 'http://localhost:8080/courses',
-      type: 'GET',
-      dataType: 'json',
-      success: function(response) {
-        // Extract the relevant information from the response
-        const courses = response._embedded.courses;
-        const courseData = courses.map(function(course) {
-          const { code, title, type, desc, acadYear, openSmes, prereq } = course;
-          return { code, title, type, desc, acadYear, openSmes, prereq };
-        });
-  
-        // Display the course information in a table
-        displayCourseCatalog(courseData);
-      },
-      error: function(error) {
-        console.log('Error:', error);
-      }
-    });
+    returnSelect = document.getElementById('recSelect');
+    if(returnSelect.value != "none") {
+      $.ajax({
+        url: `http://localhost:8080/courses/recommend/${encodeURIComponent(returnSelect.value)}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          // Extract the relevant information from the response
+          const courses = response._embedded.courses;
+          const courseData = courses.map(function(course) {
+            const { code, title, type, desc } = course;
+            return { code, title, type, desc };
+          });
+    
+          // Display the course information in a table
+          displayRecommend(courseData);
+        },
+        error: function(error) {
+          console.log('Error:', error);
+        }
+      });
+    }
+    else {displayEmptyRecommend();}
   });
 
   // Function to display the course information in a table
-  function displayCourseCatalog(courses) {
+  function displayEmptyRecommend() {
     // Create the table element
     const table = $('<table>').addClass('course-table');
     const thead = $('<thead>');
     const tbody = $('<tbody>');
   
     // Create the table headers
-    const headers = ['Course ID', 'Course Name', 'Course Area', 'Course Description'];
+    const headers = ['Course ID', 'Course Name', 'Course Area', 'Course Description', 'User Roadmap'];
     const headerRow = $('<tr>');
     headers.forEach(function(header) {
       const th = $('<th>').text(header);
@@ -104,65 +105,36 @@ $(document).ready(function() {
     thead.append(headerRow);
     table.append(thead);
 
-    // Reading radio button condition for filtering
-    const radioButtons = document.querySelectorAll('input[name="filter"]');
-    let selectedFilter;
-    radioButtons.forEach(radioButton => {
-      if (radioButton.checked) {
-        selectedFilter = radioButton.value;
-      }
+    // Append the table to the screen
+    table.append(tbody);
+    $('.recommend-content').empty().append(table);
+    const returnButton = document.getElementById('returnButton');
+    returnButton.style.display = 'none';
+  }
+
+  // Function to display the course information in a table
+  function displayRecommend(courses) {
+    // Create the table element
+    const table = $('<table>').addClass('course-table');
+    const thead = $('<thead>');
+    const tbody = $('<tbody>');
+
+    // Create the table headers
+    const headers = ['Course ID', 'Course Name', 'Course Area', 'Course Description', 'User Roadmap'];
+    const headerRow = $('<tr>');
+    headers.forEach(function(header) {
+      const th = $('<th>').text(header);
+      headerRow.append(th);
     });
+    thead.append(headerRow);
+    table.append(thead);
+
+    const disabledButtons = [];
+    const abledButtons = [];
 
     // Create the table rows with course data, with filter applied
     courses.forEach(function(course) {
-      const { code, title, type, desc, acadYear, openSmes, prereq } = course;
-      let filterSelect;
-      switch (selectedFilter) {
-        case "cid":
-          filterSelect = document.getElementById('cidInput');
-          if(filterSelect.value != "" && !code.includes(filterSelect.value)) {return;}
-          break;
-        case "acy":
-          filterSelect = document.getElementById('acySelect');
-          if(filterSelect.value != "none" && filterSelect.value != acadYear) {return;}
-          break;
-        case "ays":
-          filterSelect = document.getElementById('aysSelect');
-          const filterYear = filterSelect.value.slice(0, filterSelect.value.length-1);
-          const filterSmes = parseInt(filterSelect.value.slice(filterSelect.value.length-1, filterSelect.value.length));
-          if(filterYear != "none" && filterYear != acadYear) {return;}
-          if(filterSmes != 0 && filterSmes != openSmes) {return;}
-          break;
-        case "car":
-          filterSelect = document.getElementById('carSelect');
-          if(filterSelect.value != "none" && filterSelect.value != type) {return;}
-          break;
-        case "pre":
-          filterSelect = document.getElementById('preInput');
-          let isFound = 0;
-          prereq.forEach(function(courseCode) {
-            if(courseCode == "0") {return;}
-            const courseMain = courseCode.slice(0, 1);
-            const courseSub = courseCode.slice(1, 4);
-            let courseId;
-            switch (courseMain) {
-              case "1":
-                courseId = "CSE" + courseSub;
-                break;
-              case "2":
-                courseId = "ITP" + courseSub;
-                break;
-              case "3":
-                courseId = "MTH" + courseSub;
-                break;
-            }
-            if(courseId.includes(filterSelect.value)) {
-              isFound = 1;
-            }
-          });
-          if(filterSelect.value != "" && isFound == 0) {return;}
-          break;
-      }
+      const { code, title, type, desc } = course;
 
       const row = $('<tr>');
       const codeCell = $('<td>').text(code).addClass('course-id');
@@ -171,11 +143,62 @@ $(document).ready(function() {
       const descCell = $('<td>').text(desc);
       row.append(codeCell, nameCell, areaCell, descCell);
       tbody.append(row);
+
+      const buttonCell = $('<td>').css('text-align', 'center');
+      let button = $('<button>').text('Add');
+
+      $.ajax({
+        url: `http://localhost:8080/users/${userId}/courses`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(c) {
+            if(c.find(function(Id) {
+            return Id.code === code;
+            })){
+            button.prop('disabled', true);
+            }
+        },
+        error: function(error) {
+            console.log('Error:', error);
+        }
+      });
+
+      buttonCell.append(button);
+      row.append(buttonCell);
+      
+      const courseMain = code.slice(0, 3);
+      const courseSub = code.slice(3, 8);
+      let courseId;
+      switch (courseMain) {
+        case "CSE":
+          courseId = "1" + courseSub;
+          break;
+        case "ITP":
+          courseId = "2" + courseSub;
+          break;
+        case "MTH":
+          courseId = "3" + courseSub;
+          break;
+      }
+
+      button.on('click', function() {
+        $.ajax({
+          url: `http://localhost:8080/users/${userId}/courses/${courseId}`,
+          type: 'POST',
+          success: function(response) {
+            console.log('Course added to user course list:', response);
+            button.prop('disabled', true);
+          },
+          error: function(error) {
+            console.log('Error adding course to user course list:', error);
+          }
+        });
+      });
     });
  
     // Append the table to the screen
     table.append(tbody);
-    $('.course-content').empty().append(table);
+    $('.recommend-content').empty().append(table);
     const returnButton = document.getElementById('returnButton');
     returnButton.style.display = 'none';
 
@@ -263,7 +286,7 @@ $(document).ready(function() {
   
     // Append the table to the screen
     table.append(tbody);
-    $('.course-content').empty().append(table);
+    $('.recommend-content').empty().append(table);
     const returnButton = document.getElementById('returnButton');
     returnButton.style.display = 'block';
   }

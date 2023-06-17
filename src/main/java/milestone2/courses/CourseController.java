@@ -292,6 +292,14 @@ public class CourseController {
         if(course.getMandatory().indexOf("Required") == 0)
           return true;
         String findArea = course.getType().toLowerCase();
+        if(course.getMandatory().indexOf("Selective_Required") == 0) {
+          if((area.toLowerCase().indexOf("system") == 0 || area.toLowerCase().indexOf("mobile") == 0 || area.toLowerCase().indexOf("security") == 0)
+            && course.getCode().indexOf("CSE311") == 0)
+            return true;
+          else if((area.toLowerCase().indexOf("system") == -1 && area.toLowerCase().indexOf("mobile") == -1 && area.toLowerCase().indexOf("security") == -1)
+          && course.getCode().indexOf("CSE351") == 0)
+            return true;
+        }
         if(findArea.indexOf(area.toLowerCase()) >= 0)
           return true;
         return false;
