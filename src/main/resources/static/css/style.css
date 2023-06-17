@@ -98,18 +98,22 @@ body {
   text-decoration: none;
 }
 
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0 auto;
-  max-width: 400px;
-}
-
-.filter-item {
+.form-row {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+}
+
+.form-row label,
+.form-row select {
+  margin-right: 20px;
+}
+
+.form-row input[type="radio"] {
+  margin-right: 5px;
+}
+
+.form-row input[type="text"] {
+  margin-right: 5px;
 }
 
 table {
