@@ -48,7 +48,7 @@ public class UserServiceTest {
         Course course2 = new Course(null, null, null, null, null, null, 0, null, null); 
         List<Course> courses = Arrays.asList(course1, course2);
         
-        User user = new User(); // Assuming you have a User class
+        User user = new User(null, null); // Assuming you have a User class
         user.setCourses(courses); // Assuming you have a setCourseList method
 
         List<Course> resultCourses = userService.getCourses(user);

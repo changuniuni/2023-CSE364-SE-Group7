@@ -98,22 +98,18 @@ body {
   text-decoration: none;
 }
 
-.form-row {
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.filter-item {
   display: flex;
   align-items: center;
-}
-
-.form-row label,
-.form-row select {
-  margin-right: 20px;
-}
-
-.form-row input[type="radio"] {
-  margin-right: 5px;
-}
-
-.form-row input[type="text"] {
-  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 table {
@@ -141,7 +137,3 @@ table tbody tr:nth-child(even) {
 table tbody tr:hover {
   background-color: #eaeaea;
 }
-/*
-table tbody tr:first-child {
-  display: none;
-}*/
