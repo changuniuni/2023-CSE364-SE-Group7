@@ -98,7 +98,32 @@ body {
     text-decoration: none;
   }
   
-  .user-main-content {
-    /* Add styling for the main content as needed */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table th,
+  table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  table th {
+    background-color: #f2f2f2;
+  }
+  
+  table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  table tbody tr:hover {
+    background-color: #eaeaea;
+  }
+  
+  table tbody tr:first-child {
+    display: none;
   }
   

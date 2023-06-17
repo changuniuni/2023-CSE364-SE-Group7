@@ -1,19 +1,19 @@
 $(document).ready(function() {
     // Fetch the professors' information
     $.ajax({
-      url: 'http://localhost:8080/professors',
+      url: 'http://localhost:8080/courses',
       type: 'GET',
       dataType: 'json',
       success: function(response) {
         // Extract the relevant information from the response
-        const professors = response._embedded.professors;
-        const professorData = professors.map(function(professor) {
-          const { name, topic, email } = professor;
-          return { name, topic, email };
+        const courses = response._embedded.courses;
+        const courseData = courses.map(function(course) {
+          const { code, title, type, desc } = course;
+          return { code, title, type, desc };
         });
   
         // Display the professor information in a table
-        displayProfessorTable(professorData);
+        displayProfessorTable(courseData);
       },
       error: function(error) {
         console.log('Error:', error);
@@ -21,14 +21,14 @@ $(document).ready(function() {
     });
   
     // Function to display the professor information in a table
-    function displayProfessorTable(professors) {
+    function displayProfessorTable(courses) {
       // Create the table element
-      const table = $('<table>').addClass('professor-table');
+      const table = $('<table>').addClass('course-table');
       const thead = $('<thead>');
       const tbody = $('<tbody>');
   
       // Create the table headers
-      const headers = ['Name', 'Topic', 'Email'];
+      const headers = ['Course ID', 'Course Name', 'Course Area', 'Course Description'];
       const headerRow = $('<tr>');
       headers.forEach(function(header) {
         const th = $('<th>').text(header);
@@ -38,19 +38,20 @@ $(document).ready(function() {
       table.append(thead);
   
       // Create the table rows with professor data
-      professors.forEach(function(professor) {
-        const { name, topic, email } = professor;
+      courses.forEach(function(course) {
+        const { code, title, type, desc } = course;
         const row = $('<tr>');
-        const nameCell = $('<td>').text(name);
-        const topicCell = $('<td>').text(topic);
-        const emailCell = $('<td>').text(email);
-        row.append(nameCell, topicCell, emailCell);
+        const idCell = $('<td>').text(code);
+        const nameCell = $('<td>').text(title);
+        const areaCell = $('<td>').text(type);
+        const descCell = $('<td>').text(desc);
+        row.append(idCell, nameCell, areaCell, descCell);
         tbody.append(row);
       });
   
       // Append the table to the screen
       table.append(tbody);
-      $('.user-main-content').append(table);
+      $('.course-content').append(table);
     }
   });
   

@@ -17,7 +17,7 @@ $(document).ready(function() {
   
           // Find the user with the matching student ID
           const user = response.find(function(user) {
-            return user.id === studentId;
+            return user.id === studentId && user.name === name;
           });
   
           if (user) {
