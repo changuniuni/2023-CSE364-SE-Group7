@@ -98,6 +98,20 @@ body {
     text-decoration: none;
   }
   
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 auto;
+    max-width: 400px;
+  }
+  
+  .filter-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
   table {
     width: 100%;
     border-collapse: collapse;
