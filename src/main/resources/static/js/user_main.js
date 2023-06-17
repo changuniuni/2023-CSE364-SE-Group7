@@ -1,11 +1,30 @@
 $(document).ready(function() {
-  
-  const userId = getCookie('userid');
+  const urlParams = new URLSearchParams(location.search);
+
+  const userId = urlParams.get('userid');
+  const name = urlParams.get('name');
+
   $.ajax({
     url: `http://localhost:8080/users/${userId}`,
     type: 'GET',
     dataType: 'json',
     success: function(response) {
+      const newItem1 = $('<li>').addClass('nav-item');
+      const newItem2 = $('<li>').addClass('nav-item');
+      const newItem3 = $('<li>').addClass('nav-item');
+      const newLink1 = $('<a>').attr('href', `user_main.html?userid=${userId}&name=${name}`).text('Home');
+      const newLink2 = $('<a>').attr('href', `professor.html?userid=${userId}&name=${name}`).text('Professor');
+      const newLink3 = $('<a>').attr('href', `course.html?userid=${userId}&name=${name}`).text('Course');
+
+      newItem1.append(newLink1);
+      newItem2.append(newLink2);
+      newItem3.append(newLink3);
+
+      $('.nav-list').append(newItem1, newItem2, newItem3);
+
+      const button = $('<a>').attr('href', `add_course.html?userid=${userId}&name=${name}`).addClass('btn btn-primary').text('Add Course');
+      $('.button-container').append(button);
+
       displayUserInfo(response);
     },
     error: function(error) {
@@ -76,18 +95,5 @@ $(document).ready(function() {
       // Append the table to the screen
       table.append(tbody);
       $('.user-main-content').append(table);
-    }
-
-
-  // Get the value of a cookie by name
-    function getCookie(name) {
-      var nameEQ = name + "=";
-      var ca = document.cookie.split(';');
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-      }
-      return null;
     }
 });

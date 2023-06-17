@@ -22,8 +22,8 @@ public class UserController {
 
     // curl -X POST -H "Content-Type: application/json" -d '{"id": "20201111", "name": "Hong gil dong"}' http://localhost:8080/users
     @PostMapping("/users")
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(new User(user.getId(), user.getName()));
+    public User createUser(@RequestParam String userid, @RequestParam String name) {
+        return userRepository.save(new User(userid, name));
     }
 
     //curl -X GET http://localhost:8080/users
