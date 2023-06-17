@@ -1,15 +1,10 @@
 package milestone2.courses;
 import milestone2.sign_up.controller.UserService;
-import milestone2.sign_up.model.User;
 import milestone2.sign_up.repository.UserRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import org.springframework.http.MediaType;
 
 import org.mockito.Mockito;
 
