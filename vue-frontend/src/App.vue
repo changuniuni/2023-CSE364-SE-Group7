@@ -1,46 +1,46 @@
 <template>
   <div id="app">
     <div class="logo-container">
-      <img src="./assets/logo.png" alt="paCsemaker Logo">
+      <img src="./assets/logo.png" alt="paCsemaker Logo" class="logo-image">
     </div>
 
     <div class="button-container">
-      <button @click="redirectToSignup">Sign Up</button>
-      <button @click="redirectToLogin">Login</button>
+      <router-link to="/signup" class="button">Sign Up</router-link>
+      <router-link to="/login" class="button">Login</router-link>
     </div>
+
+    <router-view></router-view>
   </div>
 </template>
 
-<script>
-export default {
-  name: "App",
-  methods: {
-    redirectToSignup() {
-      // Redirect to the signup page or perform any desired action
-      // Example: this.$router.push('/signup');
-    },
-    redirectToLogin() {
-      // Redirect to the login page or perform any desired action
-      // Example: this.$router.push('/login');
-    },
-  },
-};
-</script>
-
 <style>
-.logo-container {
+#app {
   text-align: center;
   margin-top: 100px;
 }
 
-.button-container {
-  text-align: center;
-  margin-top: 20px;
+.logo-container {
+  margin-bottom: 20px;
 }
 
-.button-container button {
+.logo-image {
+  max-width: 400px;
+}
+
+.button-container {
+  margin-bottom: 20px;
+}
+
+.button-container .button {
+  display: inline-block;
   padding: 10px 20px;
-  font-size: 16px;
-  margin: 0 10px;
+  background-color: #3490dc;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.button-container .button + .button {
+  margin-left: 10px;
 }
 </style>

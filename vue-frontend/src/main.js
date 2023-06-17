@@ -1,6 +1,15 @@
-import * as Vue from 'vue'
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import App from './App.vue';
+import SignupForm from './components/SignupForm.vue';
 
-new Vue({
-  el: '#app',
-  render: (h) => h(),   
+const routes = [
+  { path: '/signup', component: SignupForm }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
 });
+
+createApp(App).use(router).mount('#app');
