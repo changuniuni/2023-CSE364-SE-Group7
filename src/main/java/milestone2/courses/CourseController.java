@@ -285,8 +285,75 @@ public class CourseController {
   //  AI, Data, Graphics, HCI, Mobile, Network, Security, Software, System, Virtual
   @GetMapping("/courses/recommend/{area}")
   ResponseEntity<?> courseRecommendArea(@PathVariable String area) {
-
+    String[] prereqList = new String[15];
+    List<Course> courseWhole = repository.findAll()
+      .stream()
+      .filter(course -> {return true;})
+      .collect(Collectors.toList());
+    
+    for(Course courseTarget : courseWhole) {
+      Boolean is_valid = false;
+      if(courseTarget.getMandatory().indexOf("Required") == 0)
+          is_valid = true;
+      String findArea = courseTarget.getType().toLowerCase();
+      if(courseTarget.getMandatory().indexOf("Selective_Required") == 0) {
+        if((area.toLowerCase().indexOf("system") == 0 || area.toLowerCase().indexOf("mobile") == 0 || area.toLowerCase().indexOf("security") == 0)
+           && courseTarget.getCode().indexOf("CSE311") == 0)
+          is_valid = true;
+        else if((area.toLowerCase().indexOf("system") == -1 && area.toLowerCase().indexOf("mobile") == -1 && area.toLowerCase().indexOf("security") == -1)
+                && courseTarget.getCode().indexOf("CSE351") == 0)
+          is_valid = true;
+      }
+      if(findArea.indexOf(area.toLowerCase()) >= 0)
+        is_valid = true;
+      
+      if(is_valid) {
+        for(String prereqElem : courseTarget.getPrereq()) {
+          if (prereqElem.indexOf("0") != 0) {
+            for(int i = 0; i < 15; i++) {
+              if(prereqList[i] == null) {
+                prereqList[i] = prereqElem;
+                break;
+              }
+              else if(prereqList[i].indexOf(prereqElem) == 0) break;
+            }
+          }
+        }
+      }
+    }
+    
     List<EntityModel<Course>> CourseRec = repository.findAll()
+      .stream()
+      .filter(course -> {
+        if(course.getMandatory().indexOf("Required") == 0)
+          return true;
+        String findArea = course.getType().toLowerCase();
+        String findId = course.getCourseId();
+        for(int i = 0; i < 15; i++) {
+          if(prereqList[i] == null) break;
+          else if(prereqList[i].indexOf(findId) == 0) return true;
+        }
+        if(course.getMandatory().indexOf("Selective_Required") == 0) {
+          if((area.toLowerCase().indexOf("system") == 0 || area.toLowerCase().indexOf("mobile") == 0 || area.toLowerCase().indexOf("security") == 0)
+            && course.getCode().indexOf("CSE311") == 0)
+            return true;
+          else if((area.toLowerCase().indexOf("system") == -1 && area.toLowerCase().indexOf("mobile") == -1 && area.toLowerCase().indexOf("security") == -1)
+          && course.getCode().indexOf("CSE351") == 0)
+            return true;
+        }
+        if(findArea.indexOf(area.toLowerCase()) >= 0)
+          return true;
+        return false;
+      })
+      .map(assembler::toModel)
+      .collect(Collectors.toList());    
+
+    return ResponseEntity.ok(CollectionModel.of(CourseRec, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
+  }
+}
+
+/*
+List<EntityModel<Course>> CourseRec = repository.findAll()
       .stream()
       .filter(course -> {
         if(course.getMandatory().indexOf("Required") == 0)
@@ -306,7 +373,4 @@ public class CourseController {
       })
       .map(assembler::toModel)
       .collect(Collectors.toList());
-
-    return ResponseEntity.ok(CollectionModel.of(CourseRec, linkTo(methodOn(CourseController.class).courseShowAll()).withSelfRel()));
-  }
-}
+      */
