@@ -14,7 +14,7 @@ $(document).ready(function() {
       const newItem2 = $('<li>').addClass('nav-item');
       const newItem3 = $('<li>').addClass('nav-item');
       const newItem4 = $('<li>').addClass('nav-item');
-      const newLink1 = $('<a>').attr('href', `user_main.html?userid=${userId}&name=${name}`).text('Home');
+      const newLink1 = $('<a>').attr('href', `user_main.html?userid=${userId}&name=${name}`).text('UserProfile');
       const newLink2 = $('<a>').attr('href', `professor.html?userid=${userId}&name=${name}`).text('Professor');
       const newLink3 = $('<a>').attr('href', `course.html?userid=${userId}&name=${name}`).text('Course');
       const newLink4 = $('<a>').attr('href', `recommend.html?userid=${userId}&name=${name}`).text('Recommend');
@@ -137,7 +137,10 @@ $(document).ready(function() {
       const { code, title, type, desc } = course;
 
       const row = $('<tr>');
-      const codeCell = $('<td>').text(code).addClass('course-id');
+      const codeCell = $('<td>').text(code).css({
+        'color': 'blue',
+        'cursor': 'pointer'
+      }).addClass('course-id');
       const nameCell = $('<td>').text(title);
       const areaCell = $('<td>').text(type);
       const descCell = $('<td>').text(desc);
