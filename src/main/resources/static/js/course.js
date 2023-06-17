@@ -13,7 +13,7 @@ $(document).ready(function() {
         });
   
         // Display the professor information in a table
-        displayProfessorTable(courseData);
+        displayCourseTable(courseData);
       },
       error: function(error) {
         console.log('Error:', error);
@@ -21,7 +21,7 @@ $(document).ready(function() {
     });
   
     // Function to display the professor information in a table
-    function displayProfessorTable(courses) {
+    function displayCourseTable(courses) {
       // Create the table element
       const table = $('<table>').addClass('course-table');
       const thead = $('<thead>');

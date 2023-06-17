@@ -102,6 +102,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    margin-bottom: 100px;
   }
   
   table th,
@@ -122,8 +123,3 @@ body {
   table tbody tr:hover {
     background-color: #eaeaea;
   }
-  
-  table tbody tr:first-child {
-    display: none;
-  }
-  
