@@ -67,20 +67,19 @@ $(document).ready(function() {
     });
     thead.append(headerRow);
     table.append(thead);
-    
+
     // Create the table rows with course data
     courses.forEach(function(course) {
       const { code, title, type, desc, acadYear, openSmes, prereq } = course;
       let filterSelect;
       switch (selectedFilter) {
         case "cid":
-          //if()
+          filterSelect = document.getElementById('cidInput');
+          if(filterSelect.value != "" && !code.includes(filterSelect.value)) {return;}
           break;
         case "acy":
           filterSelect = document.getElementById('acySelect');
-          if(filterSelect.value != "none" && filterSelect.value != acadYear) {
-            console.log(acadYear);
-            return;}
+          if(filterSelect.value != "none" && filterSelect.value != acadYear) {return;}
           break;
         case "ays":
           filterSelect = document.getElementById('aysSelect');
@@ -94,7 +93,29 @@ $(document).ready(function() {
           if(filterSelect.value != "none" && filterSelect.value != type) {return;}
           break;
         case "pre":
-          //courseId = "3" + courseSub;
+          filterSelect = document.getElementById('preInput');
+          let isFound = 0;
+          prereq.forEach(function(courseCode) {
+            if(courseCode == "0") {return;}
+            const courseMain = courseCode.slice(0, 1);
+            const courseSub = courseCode.slice(1, 4);
+            let courseId;
+            switch (courseMain) {
+              case "1":
+                courseId = "CSE" + courseSub;
+                break;
+              case "2":
+                courseId = "ITP" + courseSub;
+                break;
+              case "3":
+                courseId = "MTH" + courseSub;
+                break;
+            }
+            if(courseId.includes(filterSelect.value)) {
+              isFound = 1;
+            }
+          });
+          if(filterSelect.value != "" && isFound == 0) {return;}
           break;
       }
 
