@@ -98,10 +98,25 @@ body {
     text-decoration: none;
   }
   
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 auto;
+    max-width: 400px;
+  }
+  
+  .filter-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
   table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    margin-bottom: 20px;
   }
   
   table th,
@@ -122,8 +137,8 @@ body {
   table tbody tr:hover {
     background-color: #eaeaea;
   }
-  
+  /*
   table tbody tr:first-child {
     display: none;
-  }
+  }*/
   

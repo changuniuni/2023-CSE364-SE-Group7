@@ -138,6 +138,28 @@ class ProfessorController {
     return ResponseEntity.ok(coursehistoryassembler.toModel(coursehistory));
   }
 
+  @GetMapping("/coursehistories/course/{id}")
+  ResponseEntity<?> histroyCourseId(@PathVariable String id) {
+
+    List<EntityModel<CourseHistory>> cHistoryYear = coursehistoryrepository.findAll()
+      .stream()
+      .filter(coursehistory -> {
+        String findCourse = coursehistory.getCourseId();
+        if(id.indexOf(findCourse) == 0) {
+          return true;
+        }
+        return false;
+      })
+      .map(coursehistoryassembler::toModel)
+      .collect(Collectors.toList());
+    
+      if (cHistoryYear.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      }
+
+    return ResponseEntity.ok(CollectionModel.of(cHistoryYear, linkTo(methodOn(ProfessorController.class).historyall()).withSelfRel()));
+  }
+
   @GetMapping("/coursehistories/browse/{year}")
   ResponseEntity<?> histroyBrowseYear(@PathVariable int year) {
 

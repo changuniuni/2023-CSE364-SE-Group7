@@ -1,27 +1,27 @@
 $(document).ready(function() {
     // Fetch the professors' information
-    $.ajax({
-      url: 'http://localhost:8080/professors',
-      type: 'GET',
-      dataType: 'json',
-      success: function(response) {
-        // Extract the relevant information from the response
-        const professors = response._embedded.professors;
-        const professorData = professors.map(function(professor) {
-          const { name, topic, email } = professor;
-          return { name, topic, email };
-        });
+  $.ajax({
+    url: 'http://localhost:8080/professors',
+    type: 'GET',
+    dataType: 'json',
+    success: function(response) {
+      // Extract the relevant information from the response
+      const professors = response._embedded.professors;
+      const professorData = professors.map(function(professor) {
+        const { name, topic, email } = professor;
+        return { name, topic, email };
+      });
   
-        // Display the professor information in a table
-        displayProfessorTable(professorData);
-      },
-      error: function(error) {
-        console.log('Error:', error);
-      }
-    });
+      // Display the professor information in a table
+      displayProfessorTable(professorData);
+    },
+    error: function(error) {
+      console.log('Error:', error);
+    }
+  });
   
-    // Function to display the professor information in a table
-function displayProfessorTable(professors) {
+  // Function to display the professor information in a table
+  function displayProfessorTable(professors) {
     // Create the table element
     const table = $('<table>').addClass('professor-table');
     const thead = $('<thead>');
@@ -47,7 +47,7 @@ function displayProfessorTable(professors) {
       row.append(nameCell, topicCell, emailCell);
       tbody.append(row);
     });
-  
+    
     // Append the table to the screen
     table.append(tbody);
     $('.user-main-content').append(table);
@@ -81,7 +81,7 @@ function displayProfessorTable(professors) {
   }
   
   // Function to display the course information in a table
-function displayCourseTable(courses) {
+  function displayCourseTable(courses) {
     // Create the table element
     const table = $('<table>').addClass('course-table');
     const thead = $('<thead>');
@@ -128,5 +128,5 @@ function displayCourseTable(courses) {
     table.append(tbody);
     $('.user-main-content').empty().append(table);
   }
-  });
+});
   
