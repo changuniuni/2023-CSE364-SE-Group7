@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - paCsemaker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="login-form" class="login-form">
+      <div>
+        <label for="student-id">Student ID:</label>
+        <input type="text" id="student-id" name="student-id" required>
+      </div>
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+    <div id="login-failure-screen" class="failure-screen">
+      <p>Login failed. Please check your student ID and name.</p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
