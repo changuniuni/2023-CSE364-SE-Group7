@@ -70,6 +70,7 @@ Finally, inside the docker container, run the following command.
 bash run.sh
 ```
 With 3~4 minutes of waitings, you can view our product on <http://localhost:8080>.  
+Please refer to [Milestone2 README](https://github.com/changuniuni/2023-CSE364-SE-Group7/blob/milestone2/README.md) to see how to manipulate REST APIs.
 
 - - -
 
