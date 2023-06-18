@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 
 
 @Component
@@ -25,7 +25,7 @@ public class ProfessorDataLoader {
     private void readDataFile(String filePath) throws IOException {
         String line = "";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(professorFile))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(filePath)))) {
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split("\t");

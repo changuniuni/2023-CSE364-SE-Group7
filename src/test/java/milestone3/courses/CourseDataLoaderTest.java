@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.io.IOException;
 
 @SpringBootTest
 public class CourseDataLoaderTest {
@@ -19,7 +18,7 @@ public class CourseDataLoaderTest {
 
     @Test
     void testLoadProfessorsData() {
-        Assertions.assertThrows((IOException.class), () -> {
+        Assertions.assertThrows((NullPointerException.class), () -> {
             courseDataLoader.courseFile = "invaild_Path";
             courseDataLoader.loadData();
         });
