@@ -8,7 +8,6 @@
 		<version>3.0.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-
 	<groupId>gruop7</groupId>
 	<artifactId>CSE364_project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -39,6 +38,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -63,6 +67,7 @@
 	</dependencies>
 
 	<build>
+	<finalName>${project.artifactId} </finalName>
 		<plugins>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>

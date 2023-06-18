@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Information - paCSEmaker</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <div class="logo-container">
+    <img src="logo.png" alt="paCsemaker Logo" class="logo-image">
+  </div>
+  <h2 class="section-title">Recommend By CSE Area</h2>
+  <nav class="navigation">
+    <ul class="nav-list">
+    </ul>
+  </nav>
+  <div class="recommend-item">
+    <label for="Semester">Getting recommendation on:</label>
+    <select id="recSelect">
+      <option value="none">(Select)</option>
+      <option value="System">System</option>
+      <option value="AI">Artificial Intelligence</option>
+      <option value="Data">Data</option>
+      <option value="Graphics">Graphics</option>
+      <option value="Network">Network</option>
+      <option value="Software">Software</option>
+      <option value="Virtual">Virtual</option>
+      <option value="HCI">Human-Computer Interaction</option>
+      <option value="Mobile">Mobile</option>
+      <option value="Security">Security</option>
+    </select>
+  </div>
+  <button id="getRecommend">Get Recommendation!</button>
+  <div class="container">
+    <div class="recommend-content">
+      <!-- Professor information will be dynamically inserted here -->
+    </div>
+  </div>
+  <div class="recommend-item">
+    <button id="returnButton" style="display: none;">Return to recommendation</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/recommend.js"></script>
+</body>
+</html>

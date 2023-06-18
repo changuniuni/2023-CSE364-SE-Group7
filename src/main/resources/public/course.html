@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Information - paCSEmaker</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <div class="logo-container">
+    <img src="logo.png" alt="paCsemaker Logo" class="logo-image">
+  </div>
+  <h2 class="section-title">Course Information</h2>
+  <nav class="navigation">
+    <ul class="nav-list">
+    </ul>
+  </nav>
+  <div class="filter-group">
+    <div class="filter-item">
+      <input type="radio" name="filter" id="ID" value="cid" checked>
+      <label for="ID">Course ID    </label>
+      <input type="text" id="cidInput" value="" placeholder="Type course code">
+    </div>
+    <div class="filter-item">
+      <input type="radio" name="filter" id="Academic Year" value="acy">
+      <label for="Academic Year">Grade to take</label>
+      <select id="acySelect">
+        <option value="none">Any grade</option>
+        <option value="Freshman">Freshman</option>
+        <option value="Sophomore">Sophomore</option>
+        <option value="Junior">Junior</option>
+        <option value="Senior">Senior</option>
+      </select>
+    </div>
+    <div class="filter-item">
+      <input type="radio" name="filter" id="Year and Semester" value="ays">
+      <label for="Semester">Grade & semester to take</label>
+      <select id="aysSelect">
+        <option value="none0">Any grade, any semester</option>
+        <option value="none1">Any grade, spring semester</option>
+        <option value="none2">Any grade, fall semester</option>
+        <option value="Freshman0">Freshman, any semester</option>
+        <option value="Freshman1">Freshman, spring semester</option>
+        <option value="Freshman2">Freshman, fall semester</option>
+        <option value="Sophomore0">Sophomore, any semester</option>
+        <option value="Sophomore1">Sophomore, spring semester</option>
+        <option value="Sophomore2">Sophomore, fall semester</option>
+        <option value="Junior0">Junior, any semester</option>
+        <option value="Junior1">Junior, spring semester</option>
+        <option value="Junior2">Junior, fall semester</option>
+        <option value="Senior0">Senior, any semester</option>
+        <option value="Senior1">Senior, spring semester</option>
+        <option value="Senior2">Senior, fall semester</option>
+      </select>
+    </div>
+    <div class="filter-item">
+      <input type="radio" name="filter" id="CSE Area" value="car">
+      <label for="Semester">Specific CSE area</label>
+      <select id="carSelect">
+        <option value="none">Any area</option>
+        <option value="Math">Mathematics</option>
+        <option value="Basic">CSE Basics</option>
+        <option value="System">System</option>
+        <option value="AI">Artificial Intelligence</option>
+        <option value="Data">Data</option>
+        <option value="Graphics">Graphics</option>
+        <option value="Network">Network</option>
+        <option value="Software">Software</option>
+        <option value="Virtual">Virtual</option>
+        <option value="HCI">Human-Computer Interaction</option>
+        <option value="Mobile">Mobile</option>
+        <option value="Security">Security</option>
+      </select>
+    </div>
+    <div class="filter-item">
+      <input type="radio" name="filter" id="Prerequisite" value="pre">
+      <label for="Semester">Prerequisite</label>
+      <input type="text" id="preInput" value="" placeholder="Type course code">
+    </div>
+  </div>
+  <button id="checkFilter">Filter</button>
+  <div class="container">
+    <div class="course-content">
+      <!-- Professor information will be dynamically inserted here -->
+    </div>
+  </div>
+  <div class="recommend-item">
+    <button id="returnButton" style="display: none;">Return to information</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/course.js"></script>
+</body>
+</html>
