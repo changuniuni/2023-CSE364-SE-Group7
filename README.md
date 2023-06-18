@@ -27,12 +27,49 @@ To resolve this, our team made integrated UNIST CSE planner called **paCSEmaker*
 - - -
 
 ## **⚙️ Getting Started**  
-### *Step 1*. Deploying WAR file to Apache Tomcat on Docker  
-(Description on step 1)
-### *Step 2*. Running JAR on Docker using run.sh  
-(Description on step 2)  
-### *Step 3*. Running JAR manually  
-(Description on step 3)  
+### *Case 1:* For ordinary users who want to use our product  
+First, you need two files to start deloying. If you're missing with any one of these, please get them from our github repository.
+* Dockerfile  
+* CSE364_project.war  
+If you have two files on the same directory, make a Docker image by typing this command.  
+```bash
+docker build -t paCSEmaker .
+```
+Then, you can see the Docker image has been created. Now, make a new container with port 8080.  
+```bash
+docker run -p 8080:8080 -it paCSEmaker
+```
+After this process, wait for 2~3 minutes. Then you can start using our product on <http://localhost:8080>.  
+### *Case 2:* For developers who want to view&edit our code  
+For this case, you need three files to start deloying. Again, missing files can be obtained from our github repository.
+* Dockerfile  
+* CSE364_project.war
+* run.sh
+
+**Important!** You need to do a modification on Dockerfile. Please change the following parts as follows.  
+```bash
+//Change line 42 from  
+CMD mongod --fork --logpath /var/log/mongodb.log; /root/tomcat/apache-tomcat-10.0.10/bin/catalina.sh run  
+//into  
+CMD mongod  
+```
+Then, make a Docker image on the directory that three files are put together.  
+```bash
+docker build -t paCSEmaker .
+```
+After creating Docker image, make a new container with port 8080.  
+```bash
+docker run -p 8080:8080 -it paCSEmaker
+```
+Execute that container with this command.  
+```bash
+docker exec -it container_name /bin/bash
+```
+Finally, inside the docker container, run the following command.  
+```bash
+bash run.sh
+```
+With 3~4 minutes of waitings, you can view our product on <http://localhost:8080>.  
 
 - - -
 
