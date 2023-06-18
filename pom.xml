@@ -13,8 +13,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CSE364_project</name>
 	<description>Project for CSE364_project</description>
-	
-	<packaging>war</packaging>
 
 	<properties>
 		<java.version>17</java.version>
