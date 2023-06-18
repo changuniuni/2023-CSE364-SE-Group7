@@ -18,20 +18,20 @@ To resolve this, our team made integrated UNIST CSE planner called **paCSEmaker*
 - - -
 
 ## **💡 Three Key Features of paCSEmaker**  
-### **Feature 1.** Browse course catalog, revise 5-year histories of course opened, and getting course roadmap recommendatiosn depending on CSE areas.  
+### *Feature 1.* Browse course catalog, revise 5-year histories of course opened, and getting course roadmap recommendatiosn depending on CSE areas.  
 
-### **Feature 2.** Personal storage to store courses that are already taken or will be taken. Availabe users to add courses into the storage whenever they want.  
+### *Feature 2.* Personal storage to store courses that are already taken or will be taken. Availabe users to add courses into the storage whenever they want.  
 
-### **Feature 3.** Provide professor infromation in one table. Link professor with 5-year course histories to see which courses has this professor opened.  
+### *Feature 3.* Provide professor infromation in one table. Link professor with 5-year course histories to see which courses has this professor opened.  
 
 - - -
 
 ## **⚙️ Getting Started**  
-### **Step 1**. Deploying WAR file to Apache Tomcat on Docker  
+### *Step 1*. Deploying WAR file to Apache Tomcat on Docker  
 (Description on step 1)
-### **Step 2**. Running JAR on Docker using run.sh  
+### *Step 2*. Running JAR on Docker using run.sh  
 (Description on step 2)  
-### **Step 3**. Running JAR manually  
+### *Step 3*. Running JAR manually  
 (Description on step 3)  
 
 - - -
