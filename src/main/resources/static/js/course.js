@@ -219,8 +219,6 @@ $(document).ready(function() {
         }
       });
 
-      setTimeout(function() {}, 300);
-
       // Fetch the course information for the clicked course
       $.ajax({
         url: apiUrl_2,
@@ -234,7 +232,7 @@ $(document).ready(function() {
             return { openYear, openSmes, courseId, professorName };
           });
 
-          displayCourseHistory(historyData);
+          setTimeout(function() {displayCourseHistory(historyData);}, 200);
         },
         error: function(error) {
           console.log('Error:', error);
