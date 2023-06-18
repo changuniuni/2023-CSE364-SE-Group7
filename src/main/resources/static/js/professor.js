@@ -106,23 +106,45 @@ function displayProfessorTable(professors) {
     // Attach click event to professor name cells
     $('.professor-name').click(function() {
       const professorName = $(this).text();
-      const apiUrl = `http://localhost:8080/professors/search/${encodeURIComponent(professorName)}/courses`;
-  
-      // Fetch the course information for the clicked professor
+      const apiUrl1 = `http://localhost:8080/professors/search/name/${professorName}`;
+      const apiUrl2 = `http://localhost:8080/professors/search/${professorName}/courses`;
+      
+      $('.professor-content').empty()
+
       $.ajax({
-        url: apiUrl,
+        url: apiUrl1,
         type: 'GET',
         dataType: 'json',
         success: function(response) {
           // Extract the relevant information from the response
-          const courses = response._embedded.courseHistories;
-          const courseData = courses.map(function(course) {
-            const { openYear, courseId, openSmes } = course;
-            return { openYear, courseId, openSmes };
+          const profinfos = response._embedded.professors;
+          const profInfoData = profinfos.map(function(profinfo) {
+            const { name, email, office, phone, area, topic, desc } = profinfo;
+            return { name, email, office, phone, area, topic, desc };
           });
   
           // Display the course information in a table
-          displayCourseTable(courseData);
+          displayProfInfo(profInfoData);
+
+          $.ajax({
+            url: apiUrl2,
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+              // Extract the relevant information from the response
+              const courses = response._embedded.courseHistories;
+              const courseData = courses.map(function(course) {
+                const { openYear, courseId, openSmes } = course;
+                return { openYear, courseId, openSmes };
+              });
+      
+              // Display the course information in a table
+              displayCourseTable(courseData);
+            },
+            error: function(error) {
+              console.log('Error:', error);
+            }
+          });
         },
         error: function(error) {
           console.log('Error:', error);
@@ -131,6 +153,51 @@ function displayProfessorTable(professors) {
     });
   }
   
+// Function to display the detailed course in a table
+function displayProfInfo(profInfos) {
+  // Create the table element
+  const table = $('<table>').addClass('eCourse-table');
+  const tbody = $('<tbody>');
+  // Create the table rows with course data
+  profInfos.forEach(function(profInfo) {
+    const { name, email, office, phone, area, topic, desc } = profInfo;
+    let eachCell;
+    let row = $('<tr>');
+    eachCell = $('<td>').text(name);
+    row.append("Professor name", eachCell);
+    tbody.append(row);
+    row = $('<tr>');
+    eachCell = $('<td>').text(email);
+    row.append("UNIST Email Address", eachCell);
+    tbody.append(row);
+    row = $('<tr>');
+    eachCell = $('<td>').text(office);
+    row.append("Office Building No.", eachCell);
+    tbody.append(row);
+    row = $('<tr>');
+    eachCell = $('<td>').text(phone);
+    row.append("Office Dial No.", eachCell);
+    tbody.append(row);
+    row = $('<tr>');
+    eachCell = $('<td>').text(area);
+    row.append("Research CSE Area", eachCell);
+    tbody.append(row);
+    row = $('<tr>');
+    eachCell = $('<td>').text(topic);
+    row.append("Research Lab", eachCell);
+    tbody.append(row);
+    row = $('<tr>');
+    eachCell = $('<td>').text(desc);
+    row.append("Research Description", eachCell);
+    tbody.append(row);
+  });
+
+  // Append the table to the screen
+  table.append(tbody);
+  $('.professor-content').append(table);
+  const returnButton = document.getElementById('returnButton');
+  returnButton.style.display = 'block';
+}
   
   // Function to display the course information in a table
 function displayCourseTable(courses) {
@@ -178,9 +245,8 @@ function displayCourseTable(courses) {
   
     // Append the table to the screen
     table.append(tbody);
-    $('.professor-content').empty().append(table);
+    $('.professor-content').append(table);
     const returnButton = document.getElementById('returnButton');
     returnButton.style.display = 'block';
   }
-  });
-  
+});

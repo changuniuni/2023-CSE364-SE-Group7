@@ -199,7 +199,7 @@ $(document).ready(function() {
           break;
       }
       const apiUrl_1 = `http://localhost:8080/courses`;
-      const apiUrl_2 = `http://localhost:8080/coursehistories/course/${encodeURIComponent(courseId)}`;
+      const apiUrl_2 = `http://localhost:8080/coursehistories/course/${courseId}`;
 
       $('.course-content').empty();
 
@@ -216,26 +216,25 @@ $(document).ready(function() {
           });
 
           displayDetailedCourse(eCourseData, courseId);
-        },
-        error: function(error) {
-          console.log('Error:', error);
-        }
-      });
 
-      // Fetch the course information for the clicked course
-      $.ajax({
-        url: apiUrl_2,
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-          // Extract the relevant information from the response
-          const histories = response._embedded.courseHistories;
-          const historyData = histories.map(function(history) {
-            const { openYear, openSmes, courseId, professorName } = history;
-            return { openYear, openSmes, courseId, professorName };
+          $.ajax({
+            url: apiUrl_2,
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+              // Extract the relevant information from the response
+              const histories = response._embedded.courseHistories;
+              const historyData = histories.map(function(history) {
+                const { openYear, openSmes, courseId, professorName } = history;
+                return { openYear, openSmes, courseId, professorName };
+              });
+    
+              displayCourseHistory(historyData);
+            },
+            error: function(error) {
+              console.log('Error:', error);
+            }
           });
-
-          setTimeout(function() {displayCourseHistory(historyData);}, 200);
         },
         error: function(error) {
           console.log('Error:', error);
@@ -331,7 +330,6 @@ $(document).ready(function() {
           const CourseIdCell = $('<td>').text(openCode);
           row.append(openYearCell, openSmesCell, CourseIdCell, openProfCell);
           tbody.append(row);
-          console.log("append one!");
         },
         error: function(error) {
           console.log('Error:', error);
