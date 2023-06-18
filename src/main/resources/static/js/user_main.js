@@ -23,9 +23,9 @@ $(document).ready(function() {
       newItem2.append(newLink2);
       newItem3.append(newLink3);
       newItem4.append(newLink4);
-      
-      const logout = $('<li>').addClass('button-container');
-      const logoutlink = $('<button>').attr('href', `index.html`).text('LogOut');
+
+      const logout = $('<div>').addClass('button-container');
+      const logoutlink = $('<a>').attr('href', `index.html`, 'class',"btn btn-primary").text('LogOut');
       logout.append(logoutlink);
       
       $('.nav-list').append(newItem1, newItem2, newItem3, newItem4, logoutlink);
