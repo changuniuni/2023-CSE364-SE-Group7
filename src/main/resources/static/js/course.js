@@ -177,9 +177,7 @@ $(document).ready(function() {
     });
  
     // Append the table to the screen
-    table.append(tbody).css({
-      'outline': '2px solid #ccc'
-    });
+    table.append(tbody);
     $('.course-content').empty().append(table);
     const returnButton = document.getElementById('returnButton');
     returnButton.style.display = 'none';
@@ -240,8 +238,6 @@ $(document).ready(function() {
           console.log('Error:', error);
         }
       });
-
-      // Fetch the course information for the clicked course
     });
   }
 
@@ -260,62 +256,61 @@ $(document).ready(function() {
       eachCell = $('<td>').text(code);
       textCell = $('<td>').text("Course ID").css({
         'border-right': '1px solid #ccc'
-      });;
+      });
       row.append(textCell, eachCell);
       tbody.append(row);
       row = $('<tr>');
       eachCell = $('<td>').text(title);
       textCell = $('<td>').text("Course Title").css({
         'border-right': '1px solid #ccc'
-      });;
+      });
       row.append(textCell, eachCell);
       tbody.append(row);
       row = $('<tr>');
       eachCell = $('<td>').text(acadYear);
       textCell = $('<td>').text("Recommended Grade to Take").css({
         'border-right': '1px solid #ccc'
-      });;
+      });
       row.append(textCell, eachCell);
       tbody.append(row);
       row = $('<tr>');
       eachCell = $('<td>').text(openSmes);
       textCell = $('<td>').text("Allocated Semester").css({
         'border-right': '1px solid #ccc'
-      });;
+      });
       row.append(textCell, eachCell);
       tbody.append(row);
       row = $('<tr>');
       eachCell = $('<td>').text(type);
       textCell = $('<td>').text("Course CSE Area").css({
         'border-right': '1px solid #ccc'
-      });;
+      });
       row.append(textCell, eachCell);
       tbody.append(row);
       row = $('<tr>');
       eachCell = $('<td>').text(mandatory);
       textCell = $('<td>').text("Course Mandatory").css({
         'border-right': '1px solid #ccc'
-      });;
+      });
       row.append(textCell, eachCell);
       tbody.append(row);
       row = $('<tr>');
       eachCell = $('<td>').text(prereq);
       textCell = $('<td>').text("Course Prerequisite").css({
         'border-right': '1px solid #ccc'
-      });;
+      });
       row.append(textCell, eachCell);
       tbody.append(row);
       row = $('<tr>');
       eachCell = $('<td>').text(desc);
       textCell = $('<td>').text("Course Description").css({
         'border-right': '1px solid #ccc'
-      });;
+      });
       row.append(textCell, eachCell);
       tbody.append(row);
     });
     // Append the table to the screen
     table.append(tbody).css({
-      'outline': '2px solid #ccc',
       'border-collapse': 'separate'
     });
     $('.course-content').append(table);
@@ -359,7 +354,6 @@ $(document).ready(function() {
           const CourseIdCell = $('<td>').text(openCode);
           row.append(openYearCell, openSmesCell, CourseIdCell, openProfCell);
           tbody.append(row);
-          console.log("append one!");
         },
         error: function(error) {
           console.log('Error:', error);
@@ -368,9 +362,7 @@ $(document).ready(function() {
     });
   
     // Append the table to the screen
-    table.append(tbody).css({
-      'outline': '2px solid #ccc'
-    });;
+    table.append(tbody);
     $('.course-content').append(table);
     const returnButton = document.getElementById('returnButton');
     returnButton.style.display = 'block';

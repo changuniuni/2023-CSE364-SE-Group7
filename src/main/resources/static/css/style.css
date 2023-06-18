@@ -76,6 +76,10 @@ body {
   text-align: center;
 }
 
+.section-title {
+  font-size: 30px;
+}
+
 .navigation {
   margin-top: 20px;
   position: fixed; /* Position the navigation bar */
@@ -126,6 +130,7 @@ table {
   border-collapse: collapse;
   margin-top: 20px;
   margin-bottom: 20px;
+  outline: 2px solid #ccc;
 }
 
 table th,
