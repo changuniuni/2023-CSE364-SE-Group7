@@ -31,6 +31,7 @@ To resolve this, our team made integrated UNIST CSE planner called **paCSEmaker*
 First, you need two files to start deloying. If you're missing with any one of these, please get them from our github repository.
 * Dockerfile  
 * CSE364_project.war
+* run.sh
 
 If you have two files on the same directory, make a Docker image by typing this command.  
 ```bash
