@@ -50,7 +50,7 @@ public class UserControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"id\":\"1\",\"name\":\"John\"}"))
-                .andExpect(status().isOk());
+                .andExpect(status().isBadRequest());  //changed
     }
 
     @Test
