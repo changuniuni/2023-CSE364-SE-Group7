@@ -13,20 +13,21 @@ $(document).ready(function() {
       const newItem2 = $('<li>').addClass('nav-item');
       const newItem3 = $('<li>').addClass('nav-item');
       const newItem4 = $('<li>').addClass('nav-item');
-      const logout = $('<li>').addClass('button-container');
 
       const newLink1 = $('<a>').attr('href', `user_main.html?userid=${userId}&name=${name}`).text('UserProfile');
       const newLink2 = $('<a>').attr('href', `professor.html?userid=${userId}&name=${name}`).text('Professor');
       const newLink3 = $('<a>').attr('href', `course.html?userid=${userId}&name=${name}`).text('Course');
       const newLink4 = $('<a>').attr('href', `recommend.html?userid=${userId}&name=${name}`).text('Recommend');
-      const logoutlink = $('<button>').attr('href', `index.html`).text('LogOut');
-
+      
       newItem1.append(newLink1);
       newItem2.append(newLink2);
       newItem3.append(newLink3);
       newItem4.append(newLink4);
+      
+      const logout = $('<li>').addClass('button-container');
+      const logoutlink = $('<button>').attr('href', `index.html`).text('LogOut');
       logout.append(logoutlink);
-
+      
       $('.nav-list').append(newItem1, newItem2, newItem3, newItem4, logoutlink);
 
       const button = $('<a>').attr('href', `add_course.html?userid=${userId}&name=${name}`).addClass('btn btn-primary').text('Add Course');
@@ -48,7 +49,8 @@ $(document).ready(function() {
       const userNameElement = $('<p>').text('Student Name: ' + user.name).css('margin-top', '1px');
       
       userInfoElement.append(userIdElement, userNameElement);
-      
+      $(".section-title").css('margin-top', '-18px')
+      $(".logo-container").css('margin-bottom', '-18px');
       $('.user-main-content').append(userInfoElement);
       // Display the professor information in a table
       displayUserCourseTable(user.courseList);

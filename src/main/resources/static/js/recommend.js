@@ -4,6 +4,8 @@ $(document).ready(function() {
   const userId = urlParams.get('userid');
   const name = urlParams.get('name');
 
+  $(".section-title").css('margin-top', '-40px', 'font-size', '60px');
+  $(".logo-container").css('margin-bottom', '-18px');
   // Fetch the professors' information
   $.ajax({
     url: 'http://localhost:8080/courses',
@@ -24,7 +26,11 @@ $(document).ready(function() {
       newItem3.append(newLink3);
       newItem4.append(newLink4);
 
-      $('.nav-list').append(newItem1, newItem2, newItem3, newItem4);
+      const logout = $('<li>').addClass('button-container');
+      const logoutlink = $('<button>').attr('href', `index.html`).text('LogOut');
+      logout.append(logoutlink);
+      
+      $('.nav-list').append(newItem1, newItem2, newItem3, newItem4, logoutlink);
 
       // Display the course information in a table
       displayEmptyRecommend();

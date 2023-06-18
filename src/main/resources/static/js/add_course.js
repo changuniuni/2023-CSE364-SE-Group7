@@ -4,7 +4,8 @@ $(document).ready(function() {
 
     const userId = urlParams.get('userid');
     const name = urlParams.get('name');
-
+    $(".section-title").css('margin-top', '-40px', 'font-size', '60px');
+    $(".logo-container").css('margin-bottom', '-18px');
     $.ajax({
       url: 'http://localhost:8080/coursehistories',
       type: 'GET',
@@ -25,7 +26,11 @@ $(document).ready(function() {
         newItem3.append(newLink3);
         newItem4.append(newLink4);
 
-        $('.nav-list').append(newItem1, newItem2, newItem3, newItem4);
+        const logout = $('<li>').addClass('button-container');
+        const logoutlink = $('<button>').attr('href', `index.html`).text('LogOut');
+        logout.append(logoutlink);
+      
+        $('.nav-list').append(newItem1, newItem2, newItem3, newItem4, logoutlink);
 
         // Extract the relevant information from the response
         const courses = response._embedded.courseHistories;
@@ -33,7 +38,7 @@ $(document).ready(function() {
           const { openYear, openSmes, courseId, professorName } = course;
           return { openYear, openSmes, courseId, professorName };
         });
-  
+        
         // Display the professor information in a table
         displayCourseHistoryTable(courseData);
       },
