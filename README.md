@@ -35,11 +35,11 @@ First, you need two files to start deloying. If you're missing with any one of t
 
 If you have two files on the same directory, make a Docker image by typing this command.  
 ```bash
-docker build -t paCSEmaker .
+docker build -t pacsemaker .
 ```
 Then, you can see the Docker image has been created. Now, make a new container with port 8080.  
 ```bash
-docker run -p 8080:8080 -it paCSEmaker
+docker run -p 8080:8080 -it pacsemaker
 ```
 After this process, wait for 2~3 minutes. Then you can start using our product on <http://localhost:8080>.  
 ### *Case 2:* For developers who want to view&edit our code  
@@ -57,11 +57,11 @@ CMD mongod
 ```
 Then, make a Docker image on the directory that three files are put together.  
 ```bash
-docker build -t paCSEmaker .
+docker build -t pacsemaker .
 ```
 After creating Docker image, make a new container with port 8080.  
 ```bash
-docker run -p 8080:8080 -it paCSEmaker
+docker run -p 8080:8080 -it pacsemaker
 ```
 Execute that container with this command.  
 ```bash
